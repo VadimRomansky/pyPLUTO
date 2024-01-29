@@ -38,6 +38,7 @@ def plot_temperature_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
     ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
     ax.set_ylabel(r'$T$', fontsize=40,fontweight='bold')
     ax.minorticks_on()
+    ax.set_yscale("log")
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.plot(x, T)
 
