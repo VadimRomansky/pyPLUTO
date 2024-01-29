@@ -3,12 +3,12 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     c = 2.998E10
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
 
-    D = pp.pload(ntot, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype='dbl') # Load fluid data.
+    D = pp.pload(ntot, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     ndim = len((D.vx1.shape))
 
     minV = 0
@@ -44,6 +44,7 @@ def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
     dx = (xmax - xmin) / V.shape[0]
     x = dx * range(V.shape[0]) + xmin
     ax.set_ylabel(r'v/c',fontsize=18)
+    ax.set_yscale("log")
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.plot(x, V)

@@ -5,12 +5,12 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 
-def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     # f1 = plt.figure(figsize=[10,8])
     c = 2.998E10
     f1 = plt.figure()
 
-    D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx1.shape))
 
     minV = 0
@@ -48,7 +48,7 @@ def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
     startOffset = 2
 
     for i in range(ntot - startOffset + 1):
-        D = pp.pload(i, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(i, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
         if (ndim == 1):
             Vz = D.vx3[:]*UNIT_VELOCITY/c
             Vy = D.vx2[:]*UNIT_VELOCITY/c
@@ -78,7 +78,7 @@ def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
         ax = f1.add_subplot(111)
 
         ax.set_ylim([0.9*minV, 1.1*maxV])
-        D = pp.pload(frame_number, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(frame_number, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
         if (ndim == 1):
             Vz = D.vx3[:]*UNIT_VELOCITY/c
             Vy = D.vx2[:]*UNIT_VELOCITY/c
@@ -100,6 +100,7 @@ def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
         ax.set_xlabel(r'x', fontsize=18)
         ax.set_ylabel(r'v/c', fontsize=18)
+        ax.set_uscale("log")
         ax.minorticks_on()
 
         im2 = plt.plot(x, V)  # plotting fluid data.

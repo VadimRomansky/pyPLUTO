@@ -4,9 +4,9 @@ import matplotlib.colors as colors
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax):
+def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype):
     f1 = plt.figure(figsize=[10,8])
-    P = pr.ploadparticles(0, w_dir, datatype='dbl',ptype='CR') # Loading particle data : particles.00ns_ch00.flt
+    P = pr.ploadparticles(0, w_dir, datatype=datatype,ptype='CR') # Loading particle data : particles.00ns_ch00.flt
 
     PVmag = np.sqrt(P.vx1**2 + P.vx2**2 + P.vx3**2) # estimating the velocity magnitude
     maxU = 0
@@ -14,7 +14,7 @@ def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         max(PVmag)
     index = 0
     for i in range(ntot+1):
-        P = pr.ploadparticles(i, w_dir, datatype='dbl', ptype='CR')
+        P = pr.ploadparticles(i, w_dir, datatype=datatype, ptype='CR')
         PVmag = np.sqrt(P.vx1 ** 2 + P.vx2 ** 2 + P.vx3 ** 2)  # estimating the velocity magnitude
         if(len(PVmag) > 0):
             u = max(PVmag)
@@ -23,7 +23,7 @@ def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
                 index = i
 
     #index = 27
-    P = pr.ploadparticles(index, w_dir, datatype='dbl', ptype='CR')
+    P = pr.ploadparticles(index, w_dir, datatype=datatype, ptype='CR')
     PVmag = np.sqrt(P.vx1 ** 2 + P.vx2 ** 2 + P.vx3 ** 2)
 
     particles = np.zeros((len(P.x1), 2))
@@ -32,7 +32,7 @@ def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         particles[i][1] = P.x1[i]*sin(P.x2[i])*sin(P.x3[i])*UNIT_LENGTH
         
     ### background magnetic field
-    D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Bx1.shape))
 
     minB = 0
@@ -75,7 +75,7 @@ def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
     xmax = D.x1.max() * UNIT_LENGTH
 
     for i in range(ntot + 1):
-        D = pp.pload(i, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(i, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 1):
             Bz = D.Bx3.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
             By = D.Bx2.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
@@ -107,7 +107,7 @@ def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         ax = f1.add_subplot(projection="polar")
         cax1 = f1.add_axes([0.91, 0.12, 0.03, 0.75])
         cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
-        P = pr.ploadparticles(frame_number, w_dir, datatype='dbl',
+        P = pr.ploadparticles(frame_number, w_dir, datatype=datatype,
                               ptype='CR')  # Loading particle data : particles.00ns_ch00.flt
 
         PVmag = np.sqrt(P.vx1 ** 2 + P.vx2 ** 2 + P.vx3 ** 2)  # estimating the velocity magnitude
@@ -125,7 +125,7 @@ def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         
         B = np.zeros([ny, nx])
         
-        D = pp.pload(frame_number, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(frame_number, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 1):
             Bz = D.Bx3.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
             By = D.Bx2.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)

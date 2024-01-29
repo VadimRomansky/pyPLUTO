@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_escaped_distribution(ns, npr, w_dir):
+def plot_escaped_distribution(ns, npr, w_dir, datatype):
     f1 = plt.figure(figsize=[6,6])
     ax = f1.add_subplot(111)
 
@@ -11,7 +11,7 @@ def plot_escaped_distribution(ns, npr, w_dir):
         PVmag1[i] = -1
 
     for i in range(ns):
-        P = pr.ploadparticles(ns-i, w_dir, datatype='dbl',
+        P = pr.ploadparticles(ns-i, w_dir, datatype=datatype,
                           ptype='CR')  # Loading particle data : particles.00ns_ch00.flt
 
         PVmag = np.sqrt(P.vx1 ** 2 + P.vx2 ** 2 + P.vx3 ** 2)  # estimating the velocity magnitude

@@ -3,11 +3,11 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_density_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_density_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
 
-    D = pp.pload(number, varNames = ['rho'], w_dir = w_dir, datatype='dbl') # Load fluid data.
+    D = pp.pload(number, varNames = ['rho'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     ndim = len((D.rho.shape))
 
     minRho = 0
@@ -20,24 +20,24 @@ def plot_density_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
 
     if (ndim == 1):
         Rho3 = D.rho[:] * UNIT_DENSITY
-        D = pp.pload(int(number / 2), varNames=['rho'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['rho'], w_dir=w_dir, datatype=datatype)
         Rho2 = D.rho[:] * UNIT_DENSITY
-        D = pp.pload(1, varNames=['rho'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['rho'], w_dir=w_dir, datatype=datatype)
         Rho1 = D.rho[:] * UNIT_DENSITY
     if (ndim == 2):
         ypoint = math.floor(D.rho.shape[1] / 2)
         Rho3 = D.rho[:, ypoint] * UNIT_DENSITY
-        D = pp.pload(int(number / 2), varNames=['rho'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['rho'], w_dir=w_dir, datatype=datatype)
         Rho2 = D.rho[:, ypoint] * UNIT_DENSITY
-        D = pp.pload(1, varNames=['rho'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['rho'], w_dir=w_dir, datatype=datatype)
         Rho1 = D.rho[:, ypoint] * UNIT_DENSITY
     if (ndim == 3):
         ypoint = math.floor(D.rho.shape[1] / 2)
         zpoint = math.floor(D.rho.shape[2] / 2)
         Rho3 = D.rho[:,ypoint, zpoint] * UNIT_DENSITY
-        D = pp.pload(int(number / 2), varNames=['rho'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['rho'], w_dir=w_dir, datatype=datatype)
         Rho2 = D.rho[:, ypoint, zpoint] * UNIT_DENSITY
-        D = pp.pload(1, varNames=['rho'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['rho'], w_dir=w_dir, datatype=datatype)
         Rho1 = D.rho[:, ypoint, zpoint] * UNIT_DENSITY
 
 

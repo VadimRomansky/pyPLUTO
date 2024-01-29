@@ -5,11 +5,11 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 
-def plot_B_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_B_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
     # f1 = plt.figure(figsize=[10,8])
     f1 = plt.figure()
 
-    D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Bx1.shape))
 
     minB = 0
@@ -47,7 +47,7 @@ def plot_B_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
     startOffset = 2
 
     for i in range(ntot - startOffset + 1):
-        D = pp.pload(i, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(i, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)
         if (ndim == 1):
             Bz = D.Bx3[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
             By = D.Bx2[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
@@ -77,7 +77,7 @@ def plot_B_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
         ax = f1.add_subplot(111)
 
         ax.set_ylim([0.9*minB, 1.1*maxB])
-        D = pp.pload(frame_number, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(frame_number, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)
         if (ndim == 1):
             Bz = D.Bx3[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
             By = D.Bx2[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)

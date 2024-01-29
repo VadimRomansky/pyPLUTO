@@ -7,12 +7,12 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
 
-    D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.rho.shape))
 
     minRho = 0
@@ -39,7 +39,7 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY)
 
 
     for i in range(ntot + 1):
-        D = pp.pload(i, varNames = ['rho'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(i, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
             Rho = D.rho[:, :] * UNIT_DENSITY
         if (ndim == 3):
@@ -67,7 +67,7 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY)
         f1.set_figwidth(12)
         ax = f1.add_subplot(111)
 
-        D = pp.pload(frame_number, varNames = ['rho'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(frame_number, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
             Rho = D.rho[:, :] * UNIT_DENSITY
         if (ndim == 3):

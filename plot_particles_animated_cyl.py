@@ -3,9 +3,9 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax):
+def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype):
     f1 = plt.figure(figsize=[10,8])
-    P = pr.ploadparticles(0, w_dir, datatype='dbl',ptype='CR') # Loading particle data : particles.00ns_ch00.flt
+    P = pr.ploadparticles(0, w_dir, datatype=datatype,ptype='CR') # Loading particle data : particles.00ns_ch00.flt
 
     PVmag = np.sqrt(P.vx1**2 + P.vx2**2 + P.vx3**2) # estimating the velocity magnitude
     maxU = 0
@@ -13,7 +13,7 @@ def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VEL
         max(PVmag)
     index = 0
     for i in range(ntot+1):
-        P = pr.ploadparticles(i, w_dir, datatype='dbl', ptype='CR')
+        P = pr.ploadparticles(i, w_dir, datatype=datatype, ptype='CR')
         PVmag = np.sqrt(P.vx1 ** 2 + P.vx2 ** 2 + P.vx3 ** 2)  # estimating the velocity magnitude
         if(len(PVmag) > 0):
             u = max(PVmag)
@@ -22,7 +22,7 @@ def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VEL
                 index = i
 
     #index = 27
-    P = pr.ploadparticles(index, w_dir, datatype='dbl', ptype='CR')
+    P = pr.ploadparticles(index, w_dir, datatype=datatype, ptype='CR')
     PVmag = np.sqrt(P.vx1 ** 2 + P.vx2 ** 2 + P.vx3 ** 2)
 
     particles = np.zeros((len(P.x1), 2))
@@ -35,7 +35,7 @@ def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VEL
         f1.clear()
         ax = f1.add_subplot(111)
         cax1 = f1.add_axes([0.91, 0.12, 0.03, 0.75])
-        P = pr.ploadparticles(frame_number, w_dir, datatype='dbl',
+        P = pr.ploadparticles(frame_number, w_dir, datatype=datatype,
                               ptype='CR')  # Loading particle data : particles.00ns_ch00.flt
 
         PVmag = np.sqrt(P.vx1 ** 2 + P.vx2 ** 2 + P.vx3 ** 2)  # estimating the velocity magnitude

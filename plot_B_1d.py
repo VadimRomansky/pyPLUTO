@@ -3,11 +3,11 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_B_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_B_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
 
-    D = pp.pload(ntot, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype='dbl') # Load fluid data.
+    D = pp.pload(ntot, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     ndim = len((D.Bx1.shape))
 
     minB = 0

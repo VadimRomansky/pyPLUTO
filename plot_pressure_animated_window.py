@@ -7,12 +7,12 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax):
+def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
 
-    D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.prs.shape))
 
     minPrs = 0
@@ -39,7 +39,7 @@ def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
 
 
     for i in range(ntot + 1):
-        D = pp.pload(i, varNames = ['prs'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(i, varNames = ['prs'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
             Prs = D.prs[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if (ndim == 3):
@@ -67,7 +67,7 @@ def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         f1.set_figwidth(12)
         ax = f1.add_subplot(111)
 
-        D = pp.pload(frame_number, varNames = ['prs'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(frame_number, varNames = ['prs'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
             Prs = D.prs[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if (ndim == 3):

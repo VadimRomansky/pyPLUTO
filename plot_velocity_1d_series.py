@@ -3,12 +3,12 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
 
-    D = pp.pload(number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype='dbl') # Load fluid data.
+    D = pp.pload(number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     ndim = len((D.vx1.shape))
 
     minV = 0
@@ -24,12 +24,12 @@ def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
         Vy = D.vx2[:] * UNIT_VELOCITY / c
         Vx = D.vx1[:] * UNIT_VELOCITY / c
         V3 = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
-        D = pp.pload(int(number / 2), varNames=['vx1','vx2','vx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['vx1','vx2','vx3'], w_dir=w_dir, datatype=datatype)
         Vz = D.vx3[:] * UNIT_VELOCITY / c
         Vy = D.vx2[:] * UNIT_VELOCITY / c
         Vx = D.vx1[:] * UNIT_VELOCITY / c
         V2 = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
-        D = pp.pload(1, varNames=['vx1','vx2','vx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['vx1','vx2','vx3'], w_dir=w_dir, datatype=datatype)
         Vz = D.vx3[:] * UNIT_VELOCITY / c
         Vy = D.vx2[:] * UNIT_VELOCITY / c
         Vx = D.vx1[:] * UNIT_VELOCITY / c
@@ -40,12 +40,12 @@ def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
         Vy = D.vx2[:, ypoint] * UNIT_VELOCITY / c
         Vx = D.vx1[:, ypoint] * UNIT_VELOCITY / c
         V3 = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
-        D = pp.pload(int(number / 2), varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
         Vz = D.vx3[:, ypoint] * UNIT_VELOCITY / c
         Vy = D.vx2[:, ypoint] * UNIT_VELOCITY / c
         Vx = D.vx1[:, ypoint] * UNIT_VELOCITY / c
         V2 = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
-        D = pp.pload(1, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
         Vz = D.vx3[:, ypoint] * UNIT_VELOCITY / c
         Vy = D.vx2[:, ypoint] * UNIT_VELOCITY / c
         Vx = D.vx1[:, ypoint] * UNIT_VELOCITY / c
@@ -57,12 +57,12 @@ def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
         Vy = D.vx2[:, ypoint, zpoint] * UNIT_VELOCITY / c
         Vx = D.vx1[:, ypoint, zpoint] * UNIT_VELOCITY / c
         V3 = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
-        D = pp.pload(int(number / 2), varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
         Vz = D.vx3[:, ypoint, zpoint] * UNIT_VELOCITY / c
         Vy = D.vx2[:, ypoint, zpoint] * UNIT_VELOCITY / c
         Vx = D.vx1[:, ypoint, zpoint] * UNIT_VELOCITY / c
         V2 = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
-        D = pp.pload(1, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
         Vz = D.vx3[:, ypoint, zpoint] * UNIT_VELOCITY / c
         Vy = D.vx2[:, ypoint, zpoint] * UNIT_VELOCITY / c
         Vx = D.vx1[:, ypoint, zpoint] * UNIT_VELOCITY / c

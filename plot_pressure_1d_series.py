@@ -3,11 +3,11 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_pressure_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_pressure_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
 
-    D = pp.pload(number, varNames = ['prs'], w_dir = w_dir, datatype='dbl') # Load fluid data.
+    D = pp.pload(number, varNames = ['prs'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     ndim = len((D.prs.shape))
 
     minRho = 0
@@ -20,24 +20,24 @@ def plot_pressure_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
     if (ndim == 1):
         Prs3 = D.prs[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        D = pp.pload(int(number / 2), varNames=['prs'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['prs'], w_dir=w_dir, datatype=datatype)
         Prs2 = D.prs[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        D = pp.pload(1, varNames=['prs'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['prs'], w_dir=w_dir, datatype=datatype)
         Prs1 = D.prs[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
     if (ndim == 2):
         ypoint = math.floor(D.prs.shape[1] / 2)
         Prs3 = D.prs[:, ypoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        D = pp.pload(int(number / 2), varNames=['prs'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['prs'], w_dir=w_dir, datatype=datatype)
         Prs2 = D.rho[:, ypoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        D = pp.pload(1, varNames=['prs'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['prs'], w_dir=w_dir, datatype=datatype)
         Prs1 = D.rho[:, ypoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
     if (ndim == 3):
         ypoint = math.floor(D.prs.shape[1] / 2)
         zpoint = math.floor(D.prs.shape[2] / 2)
         Prs3 = D.prs[:,ypoint, zpoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        D = pp.pload(int(number / 2), varNames=['prs'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(int(number / 2), varNames=['prs'], w_dir=w_dir, datatype=datatype)
         Prs2 = D.prs[:, ypoint, zpoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        D = pp.pload(1, varNames=['prs'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(1, varNames=['prs'], w_dir=w_dir, datatype=datatype)
         Prs1 = D.prs[:, ypoint, zpoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
 
 

@@ -5,10 +5,10 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 
-def plot_profile_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax):
+def plot_profile_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype):
     f1 = plt.figure(figsize=[10, 8])
 
-    D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx1.shape))
 
     minV = 0
@@ -61,7 +61,7 @@ def plot_profile_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
     for i in range(ntot+1):
         D = pp.pload(i, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho'], w_dir=w_dir,
-                     datatype='dbl')  # Load fluid data.
+                     datatype=datatype)  # Load fluid data.
         if (ndim == 1):
             V = np.abs(D.vx1[N1:N2])
             P = D.prs[N1:N2]
@@ -96,7 +96,7 @@ def plot_profile_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         ax.set_ylim([0.5*minV, 2*maxV])
 
         D = pp.pload(frame_number, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho'], w_dir=w_dir,
-                     datatype='dbl')  # Load fluid data.
+                     datatype=datatype)  # Load fluid data.
         if (ndim == 1):
             V = np.abs(D.vx1[N1:N2])
             P = D.prs[N1:N2]

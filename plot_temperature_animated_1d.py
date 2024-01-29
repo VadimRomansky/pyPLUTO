@@ -5,12 +5,12 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 
-def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure()
 
-    D = pp.pload(ntot, varNames=['T'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames=['T'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.T.shape))
 
     minT = 0
@@ -39,7 +39,7 @@ def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
     startOffset = 20
 
     for i in range(ntot - startOffset + 1):
-        D = pp.pload(i, varNames=['T'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(i, varNames=['T'], w_dir=w_dir, datatype=datatype)
         if (ndim == 1):
             T = D.T[:]
         if (ndim == 2):
@@ -60,7 +60,7 @@ def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         ax = f1.add_subplot(111)
 
         ax.set_ylim([0.9*minT, 1.1*maxT])
-        D = pp.pload(frame_number, varNames=['T'], w_dir=w_dir, datatype='dbl')
+        D = pp.pload(frame_number, varNames=['T'], w_dir=w_dir, datatype=datatype)
         if (ndim == 1):
             T = D.T[:]
         if (ndim == 2):

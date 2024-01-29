@@ -1,11 +1,11 @@
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_gamma_2d(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_gamma_2d(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT, datatype):
     f1 = plt.figure(figsize=[6,6])
     ax = f1.add_subplot(111)
 
-    D = pp.pload(ns, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype='dbl') # Load fluid data.
+    D = pp.pload(ns, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     #B = D.Bx1.T**2 + D.Bx2.T**2 + D.Bx3.T**2
     nx = shape(D.vx1.T)[0]
     ny = shape(D.vx1.T)[1]

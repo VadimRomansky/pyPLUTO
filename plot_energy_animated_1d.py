@@ -6,10 +6,10 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 
-def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocity):
+def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocity, datatype):
     f1 = plt.figure(figsize=[10, 8])
 
-    D = pp.pload(ntot, varNames = ['rho','vx1','vx2','vx3'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames = ['rho','vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     density = D.rho.T * unit_density
     nx = density.shape[0]
     vel = np.zeros([nx])
@@ -30,7 +30,7 @@ def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocit
 
     for i in range(ntot - startOffset + 1):
 
-        D = pp.pload(i + startOffset, varNames = ['rho','vx1','vx2','vx3'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(i + startOffset, varNames = ['rho','vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         density = D.rho.T * unit_density
         nx = density.shape[0]
         vel = np.zeros([nx])
@@ -57,7 +57,7 @@ def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocit
         # ax.set_ylim([ymin, ymax])
         ax.set_ylim([minE, maxE])
         ax.set_yscale("log")
-        D = pp.pload(frame_number + startOffset, varNames = ['rho','vx1','vx2','vx3'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(frame_number + startOffset, varNames = ['rho','vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         density = D.rho.T * unit_density
         nx = density.shape[0]
         vel = np.zeros([nx])

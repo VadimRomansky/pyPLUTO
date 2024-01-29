@@ -7,12 +7,12 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax):
+def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
 
-    D = pp.pload(ntot, varNames=['T'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ntot, varNames=['T'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.T.shape))
 
     minT = 0
@@ -39,7 +39,7 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
 
 
     for i in range(ntot + 1):
-        D = pp.pload(i, varNames = ['T'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(i, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
             T = D.T[:, :]
         if (ndim == 3):
@@ -67,7 +67,7 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
         f1.set_figwidth(12)
         ax = f1.add_subplot(111)
 
-        D = pp.pload(frame_number, varNames = ['T'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(frame_number, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
             T = D.T[:, :]
         if (ndim == 3):

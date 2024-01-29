@@ -4,7 +4,7 @@ import pyPLUTO.pload as pp  # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_B_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax):
+def plot_B_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
@@ -13,7 +13,7 @@ def plot_B_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xma
     ax.set_xlim([xmin, xmax])
     ax.set_ylim([ymin, ymax])
 
-    D = pp.pload(ns, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+    D = pp.pload(ns, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Bx1.shape))
 
     minB = 0

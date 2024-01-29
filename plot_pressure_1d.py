@@ -3,13 +3,13 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_pressure_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_pressure_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
 
-    D = pp.pload(ntot, varNames = ['prs'], w_dir = w_dir, datatype='dbl') # Load fluid data.
+    D = pp.pload(ntot, varNames = ['prs'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     ndim = len((D.prs.shape))
 
     minPrs = 0
