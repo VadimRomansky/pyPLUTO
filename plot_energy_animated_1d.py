@@ -26,7 +26,7 @@ def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocit
     xmax = D.x1.max() * unit_length
     dx = (xmax - xmin) / density.shape[0]
     x = dx * range(density.shape[0])
-    startOffset = 0;
+    startOffset = 0
 
     for i in range(ntot - startOffset + 1):
 

@@ -3,12 +3,14 @@ from matplotlib import colors
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_velocity(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_velocity_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
+    ax.set_xlim([xmin, xmax])
+    ax.set_ylim([ymin, ymax])
 
     D = pp.pload(ns, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
     ndim = len((D.vx1.shape))
@@ -52,5 +54,5 @@ def plot_velocity(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('velocity.png')
+    plt.savefig('velocity_window.png')
     plt.close()

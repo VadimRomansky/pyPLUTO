@@ -1,12 +1,11 @@
 from matplotlib import animation
-import matplotlib.colors as colors
 from pylab import *
+import matplotlib.colors as colors
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
-    f1 = plt.figure(figsize=[10,10])
-
+def plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax):
+    f1 = plt.figure(figsize=[10,8])
     P = pr.ploadparticles(0, w_dir, datatype='dbl',ptype='CR') # Loading particle data : particles.00ns_ch00.flt
 
     PVmag = np.sqrt(P.vx1**2 + P.vx2**2 + P.vx3**2) # estimating the velocity magnitude
@@ -22,17 +21,17 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
             if(u > maxU):
                 maxU = u
                 index = i
-    if(maxU <= 0):
-        maxU = 1
+
     #index = 27
     P = pr.ploadparticles(index, w_dir, datatype='dbl', ptype='CR')
     PVmag = np.sqrt(P.vx1 ** 2 + P.vx2 ** 2 + P.vx3 ** 2)
 
     particles = np.zeros((len(P.x1), 2))
     for i in range(len(particles)):
-        particles[i][0] = P.x1[i]*UNIT_LENGTH
-        particles[i][1] = P.x2[i]*UNIT_LENGTH
-
+        particles[i][0] = P.x1[i]*sin(P.x2[i])*cos(P.x3[i])*UNIT_LENGTH
+        particles[i][1] = P.x1[i]*sin(P.x2[i])*sin(P.x3[i])*UNIT_LENGTH
+        
+    ### background magnetic field
     D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
     ndim = len((D.Bx1.shape))
 
@@ -40,15 +39,22 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     maxB = 0
     nx = 0
     ny = 0
+    
+    nx = D.Bx1.shape[0]
 
     if (ndim == 1):
-        print("cant plot 2d image of 1d setup\n")
-        return
+        ny = 10
+    else :
+        ny = D.Bx1.shape[1]
 
-    nx = D.Bx1.shape[0]
-    ny = D.Bx1.shape[1]
     B = np.zeros([ny, nx])
-
+    
+    if (ndim == 1):
+        Bz = D.Bx3.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+        By = D.Bx2.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+        Bx = D.Bx1.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+        for i in range(ny):
+            B[i] = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
     if (ndim == 2):
         Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
         By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
@@ -60,13 +66,22 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
         By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
         Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
         B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    np.flip(B, 0)
+    #np.flip(B, 0)
 
     minB = np.amin(B)
     maxB = np.amax(B)
+    
+    xmin = D.x1.min() * UNIT_LENGTH
+    xmax = D.x1.max() * UNIT_LENGTH
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+        if (ndim == 1):
+            Bz = D.Bx3.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+            By = D.Bx2.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+            Bx = D.Bx1.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+            for i in range(ny):
+                B[i] = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
         if (ndim == 2):
             Bz = D.Bx3[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
             By = D.Bx2[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
@@ -86,15 +101,10 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     print("maxB = ", maxB)
     print("minB = ", minB)
 
-    xmin = D.x1.min() * UNIT_LENGTH
-    xmax = D.x1.max() * UNIT_LENGTH
-    ymin = D.x2.min() * UNIT_LENGTH
-    ymax = D.x2.max() * UNIT_LENGTH
-
 
     def update(frame_number):
         f1.clear()
-        ax = f1.add_subplot(111)
+        ax = f1.add_subplot(projection="polar")
         cax1 = f1.add_axes([0.91, 0.12, 0.03, 0.75])
         cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         P = pr.ploadparticles(frame_number, w_dir, datatype='dbl',
@@ -104,15 +114,24 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
 
         particles = np.zeros((len(P.x1), 2))
         for i in range(len(particles)):
-            particles[i][0] = P.x1[i]*UNIT_LENGTH
-            particles[i][1] = P.x2[i]*UNIT_LENGTH
-            
-        ax.set_xlim([xmin, xmax])
-        ax.set_ylim([ymin, ymax])
+            #particles[i][0] = P.x1[i]*sin(P.x2[i])*cos(P.x3[i])*UNIT_LENGTH
+            #particles[i][1] = P.x1[i]*sin(P.x2[i])*sin(P.x3[i])*UNIT_LENGTH
+            particles[i][1] = P.x1[i]*UNIT_LENGTH
+            particles[i][0] = P.x3[i]
+
+        #ax.set_xlim([-xmax, xmax])
+        #ax.set_ylim([-xmax, xmax])
         ax.set_title('Number of particles = ' + str(len(particles)))
-        im1 = ax.scatter(particles[:,0], particles[:,1], s=10, c=PVmag, cmap=plt.get_cmap('hot'), vmin = 0, vmax = maxU)  # scatter plot
-        plt.colorbar(im1, cax=cax1)  # vertical colorbar for particle data.
+        
+        B = np.zeros([ny, nx])
+        
         D = pp.pload(frame_number, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+        if (ndim == 1):
+            Bz = D.Bx3.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+            By = D.Bx2.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+            Bx = D.Bx1.T[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
+            for i in range(ny):
+                B[i] = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
         if (ndim == 2):
             Bz = D.Bx3[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
             By = D.Bx2[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
@@ -125,18 +144,29 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
             Bx = D.Bx1[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
             B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
 
-        np.flip(B, 0)
-        #V=D.rho.T
-        im2 = ax.imshow(B, origin='upper', norm=colors.Normalize(vmin=minB, vmax=maxB), aspect = 'auto',
-                        extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
-        plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
+        rad = np.linspace(0, xmax, nx)
+        azm = np.linspace(0, 2 * np.pi, ny)
+        r, th = np.meshgrid(rad, azm)
+        im2 = ax.pcolormesh(th, r, B)
+        plt.colorbar(im2, cax=cax2, orientation='horizontal', norm=colors.Normalize(vmin=minB, vmax=maxB))
 
+        #im1 = ax.scatter(particles[:,0], particles[:,1], s=10, c=PVmag, cmap=colors.Normalize(vmin=0, vmax=maxU))  # scatter plot
+        im1 = ax.scatter(particles[:,0], particles[:,1], s=10, c=PVmag, cmap=plt.get_cmap('hot'), vmin = 0, vmax = maxU)  # scatter plot
+        plt.colorbar(im1, cax=cax1)  # vertical colorbar for particle data.
+            
+
+            
+        #plt.subplot(projection="polar")
+
+        
+        
+        
         return im1
 
     anim = FuncAnimation(f1, update, interval=10, frames = ntot+1)
 
     #plt.show()
 
-    f = r"particles.gif"
+    f = r"./particles_spher.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)

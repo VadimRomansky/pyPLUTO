@@ -7,16 +7,16 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
 
-    D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
-    ndim = len((D.prs.shape))
+    D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype='dbl')  # Load fluid data.
+    ndim = len((D.rho.shape))
 
-    minPrs = 0
-    maxPrs = 0
+    minRho = 0
+    maxRho = 0
     nx = 0
     ny = 0
 
@@ -24,35 +24,35 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.prs.shape[0]
-    ny = D.prs.shape[1]
-    Prs = np.zeros([ny, nx])
+    nx = D.rho.shape[0]
+    ny = D.rho.shape[1]
+    Rho = np.zeros([ny, nx])
 
     if (ndim == 2):
-        Prs = D.prs[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        Rho = D.rho[:, :] * UNIT_DENSITY
     if (ndim == 3):
-        zpoint = math.floor(D.prs.T.shape[0] / 2)
-        Prs = D.prs[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        zpoint = math.floor(D.rho.T.shape[0] / 2)
+        Rho = D.rho[zpoint, :, :] * UNIT_DENSITY
 
-    minPrs = np.amin(Prs)
-    maxPrs = np.amax(Prs)
+    minRho = np.amin(Rho)
+    maxRho = np.amax(Rho)
 
 
     for i in range(ntot + 1):
-        D = pp.pload(i, varNames = ['prs'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(i, varNames = ['rho'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
         if (ndim == 2):
-            Prs = D.prs[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            Rho = D.rho[:, :] * UNIT_DENSITY
         if (ndim == 3):
-            zpoint = math.floor(D.prs.T.shape[0] / 2)
-            Prs = D.prs[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        if(np.amin(Prs) < minPrs):
-            minPrs = np.amin(Prs)
-        if(np.amax(Prs) > maxPrs):
-            maxPrs = np.amax(Prs)
+            zpoint = math.floor(D.rho.T.shape[0] / 2)
+            Rho = D.rho[zpoint, :, :] * UNIT_DENSITY
+        if(np.amin(Rho) < minRho):
+            minRho = np.amin(Rho)
+        if(np.amax(Rho) > maxRho):
+            maxRho = np.amax(Rho)
 
 
-    print("maxRho = ", maxPrs)
-    print("minRho = ", minPrs)
+    print("maxRho = ", maxRho)
+    print("minRho = ", minRho)
 
     xmin = D.x1.min() * UNIT_LENGTH
     xmax = D.x1.max() * UNIT_LENGTH
@@ -67,16 +67,16 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         f1.set_figwidth(12)
         ax = f1.add_subplot(111)
 
-        D = pp.pload(frame_number, varNames = ['prs'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
+        D = pp.pload(frame_number, varNames = ['rho'], w_dir = w_dir, datatype='dbl')  # Load fluid data.
         if (ndim == 2):
-            Prs = D.prs[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            Rho = D.rho[:, :] * UNIT_DENSITY
         if (ndim == 3):
-            zpoint = math.floor(D.prs.shape[2] / 2)
-            Prs = D.prs[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            zpoint = math.floor(D.rho.shape[2] / 2)
+            Rho = D.rho[zpoint, :, :] * UNIT_DENSITY
 
-        np.flip(Prs, 0)
+        np.flip(Rho, 0)
 
-        im2 = ax.imshow(Prs, origin='upper', norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs), aspect = 'auto',
+        im2 = ax.imshow(Rho, origin='upper', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect = 'auto',
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
@@ -99,6 +99,6 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"pressure.gif"
+    f = r"density.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)

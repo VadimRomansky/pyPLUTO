@@ -7,7 +7,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY):
+def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
@@ -54,10 +54,10 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     print("maxRho = ", maxPrs)
     print("minRho = ", minPrs)
 
-    xmin = D.x1.min() * UNIT_LENGTH
-    xmax = D.x1.max() * UNIT_LENGTH
-    ymin = D.x2.min() * UNIT_LENGTH
-    ymax = D.x2.max() * UNIT_LENGTH
+    xmin1 = D.x1.min() * UNIT_LENGTH
+    xmax1 = D.x1.max() * UNIT_LENGTH
+    ymin1 = D.x2.min() * UNIT_LENGTH
+    ymax1 = D.x2.max() * UNIT_LENGTH
 
 
     def update(frame_number):
@@ -77,7 +77,9 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         np.flip(Prs, 0)
 
         im2 = ax.imshow(Prs, origin='upper', norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs), aspect = 'auto',
-                        extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
+                        extent=[xmin1, xmax1, ymin1, ymax1])  # plotting fluid data.
+        ax.set_xlim([xmin, xmax])
+        ax.set_ylim([ymin, ymax])
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
@@ -99,6 +101,6 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"pressure.gif"
+    f = r"pressure_window.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
