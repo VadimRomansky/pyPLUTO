@@ -78,7 +78,7 @@ UNIT_DENSITY=1.672E-24;
 UNIT_LENGTH=3.086E17;
 UNIT_VELOCITY=2.998E10;
 datatype = 'dbl'
-ntot = 50
+ntot = 80
 
 plt.rcParams['image.cmap'] = 'jet'
 

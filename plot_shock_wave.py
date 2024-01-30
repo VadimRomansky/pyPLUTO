@@ -41,7 +41,7 @@ def plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     Xapprox = np.zeros([ntot])
     Xapprox[ntot-1] = X[ntot-1]
     for i in range(ntot-1):
-        Xapprox[i] = Xapprox[ntot-1]*(i*1.0/ntot)
+        Xapprox[i] = Xapprox[ntot-1]*(i*1.0/(ntot-1))**(4.0/5.0)
 
     ax.set_xlabel(r'$t$', fontsize=40, fontweight='bold')
     ax.set_ylabel(r'$X_{sh}$', fontsize=40,fontweight='bold')
