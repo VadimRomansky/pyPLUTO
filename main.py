@@ -42,6 +42,7 @@ from plot_pressure_animated import plot_pressure_animated
 from plot_pressure_animated_1d import plot_pressure_animated_1d
 from plot_pressure_animated_window import plot_pressure_animated_window
 from plot_pressure_window import plot_pressure_window
+from plot_shock_wave import plot_shock_wave
 
 from plot_temperature import plot_temperature
 from plot_temperature_1d import plot_temperature_1d
@@ -70,14 +71,14 @@ from plot_profile_animated import plot_profile_animated
 from plot_profile_animated_window import plot_profile_animated_window
 from plot_profile_window import plot_profile_window
 
-w_dir='../../output1/'
+w_dir='../../output/'
 #w_dir='../../output_2_winds_MWR1_1_4_4/'
 #w_dir='../../output_snr_rel_M0.1_MWR4_4/'
 UNIT_DENSITY=1.672E-24;
 UNIT_LENGTH=3.086E17;
 UNIT_VELOCITY=2.998E10;
 datatype = 'dbl'
-ntot = 0
+ntot = 50
 
 plt.rcParams['image.cmap'] = 'jet'
 
@@ -146,7 +147,7 @@ plt.rcParams['image.cmap'] = 'jet'
 #plot_velocity_z(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_z_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -1E16, 1E16, -1E16, 1E16, datatype)
 
-plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+#plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_1d_series(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
@@ -163,6 +164,7 @@ plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype
 #plot_distribution(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_escaped_distribution(150, 2500, w_dir, datatype)
+plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 
 ######### particles

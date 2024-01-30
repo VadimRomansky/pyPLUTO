@@ -100,7 +100,7 @@ def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
         ax.set_xlabel(r'x', fontsize=18)
         ax.set_ylabel(r'v/c', fontsize=18)
-        ax.set_uscale("log")
+        ax.set_yscale("log")
         ax.minorticks_on()
 
         im2 = plt.plot(x, V)  # plotting fluid data.
