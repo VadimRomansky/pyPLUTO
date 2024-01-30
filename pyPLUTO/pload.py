@@ -512,15 +512,18 @@ class pload(object):
 			h5d = self.DataScanHDF5(fp,myvars,self.level)
 			ddict.update(h5d)
 		else:
-			for i in range(len(myvars)):
-				if myvars[i] == 'bx1s':
-					ddict.update({myvars[i]: self.DataScan(fp, n1, n2, n3, endian,dtype, off=n2*n3)})
-				elif myvars[i] == 'bx2s':
-					ddict.update({myvars[i]: self.DataScan(fp, n1, n2, n3, endian,dtype, off=n3*n1)})
-				elif myvars[i] == 'bx3s':
-					ddict.update({myvars[i]: self.DataScan(fp, n1, n2, n3, endian,dtype, off=n1*n2)})
+			for i in range(len(self.vars)):
+				if self.vars[i] == 'bx1s':
+					ddict.update({self.vars[i]: self.DataScan(fp, n1, n2, n3, endian,dtype, off=n2*n3)})
+				elif self.vars[i] == 'bx2s':
+					ddict.update({self.vars[i]: self.DataScan(fp, n1, n2, n3, endian,dtype, off=n3*n1)})
+				elif self.vars[i] == 'bx3s':
+					ddict.update({self.vars[i]: self.DataScan(fp, n1, n2, n3, endian,dtype, off=n1*n2)})
 				else:
-					ddict.update({myvars[i]: self.DataScan(fp, n1, n2, n3, endian, dtype)})
+					tempdata = self.DataScan(fp, n1, n2, n3, endian, dtype)
+					for j in range(len(myvars)):
+						if(self.vars[i] == myvars[j]):
+							ddict.update({myvars[j]: tempdata})
 		fp.close()
 
 	def ReadMultipleFiles(self, nstr, dataext, myvars, n1, n2, n3, endian,
