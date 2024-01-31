@@ -47,15 +47,15 @@ def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
-            Vz = D.vx3[:, :] * UNIT_VELOCITY / c
-            Vy = D.vx2[:, :] * UNIT_VELOCITY / c
-            Vx = D.vx1[:, :] * UNIT_VELOCITY / c
+            Vz = D.vx3.T[:, :] * UNIT_VELOCITY / c
+            Vy = D.vx2.T[:, :] * UNIT_VELOCITY / c
+            Vx = D.vx1.T[:, :] * UNIT_VELOCITY / c
             V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
         if (ndim == 3):
             zpoint = math.floor(D.vx1.T.shape[0] / 2)
-            Vz = D.vx3[zpoint, :, :] * UNIT_VELOCITY / c
-            Vy = D.vx2[zpoint, :, :] * UNIT_VELOCITY / c
-            Vx = D.vx1[zpoint, :, :] * UNIT_VELOCITY / c
+            Vz = D.vx3.T[zpoint, :, :] * UNIT_VELOCITY / c
+            Vy = D.vx2.T[zpoint, :, :] * UNIT_VELOCITY / c
+            Vx = D.vx1.T[zpoint, :, :] * UNIT_VELOCITY / c
             V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
         if(np.amin(V) < minV):
             minV = np.amin(V)
@@ -81,15 +81,15 @@ def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
         D = pp.pload(frame_number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
-            Vz = D.vx3[:, :] * UNIT_VELOCITY / c
-            Vy = D.vx2[:, :] * UNIT_VELOCITY / c
-            Vx = D.vx1[:, :] * UNIT_VELOCITY / c
+            Vz = D.vx3.T[:, :] * UNIT_VELOCITY / c
+            Vy = D.vx2.T[:, :] * UNIT_VELOCITY / c
+            Vx = D.vx1.T[:, :] * UNIT_VELOCITY / c
             V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
         if (ndim == 3):
             zpoint = math.floor(D.vx1.shape[2] / 2)
-            Vz = D.vx3[zpoint, :, :] * UNIT_VELOCITY / c
-            Vy = D.vx2[zpoint, :, :] * UNIT_VELOCITY / c
-            Vx = D.vx1[zpoint, :, :] * UNIT_VELOCITY / c
+            Vz = D.vx3.T[zpoint, :, :] * UNIT_VELOCITY / c
+            Vy = D.vx2.T[zpoint, :, :] * UNIT_VELOCITY / c
+            Vx = D.vx1.T[zpoint, :, :] * UNIT_VELOCITY / c
             V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
 
         np.flip(V, 0)

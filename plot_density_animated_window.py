@@ -29,10 +29,10 @@ def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
     Rho = np.zeros([ny, nx])
 
     if (ndim == 2):
-        Rho = D.rho[:, :] * UNIT_DENSITY
+        Rho = D.rho.T[:, :] * UNIT_DENSITY
     if (ndim == 3):
         zpoint = math.floor(D.rho.T.shape[0] / 2)
-        Rho = D.rho[zpoint, :, :] * UNIT_DENSITY
+        Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
 
     minRho = np.amin(Rho)
     maxRho = np.amax(Rho)
@@ -41,10 +41,10 @@ def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
-            Rho = D.rho[:, :] * UNIT_DENSITY
+            Rho = D.rho.T[:, :] * UNIT_DENSITY
         if (ndim == 3):
             zpoint = math.floor(D.rho.T.shape[0] / 2)
-            Rho = D.rho[zpoint, :, :] * UNIT_DENSITY
+            Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
         if(np.amin(Rho) < minRho):
             minRho = np.amin(Rho)
         if(np.amax(Rho) > maxRho):

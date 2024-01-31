@@ -29,10 +29,10 @@ def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
     Prs = np.zeros([ny, nx])
 
     if (ndim == 2):
-        Prs = D.prs[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
     if (ndim == 3):
         zpoint = math.floor(D.prs.T.shape[0] / 2)
-        Prs = D.prs[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
 
     minPrs = np.amin(Prs)
     maxPrs = np.amax(Prs)
@@ -41,10 +41,10 @@ def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['prs'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
-            Prs = D.prs[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if (ndim == 3):
             zpoint = math.floor(D.prs.T.shape[0] / 2)
-            Prs = D.prs[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if(np.amin(Prs) < minPrs):
             minPrs = np.amin(Prs)
         if(np.amax(Prs) > maxPrs):
@@ -69,10 +69,10 @@ def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
 
         D = pp.pload(frame_number, varNames = ['prs'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
-            Prs = D.prs[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if (ndim == 3):
             zpoint = math.floor(D.prs.shape[2] / 2)
-            Prs = D.prs[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
 
         np.flip(Prs, 0)
 
