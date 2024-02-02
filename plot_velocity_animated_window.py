@@ -9,7 +9,7 @@ from matplotlib.animation import FuncAnimation
 
 def plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
     c = 2.998E10
-    f1 = plt.figure(figsize=[8,12])
+    f1 = plt.figure(figsize=[8,6])
 
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx1.shape))
@@ -76,7 +76,7 @@ def plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         #f1 = plt.figure(figsize=[6, 6])
         f1.clear()
         f1.set_figheight(8)
-        f1.set_figwidth(12)
+        f1.set_figwidth(6)
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.

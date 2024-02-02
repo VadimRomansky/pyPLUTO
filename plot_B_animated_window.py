@@ -8,7 +8,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from matplotlib.animation import FuncAnimation
 
 def plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
-    f1 = plt.figure(figsize=[8,12])
+    f1 = plt.figure(figsize=[8,6])
 
     D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Bx1.shape))
@@ -74,7 +74,7 @@ def plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         #f1 = plt.figure(figsize=[6, 6])
         f1.clear()
         f1.set_figheight(8)
-        f1.set_figwidth(12)
+        f1.set_figwidth(6)
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.

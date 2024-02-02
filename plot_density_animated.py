@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams['text.usetex'] = True
-    f1 = plt.figure(figsize=[8,12])
+    f1 = plt.figure(figsize=[8,6])
 
     D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.rho.shape))
@@ -64,7 +64,7 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
         #f1 = plt.figure(figsize=[6, 6])
         f1.clear()
         f1.set_figheight(8)
-        f1.set_figwidth(12)
+        f1.set_figwidth(6)
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
