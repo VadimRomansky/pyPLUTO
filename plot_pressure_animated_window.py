@@ -9,7 +9,7 @@ from matplotlib.animation import FuncAnimation
 
 def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
     plt.rcParams.update({'font.size': 15})
-    plt.rcParams['text.usetex'] = True
+    #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,6])
 
     D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.

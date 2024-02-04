@@ -4,7 +4,7 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 
-def plot_B_spher(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
+def plot_B_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
@@ -51,13 +51,15 @@ def plot_B_spher(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
     minB = 0.9*amin(B)
     maxB = 1.1*amax(B)
 
-    rad = np.linspace(0, xmax, nx)
-    azm = np.linspace(0, 2 * np.pi, ny)
+    Nfraction = 1
+    rad = np.linspace(0, xmax/Nfraction, int(nx/Nfraction))
+    azm = np.linspace(-np.pi/2, np.pi/2, ny)
     r, th = np.meshgrid(rad, azm)
             
     plt.subplot(projection="polar")
 
-    im2 = plt.pcolormesh(th, r, B, norm = colors.Normalize(vmin = minB, vmax = maxB))
+    B1 = B[:,range(int(nx/Nfraction))]
+    im2 = plt.pcolormesh(th, r, B1, norm = colors.Normalize(vmin = minB, vmax = maxB))
     cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
     #im2.set_clim(minB, maxB)
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
@@ -65,5 +67,5 @@ def plot_B_spher(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('B_spher.png')
+    plt.savefig('B_rtheta.png')
     plt.close()

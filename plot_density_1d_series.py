@@ -5,7 +5,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from matplotlib.animation import FuncAnimation
 def plot_density_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     plt.rcParams.update({'font.size': 15})
-    plt.rcParams['text.usetex'] = True
+    #plt.rcParams['text.usetex'] = True
 
     D = pp.pload(number, varNames = ['rho'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     ndim = len((D.rho.shape))

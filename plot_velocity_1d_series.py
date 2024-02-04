@@ -6,7 +6,7 @@ from matplotlib.animation import FuncAnimation
 def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
-    plt.rcParams['text.usetex'] = True
+    #plt.rcParams['text.usetex'] = True
 
     D = pp.pload(number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     ndim = len((D.vx1.shape))

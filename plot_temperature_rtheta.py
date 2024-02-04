@@ -3,13 +3,17 @@ from matplotlib import colors
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_temperature(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+
+def plot_temperature_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
 
     D = pp.pload(ns, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
+    xmin = D.x1.min() * UNIT_LENGTH
+    xmax = D.x1.max() * UNIT_LENGTH
+    
     ndim = len((D.T.shape))
 
     minT = 0
@@ -17,33 +21,43 @@ def plot_temperature(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, dataty
     nx = 0
     ny = 0
 
-    if(ndim == 1):
-        print("cant plot 2d image of 1d setup\n")
-        return
-
     nx = D.T.shape[0]
-    ny = D.T.shape[1]
-    T = np.zeros([ny,nx])
 
-    if(ndim == 2):
+    if (ndim == 1):
+        ny = 10
+    else :
+        ny = D.T.shape[1]
+
+    T = np.zeros([ny, nx])
+    
+    if (ndim == 1):
+        T1 = D.T.T[:]
+        for i in range(ny):
+            T[i] = T1
+    if (ndim == 2):
         T = D.T.T[:, :]
-    if(ndim == 3):
+    if (ndim == 3):
         zpoint = math.floor(D.T.T.shape[0] / 2)
         T = D.T.T[zpoint, :, :]
-    np.flip(T,0)
 
-    minT = np.amin(T)
-    maxT = np.amax(T)
+    minT = 0.9*amin(T)
+    maxT = 1.1*amax(T)
 
+    Nfraction = 1
+    rad = np.linspace(0, xmax/Nfraction, int(nx/Nfraction))
+    azm = np.linspace(-np.pi/2, np.pi/2, ny)
+    r, th = np.meshgrid(rad, azm)
+            
+    plt.subplot(projection="polar")
 
-
-    im2 = ax.imshow(T, origin='upper', norm = colors.LogNorm(vmin = minT, vmax = maxT), aspect='auto',extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+    T2 = T[:,range(int(nx/Nfraction))]
+    im2 = plt.pcolormesh(th, r, T2, norm = colors.Normalize(vmin = minT, vmax = maxT))
     cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
-
+    #im2.set_clim(minT, maxT)
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
     ax.set_xlabel(r'X-axis', fontsize=40,fontweight='bold')
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('temperature.png')
+    plt.savefig('temperature_rtheta.png')
     plt.close()

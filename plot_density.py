@@ -5,7 +5,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 def plot_density(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     plt.rcParams.update({'font.size': 15})
-    plt.rcParams['text.usetex'] = True
+    #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
 

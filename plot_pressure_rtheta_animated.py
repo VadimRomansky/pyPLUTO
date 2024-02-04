@@ -7,10 +7,8 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
-    plt.rcParams.update({'font.size': 15})
-    #plt.rcParams['text.usetex'] = True
-    f1 = plt.figure(figsize=[8,6])
+def plot_pressure_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+    f1 = plt.figure(figsize=[6,8])
 
     D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.prs.shape))
@@ -21,38 +19,47 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     ny = 0
 
     if (ndim == 1):
-        print("cant plot 2d image of 1d setup\n")
-        return
+        ny = 10
+    else:
+        ny = D.prs.shape[1]
 
     nx = D.prs.shape[0]
-    ny = D.prs.shape[1]
-    Prs = np.zeros([ny, nx])
+    prs = np.zeros([ny, nx])
 
+    if (ndim == 1):
+        prs1 = D.prs.T[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        for i in range(ny):
+            prs[i] = prs1
     if (ndim == 2):
-        Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
     if (ndim == 3):
         zpoint = math.floor(D.prs.T.shape[0] / 2)
-        Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+    np.flip(prs, 0)
 
-    minPrs = np.amin(Prs)
-    maxPrs = np.amax(Prs)
+    minPrs = np.amin(prs)
+    maxPrs = np.amax(prs)
 
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['prs'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
+        if (ndim == 1):
+            prs1 = D.prs.T[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            for i in range(ny):
+                prs[i] = prs1
         if (ndim == 2):
-            Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if (ndim == 3):
             zpoint = math.floor(D.prs.T.shape[0] / 2)
-            Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        if(np.amin(Prs) < minPrs):
-            minPrs = np.amin(Prs)
-        if(np.amax(Prs) > maxPrs):
-            maxPrs = np.amax(Prs)
+            prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        if(np.amin(prs) < minPrs):
+            minPrs = np.amin(prs)
+        if(np.amax(prs) > maxPrs):
+            maxPrs = np.amax(prs)
 
 
-    print("maxRho = ", maxPrs)
-    print("minRho = ", minPrs)
+    print("maxPrs = ", maxPrs)
+    print("minPrs = ", minPrs)
 
     xmin = D.x1.min() * UNIT_LENGTH
     xmax = D.x1.max() * UNIT_LENGTH
@@ -65,25 +72,35 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         f1.clear()
         f1.set_figheight(8)
         f1.set_figwidth(6)
-        ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['prs'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
+        if (ndim == 1):
+            prs1 = D.prs.T[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            for i in range(ny):
+                prs[i] = prs1
         if (ndim == 2):
-            Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if (ndim == 3):
-            zpoint = math.floor(D.prs.shape[2] / 2)
-            Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            zpoint = math.floor(D.prs.T.shape[0] / 2)
+            prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
 
-        np.flip(Prs, 0)
+        np.flip(prs, 0)
 
-        im2 = ax.imshow(Prs, origin='upper', norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs), aspect = 'auto',
-                        extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
+        Nfraction = 1
+        rad = np.linspace(0, xmax/Nfraction, int(nx/Nfraction))
+        azm = np.linspace(-np.pi / 2, np.pi / 2, ny)
+        r, th = np.meshgrid(rad, azm)
+
+        ax = plt.subplot(projection="polar")
+        prs2=prs[:,range(int(nx/Nfraction))]
+        im2 = plt.pcolormesh(th, r, prs2, norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs))
+
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
         plt.colorbar(im2, orientation='horizontal')  # vertical colorbar for fluid data.
-        ax.set_xlabel(r'X-axis', fontsize=14)
-        ax.set_ylabel(r'Y-axis', fontsize=14)
+        ax.set_xlabel(r'R-axis', fontsize=14)
+        ax.set_ylabel(r'Z-axis', fontsize=14)
         ax.minorticks_on()
         # plt.axis([0.0,1.0,0.0,1.0])
         #plt.savefig(f'B_3d_slice2d_{frame_number}.png')
@@ -99,6 +116,6 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"pressure.gif"
+    f = r"pressure_rtheta.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
