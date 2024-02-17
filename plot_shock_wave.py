@@ -38,17 +38,34 @@ def plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
                 X[i] = x[nx-11-j];
                 break;
 
+    t=range(ntot)*0.1*UNIT_LENGTH/UNIT_VELOCITY
+
     Xapprox = np.zeros([ntot])
     Xapprox[ntot-1] = X[ntot-1]
     for i in range(ntot-1):
-        Xapprox[i] = Xapprox[ntot-1]*(i*1.0/(ntot-1))**(4.0/5.0)
+        Xapprox[i] = Xapprox[ntot-1]*(i*1.0/(ntot-1))**(3.0/5.0)
 
     ax.set_xlabel(r'$t$', fontsize=40, fontweight='bold')
     ax.set_ylabel(r'$X_{sh}$', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.plot(range(ntot), X, 'r-')
-    plt.plot(range(ntot), Xapprox, 'b-')
+    plt.plot(t, X, 'r-')
+    plt.plot(t, X, 'b-')
 
     #plt.show()
     plt.savefig('shock_x.png')
+
+    f2 = plt.figure(figsize=[10,8])
+    V = range(ntot)
+    V[0] = 0;
+    for i in range(ntot-1):
+        V[i+1] = (X[i+1] - X[i])/(t[i+1] - t[i])
+    ax2 = f2.add_subplot(111)
+    ax2.set_xlabel(r'$t$', fontsize=40, fontweight='bold')
+    ax2.set_ylabel(r'$V_{sh}$', fontsize=40,fontweight='bold')
+    ax2.minorticks_on()
+    plt.plot(t, V, 'r-')
+
+    plt.savefig('v_shock_x.png')
+
+
