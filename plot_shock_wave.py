@@ -38,7 +38,9 @@ def plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
                 X[i] = x[nx-11-j];
                 break;
 
-    t=range(ntot)*0.1*UNIT_LENGTH/UNIT_VELOCITY
+    t=np.zeros([ntot]);
+    for i in range(ntot):
+        t[i] = i*0.1*UNIT_LENGTH/UNIT_VELOCITY
 
     Xapprox = np.zeros([ntot])
     Xapprox[ntot-1] = X[ntot-1]
@@ -56,7 +58,7 @@ def plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     plt.savefig('shock_x.png')
 
     f2 = plt.figure(figsize=[10,8])
-    V = range(ntot)
+    V = np.zeros([ntot])
     V[0] = 0;
     for i in range(ntot-1):
         V[i+1] = (X[i+1] - X[i])/(t[i+1] - t[i])
