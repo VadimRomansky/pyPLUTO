@@ -7,7 +7,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,6])
@@ -24,15 +24,42 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.prs.shape[0]
-    ny = D.prs.shape[1]
+    if(ndim == 2):
+        nx = D.prs.shape[0]
+        ny = D.prs.shape[1]
+    elif(ndim == 3):
+        if(excl_axis == 3):
+            nx = D.prs.shape[0]
+            ny = D.prs.shape[1]
+        elif(excl_axis == 2):
+            nx = D.prs.shape[0]
+            ny = D.prs.shape[2]
+        elif(excl_axis == 1):
+            nx = D.prs.shape[1]
+            ny = D.prs.shape[2]
+        else:
+            print("wrong excluded axis\n")
+            return
+    else:
+        print("wrong number of dims\n")
+        return
     Prs = np.zeros([ny, nx])
 
     if (ndim == 2):
         Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
     if (ndim == 3):
-        zpoint = math.floor(D.prs.T.shape[0] / 2)
-        Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        if (excl_axis == 3):
+            zpoint = math.floor(D.prs.T.shape[0] *point)
+            Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY
+        elif (excl_axis == 2):
+            zpoint = math.floor(D.prs.T.shape[1] *point)
+            Prs = D.prs.T[:, zpoint, :] * UNIT_DENSITY
+        elif (excl_axis == 1):
+            zpoint = math.floor(D.prs.T.shape[2] *point)
+            Prs = D.prs.T[:, :, zpoint] * UNIT_DENSITY
+        else:
+            print("wrong excluded axis\n")
+            return
 
     minPrs = np.amin(Prs)
     maxPrs = np.amax(Prs)
@@ -43,8 +70,18 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         if (ndim == 2):
             Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if (ndim == 3):
-            zpoint = math.floor(D.prs.T.shape[0] / 2)
-            Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            if (excl_axis == 3):
+                zpoint = math.floor(D.prs.T.shape[0] *point)
+                Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY
+            elif (excl_axis == 2):
+                zpoint = math.floor(D.prs.T.shape[1] *point)
+                Prs = D.prs.T[:, zpoint, :] * UNIT_DENSITY
+            elif (excl_axis == 1):
+                zpoint = math.floor(D.prs.T.shape[2] *point)
+                Prs = D.prs.T[:, :, zpoint] * UNIT_DENSITY
+            else:
+                print("wrong excluded axis\n")
+                return
         if(np.amin(Prs) < minPrs):
             minPrs = np.amin(Prs)
         if(np.amax(Prs) > maxPrs):
@@ -71,8 +108,18 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         if (ndim == 2):
             Prs = D.prs.T[:, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
         if (ndim == 3):
-            zpoint = math.floor(D.prs.shape[2] / 2)
-            Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+            if (excl_axis == 3):
+                zpoint = math.floor(D.prs.T.shape[0] *point)
+                Prs = D.prs.T[zpoint, :, :] * UNIT_DENSITY
+            elif (excl_axis == 2):
+                zpoint = math.floor(D.prs.T.shape[1] *point)
+                Prs = D.prs.T[:, zpoint, :] * UNIT_DENSITY
+            elif (excl_axis == 1):
+                zpoint = math.floor(D.prs.T.shape[2] *point)
+                Prs = D.prs.T[:, :, zpoint] * UNIT_DENSITY
+            else:
+                print("wrong excluded axis\n")
+                return
 
         np.flip(Prs, 0)
 

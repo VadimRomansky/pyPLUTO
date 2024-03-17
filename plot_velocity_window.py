@@ -3,7 +3,7 @@ from matplotlib import colors
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_velocity_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
+def plot_velocity_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -24,8 +24,25 @@ def plot_velocity_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xm
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.vx1.shape[0]
-    ny = D.vx1.shape[1]
+    if(ndim == 2):
+        nx = D.vx1.shape[0]
+        ny = D.vx1.shape[1]
+    elif(ndim == 3):
+        if(excl_axis == 3):
+            nx = D.vx1.shape[0]
+            ny = D.vx1.shape[1]
+        elif(excl_axis == 2):
+            nx = D.vx1.shape[0]
+            ny = D.vx1.shape[2]
+        elif(excl_axis == 1):
+            nx = D.vx1.shape[1]
+            ny = D.vx1.shape[2]
+        else:
+            print("wrong excluded axis\n")
+            return
+    else:
+        print("wrong number of dims\n")
+        return
     V = np.zeros([ny,nx])
 
     if(ndim == 2):
@@ -34,11 +51,27 @@ def plot_velocity_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xm
         Vx = D.vx1.T[:, :] * UNIT_VELOCITY / c
         V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
     if(ndim == 3):
-        zpoint = math.floor(D.vx1.T.shape[0] / 2)
-        Vz = D.vx3.T[zpoint, :, :] * UNIT_VELOCITY / c
-        Vy = D.vx2.T[zpoint, :, :] * UNIT_VELOCITY / c
-        Vx = D.vx1.T[zpoint, :, :] * UNIT_VELOCITY / c
-        V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
+        if(excl_axis == 3):
+            zpoint = math.floor(D.vx1.T.shape[0]* point)
+            Vz = D.vx3.T[zpoint, :, :] * UNIT_VELOCITY / c
+            Vy = D.vx2.T[zpoint, :, :] * UNIT_VELOCITY / c
+            Vx = D.vx1.T[zpoint, :, :] * UNIT_VELOCITY / c
+            V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
+        elif(excl_axis == 2):
+            zpoint = math.floor(D.vx1.T.shape[1]* point)
+            Vz = D.vx3.T[:,zpoint, :] * UNIT_VELOCITY / c
+            Vy = D.vx2.T[:,zpoint, :] * UNIT_VELOCITY / c
+            Vx = D.vx1.T[:,zpoint, :] * UNIT_VELOCITY / c
+            V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
+        elif(excl_axis == 1):
+            zpoint = math.floor(D.vx1.T.shape[2]* point)
+            Vz = D.vx3.T[:,:,zpoint] * UNIT_VELOCITY / c
+            Vy = D.vx2.T[:,:,zpoint] * UNIT_VELOCITY / c
+            Vx = D.vx1.T[:,:,zpoint] * UNIT_VELOCITY / c
+            V = np.sqrt(np.square(Vx) + np.square(Vy) + np.square(Vz))
+        else:
+            print("wrong excluded axis\n")
+            return
     np.flip(V,0)
 
     minV = np.amin(V)

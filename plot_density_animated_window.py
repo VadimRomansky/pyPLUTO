@@ -7,7 +7,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
+def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,6])
@@ -24,15 +24,42 @@ def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.rho.shape[0]
-    ny = D.rho.shape[1]
+    if(ndim == 2):
+        nx = D.rho.shape[0]
+        ny = D.rho.shape[1]
+    elif(ndim == 3):
+        if(excl_axis == 3):
+            nx = D.rho.shape[0]
+            ny = D.rho.shape[1]
+        elif(excl_axis == 2):
+            nx = D.rho.shape[0]
+            ny = D.rho.shape[2]
+        elif(excl_axis == 1):
+            nx = D.rho.shape[1]
+            ny = D.rho.shape[2]
+        else:
+            print("wrong excluded axis\n")
+            return
+    else:
+        print("wrong number of dims\n")
+        return
     Rho = np.zeros([ny, nx])
 
     if (ndim == 2):
         Rho = D.rho.T[:, :] * UNIT_DENSITY
     if (ndim == 3):
-        zpoint = math.floor(D.rho.T.shape[0] / 2)
-        Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
+        if(excl_axis == 3):
+            zpoint = math.floor(D.rho.T.shape[0] *point)
+            Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
+        elif(excl_axis == 2):
+            zpoint = math.floor(D.rho.T.shape[1] *point)
+            Rho = D.rho.T[:, zpoint, :] * UNIT_DENSITY
+        elif(excl_axis == 1):
+            zpoint = math.floor(D.rho.T.shape[2] *point)
+            Rho = D.rho.T[:,:,zpoint] * UNIT_DENSITY
+        else:
+            print("wrong excluded axis\n")
+            return
 
     minRho = np.amin(Rho)
     maxRho = np.amax(Rho)
@@ -43,8 +70,18 @@ def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         if (ndim == 2):
             Rho = D.rho.T[:, :] * UNIT_DENSITY
         if (ndim == 3):
-            zpoint = math.floor(D.rho.T.shape[0] / 2)
-            Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
+            if (excl_axis == 3):
+                zpoint = math.floor(D.rho.T.shape[0] *point)
+                Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
+            elif (excl_axis == 2):
+                zpoint = math.floor(D.rho.T.shape[1] *point)
+                Rho = D.rho.T[:, zpoint, :] * UNIT_DENSITY
+            elif (excl_axis == 1):
+                zpoint = math.floor(D.rho.T.shape[2] *point)
+                Rho = D.rho.T[:, :, zpoint] * UNIT_DENSITY
+            else:
+                print("wrong excluded axis\n")
+                return
         if(np.amin(Rho) < minRho):
             minRho = np.amin(Rho)
         if(np.amax(Rho) > maxRho):
@@ -71,8 +108,18 @@ def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         if (ndim == 2):
             Rho = D.rho[:, :] * UNIT_DENSITY
         if (ndim == 3):
-            zpoint = math.floor(D.rho.shape[2] / 2)
-            Rho = D.rho[zpoint, :, :] * UNIT_DENSITY
+            if (excl_axis == 3):
+                zpoint = math.floor(D.rho.T.shape[0] * 0.5)
+                Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
+            elif (excl_axis == 2):
+                zpoint = math.floor(D.rho.T.shape[1] * 0.5)
+                Rho = D.rho.T[:, zpoint, :] * UNIT_DENSITY
+            elif (excl_axis == 1):
+                zpoint = math.floor(D.rho.T.shape[2] * 0.5)
+                Rho = D.rho.T[:, :, zpoint] * UNIT_DENSITY
+            else:
+                print("wrong excluded axis\n")
+                return
 
         np.flip(Rho, 0)
 

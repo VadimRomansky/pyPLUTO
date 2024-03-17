@@ -7,7 +7,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
+def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
@@ -24,15 +24,42 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.T.shape[0]
-    ny = D.T.shape[1]
+    if(ndim == 2):
+        nx = D.T.shape[0]
+        ny = D.T.shape[1]
+    elif(ndim == 3):
+        if(excl_axis == 3):
+            nx = D.T.shape[0]
+            ny = D.T.shape[1]
+        elif(excl_axis == 2):
+            nx = D.T.shape[0]
+            ny = D.T.shape[2]
+        elif(excl_axis == 1):
+            nx = D.T.shape[1]
+            ny = D.T.shape[2]
+        else:
+            print("wrong excluded axis\n")
+            return
+    else:
+        print("wrong number of dims\n")
+        return
     T = np.zeros([ny, nx])
 
     if (ndim == 2):
         T = D.T.T[:, :]
     if (ndim == 3):
-        zpoint = math.floor(D.T.T.shape[0] / 2)
-        T = D.T.T[zpoint, :, :]
+        if(excl_axis == 3):
+            zpoint = math.floor(D.T.T.shape[0] *point)
+            T = D.T.T[zpoint, :, :] * UNIT_DENSITY
+        elif(excl_axis == 2):
+            zpoint = math.floor(D.T.T.shape[1] *point)
+            T = D.T.T[:, zpoint, :] * UNIT_DENSITY
+        elif(excl_axis == 1):
+            zpoint = math.floor(D.T.T.shape[2] *point)
+            T = D.T.T[:,:,zpoint] * UNIT_DENSITY
+        else:
+            print("wrong excluded axis\n")
+            return
 
     minT = np.amin(T)
     maxT = np.amax(T)
@@ -43,8 +70,18 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
         if (ndim == 2):
             T = D.T.T[:, :]
         if (ndim == 3):
-            zpoint = math.floor(D.T.T.shape[0] / 2)
-            T = D.T.T[zpoint, :, :]
+            if (excl_axis == 3):
+                zpoint = math.floor(D.T.T.shape[0] * point)
+                T = D.T.T[zpoint, :, :] * UNIT_DENSITY
+            elif (excl_axis == 2):
+                zpoint = math.floor(D.T.T.shape[1] * point)
+                T = D.T.T[:, zpoint, :] * UNIT_DENSITY
+            elif (excl_axis == 1):
+                zpoint = math.floor(D.T.T.shape[2] * point)
+                T = D.T.T[:, :, zpoint] * UNIT_DENSITY
+            else:
+                print("wrong excluded axis\n")
+                return
         if(np.amin(T) < minT):
             minT = np.amin(T)
         if(np.amax(T) > maxT):
@@ -71,8 +108,18 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
         if (ndim == 2):
             T = D.T.T[:, :]
         if (ndim == 3):
-            zpoint = math.floor(D.T.shape[2] / 2)
-            T = D.T.T[zpoint, :, :]
+            if (excl_axis == 3):
+                zpoint = math.floor(D.T.T.shape[0] * point)
+                T = D.T.T[zpoint, :, :] * UNIT_DENSITY
+            elif (excl_axis == 2):
+                zpoint = math.floor(D.T.T.shape[1] * point)
+                T = D.T.T[:, zpoint, :] * UNIT_DENSITY
+            elif (excl_axis == 1):
+                zpoint = math.floor(D.T.T.shape[2] * point)
+                T = D.T.T[:, :, zpoint] * UNIT_DENSITY
+            else:
+                print("wrong excluded axis\n")
+                return
 
         np.flip(T, 0)
 

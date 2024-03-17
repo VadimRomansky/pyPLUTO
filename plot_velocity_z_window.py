@@ -3,7 +3,7 @@ from matplotlib import colors
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_velocity_z_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
+def plot_velocity_z_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5):
     c=2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -24,8 +24,25 @@ def plot_velocity_z_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.vx3.shape[0]
-    ny = D.vx3.shape[1]
+    if(ndim == 2):
+        nx = D.vx3.shape[0]
+        ny = D.vx3.shape[1]
+    elif(ndim == 3):
+        if(excl_axis == 3):
+            nx = D.vx3.shape[0]
+            ny = D.vx3.shape[1]
+        elif(excl_axis == 2):
+            nx = D.vx3.shape[0]
+            ny = D.vx3.shape[2]
+        elif(excl_axis == 1):
+            nx = D.vx3.shape[1]
+            ny = D.vx3.shape[2]
+        else:
+            print("wrong excluded axis\n")
+            return
+    else:
+        print("wrong number of dims\n")
+        return
     Vz = np.zeros([ny,nx])
 
     if(ndim == 2):
