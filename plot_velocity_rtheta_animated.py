@@ -112,10 +112,14 @@ def plot_velocity_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
 
         Nfraction = 1
         rad = np.linspace(0, xmax/Nfraction, int(nx/Nfraction))
-        azm = np.linspace(-np.pi / 2, np.pi / 2, ny)
+        azm = np.linspace(D.x2.min() - np.pi/2, D.x2.max() - np.pi/2, ny)
         r, th = np.meshgrid(rad, azm)
 
         ax = plt.subplot(projection="polar")
+        ax.axis("off")
+
+        ax.set_thetamin(D.x2.min() * 180 / np.pi - 90)
+        ax.set_thetamax(D.x2.max() * 180 / np.pi - 90)
         V2=V[:,range(int(nx/Nfraction))]
         im2 = plt.pcolormesh(th, r, V2, norm=colors.LogNorm(vmin=minV, vmax=maxV))
 
