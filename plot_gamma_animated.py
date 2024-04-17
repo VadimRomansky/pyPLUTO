@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray import getVectorArray
 
 
-def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
+def plot_gamma_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
 

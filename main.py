@@ -31,7 +31,15 @@ from plot_density_animated_1d import plot_density_animated_1d
 from plot_distribution import plot_distribution
 from plot_distribution_animated import plot_distribution_animated
 from plot_escaped_distribution import plot_escaped_distribution
-from plot_gamma_2d import plot_gamma_2d
+from plot_gamma import plot_gamma
+from plot_gamma_1d import plot_gamma_1d
+from plot_gamma_1d_series import plot_gamma_1d_series
+from plot_gamma_animated import plot_gamma_animated
+from plot_gamma_animated_1d import plot_gamma_animated_1d
+from plot_gamma_animated_window import plot_gamma_animated_window
+from plot_gamma_rtheta import plot_gamma_rtheta
+from plot_gamma_rtheta_animated import plot_gamma_rtheta_animated
+from plot_gamma_window import plot_gamma_window
 
 from plot_particles import plot_particles
 from plot_particle_trajectory import plot_particle_trajectory
@@ -166,7 +174,7 @@ plot_density_rtheta(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
 #plot_gamma_1d_series(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
-plot_gamma_rtheta(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+#plot_gamma_rtheta(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_gamma_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 ######### velocity
