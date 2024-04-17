@@ -10,23 +10,20 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray import getVectorArray
 
 
-def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
+def plot_gamma_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
 
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx1.shape))
 
-    minV = 0
-    maxV = 0
-    nx = 0
-    ny = 0
 
     if (ndim == 1):
         print("cant plot 2d image of 1d setup\n")
         return
 
-    V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, excl_axis, point)
+    V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, excl_axis, point)
+    gamma = 1 / np.sqrt(1 - np.square((V)))
 
     minV = np.amin(V)
     maxV = np.amax(V)
@@ -34,31 +31,32 @@ def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, excl_axis, point)
-        if(np.amin(V) < minV):
-            minV = np.amin(V)
-        if(np.amax(V) > maxV):
-            maxV = np.amax(V)
+        V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, excl_axis, point)
+        gamma = 1 / np.sqrt(1 - np.square((V)))
+        if(np.amin(gamma) < minV):
+            minV = np.amin(gamma)
+        if(np.amax(gamma) > maxV):
+            maxV = np.amax(gamma)
 
 
     print("maxV = ", maxV)
     print("minV = ", minV)
 
     if(excl_axis == 3):
-        xmin = D.x1.min() * UNIT_LENGTH
-        xmax = D.x1.max() * UNIT_LENGTH
-        ymin = D.x2.min() * UNIT_LENGTH
-        ymax = D.x2.max() * UNIT_LENGTH
+        xmin1 = D.x1.min() * UNIT_LENGTH
+        xmax1 = D.x1.max() * UNIT_LENGTH
+        ymin1 = D.x2.min() * UNIT_LENGTH
+        ymax1 = D.x2.max() * UNIT_LENGTH
     elif(excl_axis == 2):
-        xmin = D.x1.min() * UNIT_LENGTH
-        xmax = D.x1.max() * UNIT_LENGTH
-        ymin = D.x3.min() * UNIT_LENGTH
-        ymax = D.x3.max() * UNIT_LENGTH
+        xmin1 = D.x1.min() * UNIT_LENGTH
+        xmax1 = D.x1.max() * UNIT_LENGTH
+        ymin1 = D.x3.min() * UNIT_LENGTH
+        ymax1 = D.x3.max() * UNIT_LENGTH
     elif(excl_axis == 1):
-        xmin = D.x2.min() * UNIT_LENGTH
-        xmax = D.x2.max() * UNIT_LENGTH
-        ymin = D.x3.min() * UNIT_LENGTH
-        ymax = D.x3.max() * UNIT_LENGTH
+        xmin1 = D.x2.min() * UNIT_LENGTH
+        xmax1 = D.x2.max() * UNIT_LENGTH
+        ymin1 = D.x3.min() * UNIT_LENGTH
+        ymax1 = D.x3.max() * UNIT_LENGTH
     else:
         print("wrong exclude axis\n")
         return
@@ -72,10 +70,13 @@ def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, excl_axis, point)
+        V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, excl_axis, point)
+        gamma = 1 / np.sqrt(1 - np.square((V)))
 
-        im2 = ax.imshow(V, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect = 'auto',
-                        extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
+        im2 = ax.imshow(gamma, origin='upper', norm=colors.LogNorm(vmin=minV, vmax=maxV), aspect = 'auto',
+                        extent=[xmin1, xmax1, ymin1, ymax1])  # plotting fluid data.
+        ax.set_xlim([xmin, xmax])
+        ax.set_ylim([ymin, ymax])
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
@@ -97,6 +98,6 @@ def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"velocity.gif"
+    f = r"gamma_window.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)

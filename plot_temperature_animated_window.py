@@ -91,10 +91,24 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
     print("maxT = ", maxT)
     print("minT = ", minT)
 
-    xmin1 = D.x1.min() * UNIT_LENGTH
-    xmax1 = D.x1.max() * UNIT_LENGTH
-    ymin1 = D.x2.min() * UNIT_LENGTH
-    ymax1 = D.x2.max() * UNIT_LENGTH
+    if(excl_axis == 3):
+        xmin1 = D.x1.min() * UNIT_LENGTH
+        xmax1 = D.x1.max() * UNIT_LENGTH
+        ymin1 = D.x2.min() * UNIT_LENGTH
+        ymax1 = D.x2.max() * UNIT_LENGTH
+    elif(excl_axis == 2):
+        xmin1 = D.x1.min() * UNIT_LENGTH
+        xmax1 = D.x1.max() * UNIT_LENGTH
+        ymin1 = D.x3.min() * UNIT_LENGTH
+        ymax1 = D.x3.max() * UNIT_LENGTH
+    elif(excl_axis == 1):
+        xmin1 = D.x2.min() * UNIT_LENGTH
+        xmax1 = D.x2.max() * UNIT_LENGTH
+        ymin1 = D.x3.min() * UNIT_LENGTH
+        ymax1 = D.x3.max() * UNIT_LENGTH
+    else:
+        print("wrong exclude axis\n")
+        return
 
 
     def update(frame_number):

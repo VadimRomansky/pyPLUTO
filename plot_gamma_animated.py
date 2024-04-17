@@ -27,18 +27,20 @@ def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         return
 
     V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, excl_axis, point)
+    gamma = 1/np.sqrt(1-np.square((V)))
 
-    minV = np.amin(V)
-    maxV = np.amax(V)
+    minV = np.amin(gamma)
+    maxV = np.amax(gamma)
 
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, excl_axis, point)
-        if(np.amin(V) < minV):
-            minV = np.amin(V)
-        if(np.amax(V) > maxV):
-            maxV = np.amax(V)
+        gamma = 1 / np.sqrt(1 - np.square((V)))
+        if(np.amin(gamma) < minV):
+            minV = np.amin(gamma)
+        if(np.amax(gamma) > maxV):
+            maxV = np.amax(gamma)
 
 
     print("maxV = ", maxV)
@@ -73,8 +75,9 @@ def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
         D = pp.pload(frame_number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, excl_axis, point)
+        gamma = 1 / np.sqrt(1 - np.square((V)))
 
-        im2 = ax.imshow(V, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect = 'auto',
+        im2 = ax.imshow(gamma, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect = 'auto',
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
@@ -97,6 +100,6 @@ def plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"velocity.gif"
+    f = r"gamma.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)

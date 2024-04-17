@@ -7,7 +7,11 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 def plot_density_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
-    f1 = plt.figure(figsize=[10,10])
+    matplotlib.rcParams['figure.subplot.left'] = 0.01
+    matplotlib.rcParams['figure.subplot.bottom'] = 0
+    matplotlib.rcParams['figure.subplot.right'] = 0.99
+    matplotlib.rcParams['figure.subplot.top'] = 1
+    f1 = plt.figure(figsize=[10,4])
 
     D = pp.pload(ns, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     xmin = D.x1.min() * UNIT_LENGTH
@@ -50,6 +54,7 @@ def plot_density_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,data
     r, th = np.meshgrid(rad, azm)
             
     ax = plt.subplot(projection="polar")
+    #ax = f1.add_subplot(111)
     ax.axis("off")
 
     ax.set_thetamin(D.x2.min()*180/np.pi - 90)
