@@ -7,10 +7,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 def plot_density_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
-    matplotlib.rcParams['figure.subplot.left'] = 0.01
-    matplotlib.rcParams['figure.subplot.bottom'] = 0
-    matplotlib.rcParams['figure.subplot.right'] = 0.99
-    matplotlib.rcParams['figure.subplot.top'] = 1
+
     f1 = plt.figure(figsize=[10,4])
 
     D = pp.pload(ns, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
@@ -59,9 +56,10 @@ def plot_density_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,data
 
     ax.set_thetamin(D.x2.min()*180/np.pi - 90)
     ax.set_thetamax(D.x2.max()*180/np.pi - 90)
+    ax.set_position([0.05, -0.55, 0.9, 2.5])
     rho2 = rho[:,range(int(nx/Nfraction))]
     im2 = plt.pcolormesh(th, r, rho2, norm = colors.LogNorm(vmin = minRho, vmax = maxRho))
-    cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
+    cax2 = f1.add_axes([0.05,0.92,0.9,0.03])
     #im2.set_clim(minRho, maxRho)
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
     #ax.set_xlabel(r'X-axis', fontsize=40,fontweight='bold')

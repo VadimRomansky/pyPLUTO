@@ -14,7 +14,7 @@ def plot_pressure_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, data
     ax = f1.add_subplot(111)
 
     D = pp.pload(ntot, varNames = ['prs'], w_dir = w_dir, datatype=datatype) # Load fluid data.
-    Prs = getScalarArray_1d(D.rho, UNIT_DENSITY, axis, point1, point2)
+    Prs = getScalarArray_1d(D.prs, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
 
     minPrs = np.amin(Prs)
     maxPrs = np.amax(Prs)

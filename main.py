@@ -31,6 +31,7 @@ from plot_density_animated_1d import plot_density_animated_1d
 from plot_distribution import plot_distribution
 from plot_distribution_animated import plot_distribution_animated
 from plot_escaped_distribution import plot_escaped_distribution
+
 from plot_gamma import plot_gamma
 from plot_gamma_1d import plot_gamma_1d
 from plot_gamma_1d_series import plot_gamma_1d_series
@@ -133,7 +134,7 @@ plt.rcParams['image.cmap'] = 'jet'
 #plot_density_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 plot_density_rtheta(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 ######## pressure
 

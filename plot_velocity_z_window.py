@@ -3,6 +3,9 @@ from matplotlib import colors
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
+from getScalarArray import getScalarArray
+
+
 def plot_velocity_z_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5):
     c=2.998E10
     plt.rcParams.update({'font.size': 15})
@@ -24,33 +27,7 @@ def plot_velocity_z_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 
         print("cant plot 2d image of 1d setup\n")
         return
 
-    if(ndim == 2):
-        nx = D.vx3.shape[0]
-        ny = D.vx3.shape[1]
-    elif(ndim == 3):
-        if(excl_axis == 3):
-            nx = D.vx3.shape[0]
-            ny = D.vx3.shape[1]
-        elif(excl_axis == 2):
-            nx = D.vx3.shape[0]
-            ny = D.vx3.shape[2]
-        elif(excl_axis == 1):
-            nx = D.vx3.shape[1]
-            ny = D.vx3.shape[2]
-        else:
-            print("wrong excluded axis\n")
-            return
-    else:
-        print("wrong number of dims\n")
-        return
-    Vz = np.zeros([ny,nx])
-
-    if(ndim == 2):
-        Vz = D.vx3.T[:, :]*UNIT_VELOCITY/c
-    if(ndim == 3):
-        zpoint = math.floor(D.vx3.T.shape[0] / 2)
-        Vz = D.vx3.T[zpoint, :, :]*UNIT_VELOCITY/c
-    np.flip(Vz,0)
+    Vz = getScalarArray(D.vx3, UNIT_VELOCITY/c, excl_axis, point)
 
     minV = np.amin(Vz)
     maxV = np.amax(Vz)

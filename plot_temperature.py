@@ -3,6 +3,9 @@ from matplotlib import colors
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
+from getScalarArray import getScalarArray
+
+
 def plot_temperature(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 3):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -21,43 +24,7 @@ def plot_temperature(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, dataty
         print("cant plot 2d image of 1d setup\n")
         return
 
-    if(ndim == 2):
-        nx = D.T.shape[0]
-        ny = D.T.shape[1]
-    elif(ndim == 3):
-        if(excl_axis == 3):
-            nx = D.T.shape[0]
-            ny = D.T.shape[1]
-        elif(excl_axis == 2):
-            nx = D.T.shape[0]
-            ny = D.T.shape[2]
-        elif(excl_axis == 1):
-            nx = D.T.shape[1]
-            ny = D.T.shape[2]
-        else:
-            print("wrong excluded axis\n")
-            return
-    else:
-        print("wrong number of dims\n")
-        return
-    T = np.zeros([ny,nx])
-
-    if(ndim == 2):
-        T = D.T.T[:, :]
-    if(ndim == 3):
-        if(excl_axis == 3):
-            zpoint = math.floor(D.T.T.shape[0] *point)
-            T = D.T.T[zpoint, :, :] * UNIT_DENSITY
-        elif(excl_axis == 2):
-            zpoint = math.floor(D.T.T.shape[1] *point)
-            T = D.T.T[:, zpoint, :] * UNIT_DENSITY
-        elif(excl_axis == 1):
-            zpoint = math.floor(D.T.T.shape[2] *point)
-            T = D.T.T[:,:,zpoint] * UNIT_DENSITY
-        else:
-            print("wrong excluded axis\n")
-            return
-    np.flip(T,0)
+    T = getScalarArray(D.T, 1.0, excl_axis, point)
 
     minT = np.amin(T)
     maxT = np.amax(T)

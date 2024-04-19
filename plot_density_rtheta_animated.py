@@ -8,7 +8,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from matplotlib.animation import FuncAnimation
 
 def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
-    f1 = plt.figure(figsize=[6,8])
+    f1 = plt.figure(figsize=[10,3])
 
     D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.rho.shape))
@@ -70,8 +70,8 @@ def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
     def update(frame_number):
         #f1 = plt.figure(figsize=[6, 6])
         f1.clear()
-        f1.set_figheight(8)
-        f1.set_figwidth(6)
+        f1.set_figheight(3)
+        f1.set_figwidth(10)
 
         D = pp.pload(frame_number, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 1):
@@ -107,6 +107,7 @@ def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         ax.set_xlabel(r'R-axis', fontsize=14)
         ax.set_ylabel(r'Z-axis', fontsize=14)
         ax.minorticks_on()
+        ax.set_position([0.05, -0.55, 0.9, 2.5])
         # plt.axis([0.0,1.0,0.0,1.0])
         #plt.savefig(f'B_3d_slice2d_{frame_number}.png')
         #plt.close()

@@ -7,6 +7,9 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
+from getVectorArray import getVectorArray
+
+
 def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
     f1 = plt.figure(figsize=[6,8])
 
@@ -22,55 +25,7 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
         print("cant plot 2d image of 1d setup\n")
         return
 
-    if (ndim == 2):
-        nx = D.Bx1.shape[0]
-        ny = D.Bx1.shape[1]
-    elif (ndim == 3):
-        if (excl_axis == 3):
-            nx = D.Bx1.shape[0]
-            ny = D.Bx1.shape[1]
-        elif (excl_axis == 2):
-            nx = D.Bx1.shape[0]
-            ny = D.Bx1.shape[2]
-        elif (excl_axis == 1):
-            nx = D.Bx1.shape[1]
-            ny = D.Bx1.shape[2]
-        else:
-            print("wrong excluded axis\n")
-            return
-    else:
-        print("wrong number of dims\n")
-        return
-    B = np.zeros([ny, nx])
-
-    if (ndim == 2):
-        Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    if (ndim == 3):
-        if(excl_axis == 3):
-            zpoint = math.floor(D.Bx1.T.shape[0] * point)
-            Bz = D.Bx3.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        elif(excl_axis == 2):
-            zpoint = math.floor(D.Bx1.T.shape[1] * point)
-            Bz = D.Bx3.T[:,zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[:,zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[:,zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        elif(excl_axis == 1):
-            zpoint = math.floor(D.Bx1.T.shape[2] * point)
-            Bz = D.Bx3.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        else:
-            print("wrong exluded axis\n")
-            return;
-    np.flip(B, 0)
+    B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
 
     minB = np.amin(B)
     maxB = np.amax(B)
@@ -78,33 +33,7 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        if (ndim == 3):
-            if (excl_axis == 3):
-                zpoint = math.floor(D.Bx1.T.shape[0] * point)
-                Bz = D.Bx3.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-            elif (excl_axis == 2):
-                zpoint = math.floor(D.Bx1.T.shape[1] * point)
-                Bz = D.Bx3.T[:, zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                By = D.Bx2.T[:, zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                Bx = D.Bx1.T[:, zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-            elif (excl_axis == 1):
-                zpoint = math.floor(D.Bx1.T.shape[2] * point)
-                Bz = D.Bx3.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                By = D.Bx2.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                Bx = D.Bx1.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-            else:
-                print("wrong exluded axis\n")
-                return;
+        B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
         if(np.amin(B) < minB):
             minB = np.amin(B)
         if(np.amax(B) > maxB):
@@ -142,35 +71,7 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        if (ndim == 3):
-            if (excl_axis == 3):
-                zpoint = math.floor(D.Bx1.T.shape[0] * point)
-                Bz = D.Bx3.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-            elif (excl_axis == 2):
-                zpoint = math.floor(D.Bx1.T.shape[1] * point)
-                Bz = D.Bx3.T[:, zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                By = D.Bx2.T[:, zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                Bx = D.Bx1.T[:, zpoint, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-            elif (excl_axis == 1):
-                zpoint = math.floor(D.Bx1.T.shape[2] * point)
-                Bz = D.Bx3.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                By = D.Bx2.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                Bx = D.Bx1.T[:, :, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-                B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-            else:
-                print("wrong exluded axis\n")
-                return;
-
-        np.flip(B, 0)
+        B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
 
         im2 = ax.imshow(B, origin='upper', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect = 'auto',
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
