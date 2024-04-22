@@ -8,7 +8,6 @@ def plot_velocity_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,dat
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
-    ax = f1.add_subplot(111)
 
     D = pp.pload(ns, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     xmin = D.x1.min() * UNIT_LENGTH
@@ -53,10 +52,14 @@ def plot_velocity_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,dat
 
     Nfraction = 1
     rad = np.linspace(0, xmax/Nfraction, int(nx/Nfraction))
-    azm = np.linspace(-np.pi/2, np.pi/2, ny)
+    azm = np.linspace(D.x2.min() - np.pi/2, D.x2.max() - np.pi/2, ny)
     r, th = np.meshgrid(rad, azm)
-            
-    plt.subplot(projection="polar")
+
+    ax = plt.subplot(projection="polar")
+    ax.axis("off")
+
+    ax.set_thetamin(D.x2.min() * 180 / np.pi - 90)
+    ax.set_thetamax(D.x2.max() * 180 / np.pi - 90)
 
     V1 = V[:,range(int(nx/Nfraction))]
     im2 = plt.pcolormesh(th, r, V1, norm = colors.Normalize(vmin = minV, vmax = maxV))

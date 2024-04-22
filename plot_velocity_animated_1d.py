@@ -5,7 +5,7 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 
-def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
     # f1 = plt.figure(figsize=[10,8])
     c = 2.998E10
     f1 = plt.figure()

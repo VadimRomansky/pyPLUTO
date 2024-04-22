@@ -116,6 +116,10 @@ def plot_B_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         r, th = np.meshgrid(rad, azm)
 
         ax = plt.subplot(projection="polar")
+        ax.axis("off")
+
+        ax.set_thetamin(D.x2.min() * 180 / np.pi - 90)
+        ax.set_thetamax(D.x2.max() * 180 / np.pi - 90)
         B2=B[:,range(int(nx/Nfraction))]
         im2 = plt.pcolormesh(th, r, B2, norm=colors.LogNorm(vmin=minB, vmax=maxB))
 

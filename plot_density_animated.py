@@ -7,6 +7,9 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
+from getScalarArray import getScalarArray
+
+
 def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -24,42 +27,7 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
         print("cant plot 2d image of 1d setup\n")
         return
 
-    if(ndim == 2):
-        nx = D.rho.shape[0]
-        ny = D.rho.shape[1]
-    elif(ndim == 3):
-        if(excl_axis == 3):
-            nx = D.rho.shape[0]
-            ny = D.rho.shape[1]
-        elif(excl_axis == 2):
-            nx = D.rho.shape[0]
-            ny = D.rho.shape[2]
-        elif(excl_axis == 1):
-            nx = D.rho.shape[1]
-            ny = D.rho.shape[2]
-        else:
-            print("wrong excluded axis\n")
-            return
-    else:
-        print("wrong number of dims\n")
-        return
-    Rho = np.zeros([ny, nx])
-
-    if (ndim == 2):
-        Rho = D.rho.T[:, :] * UNIT_DENSITY
-    if (ndim == 3):
-        if(excl_axis == 3):
-            zpoint = math.floor(D.rho.T.shape[0] *point)
-            Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
-        elif(excl_axis == 2):
-            zpoint = math.floor(D.rho.T.shape[1] *point)
-            Rho = D.rho.T[:, zpoint, :] * UNIT_DENSITY
-        elif(excl_axis == 1):
-            zpoint = math.floor(D.rho.T.shape[2] *point)
-            Rho = D.rho.T[:,:,zpoint] * UNIT_DENSITY
-        else:
-            print("wrong excluded axis\n")
-            return
+    Rho = getScalarArray(D.rho, UNIT_DENSITY, excl_axis, point)
 
     minRho = np.amin(Rho)
     maxRho = np.amax(Rho)
@@ -67,21 +35,7 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            Rho = D.rho.T[:, :] * UNIT_DENSITY
-        if (ndim == 3):
-            if (excl_axis == 3):
-                zpoint = math.floor(D.rho.T.shape[0] *point)
-                Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
-            elif (excl_axis == 2):
-                zpoint = math.floor(D.rho.T.shape[1] *point)
-                Rho = D.rho.T[:, zpoint, :] * UNIT_DENSITY
-            elif (excl_axis == 1):
-                zpoint = math.floor(D.rho.T.shape[2] *point)
-                Rho = D.rho.T[:, :, zpoint] * UNIT_DENSITY
-            else:
-                print("wrong excluded axis\n")
-                return
+        Rho = getScalarArray(D.rho, UNIT_DENSITY, excl_axis, point)
         if(np.amin(Rho) < minRho):
             minRho = np.amin(Rho)
         if(np.amax(Rho) > maxRho):
@@ -91,10 +45,24 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
     print("maxRho = ", maxRho)
     print("minRho = ", minRho)
 
-    xmin = D.x1.min() * UNIT_LENGTH
-    xmax = D.x1.max() * UNIT_LENGTH
-    ymin = D.x2.min() * UNIT_LENGTH
-    ymax = D.x2.max() * UNIT_LENGTH
+    if(excl_axis == 3):
+        xmin = D.x1.min() * UNIT_LENGTH
+        xmax = D.x1.max() * UNIT_LENGTH
+        ymin = D.x2.min() * UNIT_LENGTH
+        ymax = D.x2.max() * UNIT_LENGTH
+    elif(excl_axis == 2):
+        xmin = D.x1.min() * UNIT_LENGTH
+        xmax = D.x1.max() * UNIT_LENGTH
+        ymin = D.x3.min() * UNIT_LENGTH
+        ymax = D.x3.max() * UNIT_LENGTH
+    elif(excl_axis == 1):
+        xmin = D.x2.min() * UNIT_LENGTH
+        xmax = D.x2.max() * UNIT_LENGTH
+        ymin = D.x3.min() * UNIT_LENGTH
+        ymax = D.x3.max() * UNIT_LENGTH
+    else:
+        print("wrong exclude axis\n")
+        return
 
 
     def update(frame_number):
@@ -105,21 +73,7 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            Rho = D.rho.T[:, :] * UNIT_DENSITY
-        if (ndim == 3):
-            if (excl_axis == 3):
-                zpoint = math.floor(D.rho.T.shape[0] *point)
-                Rho = D.rho.T[zpoint, :, :] * UNIT_DENSITY
-            elif (excl_axis == 2):
-                zpoint = math.floor(D.rho.T.shape[1] *point)
-                Rho = D.rho.T[:, zpoint, :] * UNIT_DENSITY
-            elif (excl_axis == 1):
-                zpoint = math.floor(D.rho.T.shape[2] *point)
-                Rho = D.rho.T[:, :, zpoint] * UNIT_DENSITY
-            else:
-                print("wrong excluded axis\n")
-                return
+        Rho = getScalarArray(D.rho, UNIT_DENSITY, excl_axis, point)
 
         np.flip(Rho, 0)
 

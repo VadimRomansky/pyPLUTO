@@ -4,66 +4,50 @@ import pyPLUTO.pload as pp  # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
+from getScalarArray_1d import getScalarArray_1d
+from getVectorArray_1d import getVectorArray_1d
 
-def plot_profile_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+
+def plot_profile_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
+    c = 2.998E10
     f1 = plt.figure(figsize=[10, 8])
 
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    ndim = len((D.vx1.shape))
+    V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
+    Prs = getScalarArray_1d(D.prs, UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY, axis, point1, point2)
+    Rho = getScalarArray_1d(D.rho, UNIT_DENSITY, axis, point1, point2)
 
-    minV = 0
-    maxV = 0
+    if (axis == 1):
+        xmin = D.x1.min() * UNIT_LENGTH
+        xmax = D.x1.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / Rho.shape[0]
+        x = dx * range(Rho.shape[0]) + xmin
+    elif (axis == 2):
+        xmin = D.x2.min() * UNIT_LENGTH
+        xmax = D.x2.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / Rho.shape[1]
+        x = dx * range(Rho.shape[1]) + xmin
+    elif (axis == 3):
+        xmin = D.x3.min() * UNIT_LENGTH
+        xmax = D.x3.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / Rho.shape[2]
+        x = dx * range(Rho.shape[2]) + xmin
+    else:
+        print("wrong axis")
+        return
 
-    nx = D.vx1.shape[0]
-    V = np.zeros([nx])
-    P = np.zeros([nx])
-    rho = np.zeros([nx])
-
-    if (ndim == 1):
-        V = np.abs(D.vx1[:])
-        P = D.prs[:]
-        rho = D.rho[:]
-    if (ndim == 2):
-        ypoint = math.floor(D.vx1.shape[1] / 2)
-        V = np.abs(D.vx1[:, ypoint])
-        P = D.prs[:, ypoint]
-        rho = D.rho[:, ypoint]
-    if (ndim == 3):
-        zpoint = math.floor(D.vx1.T.shape[0] / 2)
-        ypoint = math.floor(D.vx1.T.shape[1] / 2)
-        V = np.abs(D.vx1[:, ypoint, zpoint])
-        P = D.prs[:, ypoint, zpoint]
-        rho = D.rho[:, ypoint, zpoint]
-
-    xmin = D.x1.min() * UNIT_LENGTH
-    xmax = D.x1.max() * UNIT_LENGTH
-    dx = (xmax - xmin) / V.shape[0]
-    x = dx * range(V.shape[0]) + xmin
-
-    minV = min(amin(V), amin(P), amin(rho))
-    maxV = max(amax(V), amax(P), amax(rho))
+    minV = min(amin(V), amin(Prs), amin(Rho))
+    maxV = max(amax(V), amax(Prs), amax(Rho))
 
     for i in range(ntot+1):
         D = pp.pload(i, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho'], w_dir=w_dir,
                      datatype=datatype)  # Load fluid data.
-        if (ndim == 1):
-            V = np.abs(D.vx1[:])
-            P = D.prs[:]
-            rho = D.rho[:]
-        if (ndim == 2):
-            ypoint = math.floor(D.vx1.shape[1] / 2)
-            V = np.abs(D.vx1[:, ypoint])
-            P = D.prs[:, ypoint]
-            rho = D.rho[:, ypoint]
-        if (ndim == 3):
-            zpoint = math.floor(D.vx1.T.shape[0] / 2)
-            ypoint = math.floor(D.vx1.T.shape[1] / 2)
-            V = np.abs(D.vx1[:, ypoint, zpoint])
-            P = D.prs[:, ypoint, zpoint]
-            rho = D.rho[:, ypoint, zpoint]
+        V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
+        Prs = getScalarArray_1d(D.prs, UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY, axis, point1, point2)
+        Rho = getScalarArray_1d(D.rho, UNIT_DENSITY, axis, point1, point2)
 
-        locmin = min(amin(V), amin(P), amin(rho))
-        locmax = max(amax(V), amax(P), amax(rho))
+        locmin = min(amin(V), amin(Prs), amin(Rho))
+        locmax = max(amax(V), amax(Prs), amax(Rho))
         if(locmin < minV):
             minV = locmin
         if(locmax > maxV):
@@ -82,23 +66,11 @@ def plot_profile_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
 
         D = pp.pload(frame_number, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho'], w_dir=w_dir,
                      datatype=datatype)  # Load fluid data.
-        if (ndim == 1):
-            V = np.abs(D.vx1[:])
-            P = D.prs[:]
-            rho = D.rho[:]
-        if (ndim == 2):
-            ypoint = math.floor(D.vx1.shape[1] / 2)
-            V = np.abs(D.vx1[:, ypoint])
-            P = D.prs[:, ypoint]
-            rho = D.rho[:, ypoint]
-        if (ndim == 3):
-            zpoint = math.floor(D.vx1.T.shape[0] / 2)
-            ypoint = math.floor(D.vx1.T.shape[1] / 2)
-            V = np.abs(D.vx1[:, ypoint, zpoint])
-            P = D.prs[:, ypoint, zpoint]
-            rho = D.rho[:, ypoint, zpoint]
+        V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
+        Prs = getScalarArray_1d(D.prs, UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY, axis, point1, point2)
+        Rho = getScalarArray_1d(D.rho, UNIT_DENSITY, axis, point1, point2)
 
-        im2 = plt.plot(x, V, 'r-', x, P, 'g-', x, rho, 'b-')  # plotting fluid data.
+        im2 = plt.plot(x, V, 'r-', x, Prs, 'g-', x, Rho, 'b-')  # plotting fluid data.
         ax.legend(['vx', 'pressure', 'density'])
         return im2
 

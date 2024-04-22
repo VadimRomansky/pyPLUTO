@@ -3,78 +3,46 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_B_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
+
+from getVectorArray_1d import getVectorArray_1d
+
+
+def plot_B_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
 
     D = pp.pload(number, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
-    ndim = len((D.Bx1.shape))
+    B3 = getVectorArray_1d(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), axis, point1, point2)
+    D = pp.pload(int(number/2), varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
+    B2 = getVectorArray_1d(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), axis,
+                           point1, point2)
+    D = pp.pload(0, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
+    B1 = getVectorArray_1d(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), axis,
+                           point1, point2)
 
-    minB = 0
-    maxB = 0
-
-    nx = D.Bx1.shape[0]
-    B1 = np.zeros([nx])
-    B2 = np.zeros([nx])
-    B3 = np.zeros([nx])
-
-    if (ndim == 1):
-        Bz = D.Bx3[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B3 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        D = pp.pload(int(number / 2), varNames=['Bx1','Bx2','Bx3'], w_dir=w_dir, datatype=datatype)
-        Bz = D.Bx3[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B2 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        D = pp.pload(1, varNames=['Bx1','Bx2','Bx3'], w_dir=w_dir, datatype=datatype)
-        Bz = D.Bx3[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B1 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    if (ndim == 2):
-        ypoint = math.floor(D.Bx1.shape[1] / 2)
-        Bz = D.Bx3[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B3 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        D = pp.pload(int(number / 2), varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)
-        Bz = D.Bx3[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B2 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        D = pp.pload(1, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)
-        Bz = D.Bx3[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:, ypoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B1 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    if (ndim == 3):
-        ypoint = math.floor(D.Bx1.shape[1] / 2)
-        zpoint = math.floor(D.Bx1.shape[2] / 2)
-        Bz = D.Bx3[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B3 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        D = pp.pload(int(number / 2), varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)
-        Bz = D.Bx3[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B2 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        D = pp.pload(1, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)
-        Bz = D.Bx3[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1[:, ypoint, zpoint] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B1 = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
 
 
     minB = min(np.amin(B1), np.amin(B2), np.amin(B3))
     maxB = max(np.amax(B1), np.amax(B2), np.amax(B3))
 
-    xmin = D.x1.min() * UNIT_LENGTH
-    xmax = D.x1.max() * UNIT_LENGTH
-    dx = (xmax - xmin) / B1.shape[0]
-    x = dx * range(B1.shape[0]) + xmin
+    if (axis == 1):
+        xmin = D.x1.min() * UNIT_LENGTH
+        xmax = D.x1.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / B1.shape[0]
+        x = dx * range(B1.shape[0]) + xmin
+    elif (axis == 2):
+        xmin = D.x2.min() * UNIT_LENGTH
+        xmax = D.x2.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / B1.shape[1]
+        x = dx * range(B1.shape[1]) + xmin
+    elif (axis == 3):
+        xmin = D.x3.min() * UNIT_LENGTH
+        xmax = D.x3.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / B1.shape[2]
+        x = dx * range(B1.shape[2]) + xmin
+    else:
+        print("wrong axis")
+        return
     plt.rcParams.update({'font.size': 40})
     plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[12, 10])
