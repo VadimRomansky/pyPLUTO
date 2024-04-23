@@ -12,11 +12,11 @@ def plot_temperature_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
     #plt.rcParams['text.usetex'] = True
 
     D = pp.pload(number, varNames = ['T'], w_dir = w_dir, datatype=datatype) # Load fluid data.
-    T3 = getScalarArray(D.T, 1.0, axis, point1, point2)
+    T3 = getScalarArray_1d(D.T, 1.0, axis, point1, point2)
     D = pp.pload(int(number/2), varNames=['T'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    T2 = getScalarArray(D.T, 1.0, axis, point1, point2)
+    T2 = getScalarArray_1d(D.T, 1.0, axis, point1, point2)
     D = pp.pload(0, varNames=['T'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    T1 = getScalarArray(D.T, 1.0, axis, point1, point2)
+    T1 = getScalarArray_1d(D.T, 1.0, axis, point1, point2)
 
     minT = min(np.amin(T1), np.amin(T2), np.amin(T3))
     maxT = max(np.amax(T1), np.amax(T2), np.amax(T3))
@@ -40,8 +40,6 @@ def plot_temperature_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         print("wrong axis")
         return
 
-    plt.rcParams.update({'font.size': 40})
-    plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[12, 10])
     ax = f1.add_subplot(111)
     ax.set_xlabel(r'$r~cm$', fontsize=40,fontweight='bold')

@@ -39,8 +39,6 @@ def plot_pressure_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
     else:
         print("wrong axis")
         return
-    plt.rcParams.update({'font.size': 40})
-    plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[12, 10])
     ax = f1.add_subplot(111)
     ax.set_xlabel(r'$r~cm$', fontsize=40,fontweight='bold')
