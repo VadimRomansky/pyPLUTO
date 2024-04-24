@@ -29,3 +29,4 @@ def plot_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     plt.yscale('log')
 
     plt.savefig('distribution.png')
+    plt.close()

@@ -21,3 +21,4 @@ def plot_particles(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.savefig('particles.png')
+    plt.close()

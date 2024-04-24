@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis, point1, point2):
+def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -47,3 +47,4 @@ def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatyp
 
     #plt.show()
     plt.savefig('gamma_1d.png')
+    plt.close()

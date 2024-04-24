@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+def plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
     # f1 = plt.figure(figsize=[10,8])
     c = 2.998E10
     f1 = plt.figure()
@@ -75,3 +75,4 @@ def plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     f = r"gamma_1d.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

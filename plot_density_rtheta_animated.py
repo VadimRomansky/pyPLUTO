@@ -125,3 +125,4 @@ def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
     f = r"density_rtheta.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

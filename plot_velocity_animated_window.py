@@ -102,3 +102,4 @@ def plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
     f = r"velocity_window.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

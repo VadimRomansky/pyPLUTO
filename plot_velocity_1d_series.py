@@ -60,3 +60,4 @@ def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
     #plt.show()
     plt.savefig('velocity_1d_series.png')
+    plt.close()

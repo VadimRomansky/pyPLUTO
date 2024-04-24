@@ -46,3 +46,4 @@ def plot_profile(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype
     im2 = plt.plot(x, V, 'r-', x, Prs, 'g-', x, Rho, 'b-')  # plotting fluid data.
     ax.legend(['vx', 'pressure', 'density'])
     plt.savefig('profile.png')
+    plt.close()

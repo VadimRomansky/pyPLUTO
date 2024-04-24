@@ -155,3 +155,4 @@ def plot_gamma_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELO
     f = r"gamma_rtheta.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

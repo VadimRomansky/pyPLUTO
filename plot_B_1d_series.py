@@ -43,8 +43,7 @@ def plot_B_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,dat
     else:
         print("wrong axis")
         return
-    plt.rcParams.update({'font.size': 40})
-    plt.rcParams['text.usetex'] = True
+
     f1 = plt.figure(figsize=[12, 10])
     ax = f1.add_subplot(111)
     ax.set_xlabel(r'$r~cm$', fontsize=40,fontweight='bold')
@@ -63,3 +62,4 @@ def plot_B_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,dat
 
     #plt.show()
     plt.savefig('B_1d_series.png')
+    plt.close()

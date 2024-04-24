@@ -79,3 +79,4 @@ def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocit
     f = r"energy_1d.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

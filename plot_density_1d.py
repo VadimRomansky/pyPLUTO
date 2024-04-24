@@ -48,3 +48,4 @@ def plot_density_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
 
     #plt.show()
     plt.savefig('density_1d.png')
+    plt.close()

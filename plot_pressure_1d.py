@@ -47,3 +47,4 @@ def plot_pressure_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, data
 
     #plt.show()
     plt.savefig('pressure_1d.png')
+    plt.close()

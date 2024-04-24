@@ -4,7 +4,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-from getScalarArray import getScalarArray
+from getScalarArray_1d import getScalarArray_1d
 
 
 def plot_temperature_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
@@ -58,3 +58,4 @@ def plot_temperature_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
     #plt.show()
     plt.savefig('temperature_1d_series.png')
+    plt.close()

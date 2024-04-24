@@ -47,3 +47,4 @@ def plot_temperature_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
 
     #plt.show()
     plt.savefig('temperature_1d.png')
+    plt.close()

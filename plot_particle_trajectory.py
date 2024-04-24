@@ -38,6 +38,7 @@ def plot_particle_trajectory(ntot, npar, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_
     ax.minorticks_on()
     #plt.show()
     plt.savefig('particle_trajectory.png')
+    plt.close()
 
 
     

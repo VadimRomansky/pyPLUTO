@@ -43,3 +43,4 @@ def plot_B_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, ax
 
     #plt.show()
     plt.savefig('B_1d.png')
+    plt.close()

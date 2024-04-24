@@ -46,7 +46,7 @@ def plot_density_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
     ax.set_ylabel(r'$\rho~g~cm^{-3}$', fontsize=40,fontweight='bold')
     ax.tick_params(axis='x', size=10, width = 4)
     ax.tick_params(axis='y', size=10, width = 4)
-    ax.set_yscale("log")
+    #ax.set_yscale("log")
     #ax.set_xlim([1E15,1E17])
     #ax.set_xscale("log")
     ax.minorticks_on()
@@ -58,3 +58,4 @@ def plot_density_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
 
     #plt.show()
     plt.savefig('density_1d_series.png')
+    plt.close()

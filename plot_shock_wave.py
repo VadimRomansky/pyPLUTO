@@ -69,5 +69,5 @@ def plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     plt.plot(t, V, 'r-')
 
     plt.savefig('v_shock_x.png')
-
+    plt.close()
 

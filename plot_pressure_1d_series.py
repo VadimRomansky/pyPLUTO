@@ -57,3 +57,4 @@ def plot_pressure_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
     #plt.show()
     plt.savefig('pressure_1d_series.png')
+    plt.close()

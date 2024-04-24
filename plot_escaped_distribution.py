@@ -36,3 +36,4 @@ def plot_escaped_distribution(ns, npr, w_dir, datatype):
     plt.xscale('log')
     plt.yscale('log')
     plt.savefig('escaped_distribution.png')
+    plt.close()

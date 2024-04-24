@@ -44,3 +44,4 @@ def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, data
 
     #plt.show()
     plt.savefig('velocity_1d.png')
+    plt.close()

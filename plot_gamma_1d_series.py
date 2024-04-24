@@ -7,24 +7,24 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_gamma_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis, point1, point2):
+def plot_gamma_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
 
     D = pp.pload(number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
 
-    V3 = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, point1, point2)
+    V3 = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
     gamma3 = 1/np.sqrt(1-np.square(V3))
 
     D = pp.pload(int(number/2), varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
 
-    V2 = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, point1, point2)
+    V2 = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
     gamma2 = 1 / np.sqrt(1 - np.square(V2))
 
     D = pp.pload(0, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
 
-    V1 = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, point1, point2)
+    V1 = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
     gamma1 = 1 / np.sqrt(1 - np.square(V1))
 
     if (axis == 1):
@@ -64,3 +64,4 @@ def plot_gamma_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     #plt.show()
     plt.savefig('gamma_1d_series.png')
+    plt.close()
