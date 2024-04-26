@@ -2,7 +2,6 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from plot_B import plot_B
-from plot_B_spher import plot_B_spher
 from plot_B_1d import plot_B_1d
 from plot_B_1d_series import plot_B_1d_series
 from plot_B_animated import plot_B_animated
@@ -43,7 +42,6 @@ from plot_particles import plot_particles
 from plot_particle_trajectory import plot_particle_trajectory
 from plot_particles_animated import plot_particles_animated
 from plot_particles_animated_cyl import plot_particles_animated_cyl
-from plot_particles_animated_spher import plot_particles_animated_spher
 
 from plot_pressure import plot_pressure
 from plot_pressure_1d import plot_pressure_1d
