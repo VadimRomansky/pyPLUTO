@@ -65,7 +65,7 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
                             V2 = (D.vx1[i][j][k] * D.vx1[i][j][k] + D.vx2[i][j][k] * D.vx2[i][j][k] + D.vx3[i][j][k] * D.vx3[i][j][k]) * UNIT_VELOCITY * UNIT_VELOCITY
                             gamma = 1.0 / np.sqrt(1.0 - V2 / (c * c))
                             Ekin[n] = Ekin[n] + D.rho[i][j][k] * UNIT_DENSITY * (gamma - 1.0)*c*c * dVx*dVy*dVz
-                            Etherm[n] = Etherm[n] + (1.0/(gam-1))*(D.prs[i][j][k])*dVx*dVy*dVz
+                            Etherm[n] = Etherm[n] + (1.0/(gam-1))*(D.prs[i][j][k]*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY)*dVx*dVy*dVz
                             #Emag[n] = Emag[n] + ((D.Bx1[i][j][k] * D.Bx1[i][j][k] + D.Bx2[i][j][k] * D.Bx2[i][j][k] + D.Bx3[i][j][k] *D.Bx3[i][j][k]) *UNIT_FIELD*UNIT_FIELD/ (8 * np.pi)) * dVx*dVy*dVz
 
                             mass[n] = mass[n] + D.rho[i][j][k]*UNIT_DENSITY*dVx*dVy*dVz
@@ -82,7 +82,7 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
                         V2 = (D.vx1[i][j] * D.vx1[i][j] + D.vx2[i][j] * D.vx2[i][j] + D.vx3[i][j] * D.vx3[i][j]) * UNIT_VELOCITY * UNIT_VELOCITY
                         gamma = 1.0 / np.sqrt(1.0 - V2 / (c * c))
                         Ekin[n] = Ekin[n] + D.rho[i][j] * UNIT_DENSITY * (gamma - 1.0)*c*c * dVx*dVy
-                        Etherm[n] = Etherm[n] + (1.0/(gam-1.0))*(D.prs[i][j])*dVx*dVy
+                        Etherm[n] = Etherm[n] + (1.0/(gam-1.0))*(D.prs[i][j]*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY)*dVx*dVy
                         #Emag[n] = Emag[n] + ((D.Bx1[i][j] * D.Bx1[i][j] + D.Bx2[i][j] * D.Bx2[i][j] + D.Bx3[i][j] * D.Bx3[i][j]) *UNIT_FIELD*UNIT_FIELD / (8 * np.pi)) * dVx*dVy
 
                         mass[n] = mass[n] + D.rho[i][j]*UNIT_DENSITY*dVx*dVy
@@ -98,7 +98,7 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
                 V2 = (D.vx1[i]*D.vx1[i] + D.vx2[i]*D.vx2[i] + D.vx3[i]*D.vx3[i])*UNIT_VELOCITY*UNIT_VELOCITY
                 gamma = 1.0/np.sqrt(1.0 - V2/(c*c))
                 Ekin[n] = Ekin[n] + D.rho[i]*UNIT_DENSITY*(gamma - 1.0)*c*c*dVx
-                Etherm[n] = Etherm[n] + (1.0/(gam-1.0))*(D.prs[i])*dVx
+                Etherm[n] = Etherm[n] + (1.0/(gam-1.0))*(D.prs[i])*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY*dVx
                 #Emag[n] = Emag[n] + ((D.Bx1[i]*D.Bx1[i]+D.Bx2[i]*D.Bx2[i]+D.Bx3[i]*D.Bx3[i]) *UNIT_FIELD*UNIT_FIELD/(8*np.pi))*dVx
 
                 mass[n] = mass[n] + D.rho[i]*UNIT_DENSITY*dVx
