@@ -36,6 +36,8 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
                 dVx = D.dx1[i]*UNIT_LENGTH
             elif(D.geometry == 'CYLINDRICAL'):
                 dVx = D.x1[i]*D.dx1[i]*UNIT_LENGTH*UNIT_LENGTH
+            elif(D.geometry == 'POLAR'):
+                dVx = D.x1[i] * D.dx1[i] * UNIT_LENGTH * UNIT_LENGTH
             elif(D.geometry == 'SPHERICAL'):
                 dVx = D.x1[i]*D.x1[i]*D.dx1[i]*UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH
 
@@ -48,6 +50,8 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
                         dVy = D.dx2[j]*UNIT_LENGTH
                     elif(D.geometry == 'CYLINDRICAL'):
                         dVy = D.dx2[j]*UNIT_LENGTH
+                    elif (D.geometry == 'POLAR'):
+                        dVy = D.dx2[j]
                     elif(D.geometry == 'SPHERICAL'):
                         dVy = np.sin(D.x2[j])*D.dx2[j]
 
@@ -71,7 +75,6 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
                             mass[n] = mass[n] + D.rho[i][j][k]*UNIT_DENSITY*dVx*dVy*dVz
                     else:
 
-                        dVy = 1.0
                         if (D.geometry == 'CARTESIAN'):
                             dVy = dVy
                         elif (D.geometry == 'CYLINDRICAL'):
@@ -91,6 +94,8 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
                 if (D.geometry == 'CARTESIAN'):
                     dVx = dVx
                 elif (D.geometry == 'CYLINDRICAL'):
+                    dVx = dVx*2*np.pi
+                elif(D.geometry == 'POLAR'):
                     dVx = dVx*2*np.pi
                 elif (D.geometry == 'SPHERICAL'):
                     dVx = dVx*4*np.pi
