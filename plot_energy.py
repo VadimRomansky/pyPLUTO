@@ -90,7 +90,7 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
     for n in range(ntot+1):
         D = pp.pload(n, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho', 'Bx1', 'Bx2', 'Bx3'], w_dir=w_dir,
                      datatype=datatype)
-        Ekin[n] = np.sum(D.rho*(1.0/np.sqrt(1.0 - (D.vx1*D.vx1 + D.vx2*D.vx2+D.vx3*D.vx3)*UNIT_VELOCITY*UNIT_VELOCITY/(c*c))-1.0)*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY*Vcell*UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH)
+        Ekin[n] = np.sum(D.rho*c*c*(1.0/np.sqrt(1.0 - (D.vx1*D.vx1 + D.vx2*D.vx2+D.vx3*D.vx3)*UNIT_VELOCITY*UNIT_VELOCITY/(c*c))-1.0)*UNIT_DENSITY*Vcell*UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH)
         Etherm[n] = np.sum((D.prs*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY/(gam-1.0))*Vcell*UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH)
         Emag[n] = np.sum(((D.Bx1*D.Bx1 + D.Bx2*D.Bx2 + D.Bx3*D.Bx3)/(8*np.pi))*UNIT_FIELD*UNIT_FIELD*Vcell*UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH)
 
