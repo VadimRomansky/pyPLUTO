@@ -37,7 +37,7 @@ def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         print("wrong axis")
         return
 
-    startOffset = 20
+    startOffset = 0
 
     for i in range(ntot - startOffset + 1):
         D = pp.pload(i+startOffset, varNames=['T'], w_dir=w_dir, datatype=datatype)

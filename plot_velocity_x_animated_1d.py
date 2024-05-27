@@ -5,35 +5,34 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 from getScalarArray_1d import getScalarArray_1d
-from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_velocity_x_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
     # f1 = plt.figure(figsize=[10,8])
     c = 2.998E10
     f1 = plt.figure()
 
-    D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
+    D = pp.pload(ntot, varNames=['vx1'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
+    Vx = getScalarArray_1d(D.vx1, UNIT_VELOCITY / c, axis, point1, point2)
 
-    minV = np.amin(V)
-    maxV = np.amax(V)
+    minV = np.amin(Vx)
+    maxV = np.amax(Vx)
 
     if (axis == 1):
         xmin = D.x1.min() * UNIT_LENGTH
         xmax = D.x1.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[0]
-        x = dx * range(V.shape[0]) + xmin
+        dx = (xmax - xmin) / Vx.shape[0]
+        x = dx * range(Vx.shape[0]) + xmin
     elif (axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[1]
-        x = dx * range(V.shape[1]) + xmin
+        dx = (xmax - xmin) / Vx.shape[1]
+        x = dx * range(Vx.shape[1]) + xmin
     elif (axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[2]
-        x = dx * range(V.shape[2]) + xmin
+        dx = (xmax - xmin) / Vx.shape[2]
+        x = dx * range(Vx.shape[2]) + xmin
     else:
         print("wrong axis")
         return
@@ -41,12 +40,12 @@ def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
     startOffset = 0
 
     for i in range(ntot - startOffset + 1):
-        D = pp.pload(i + startOffset, varNames=['vx1','vx2','vx3'], w_dir=w_dir, datatype=datatype)
-        V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
-        if (np.amin(V) < minV):
-            minV = np.amin(V)
-        if (np.amax(V) > maxV):
-            maxV = np.amax(V)
+        D = pp.pload(i + startOffset, varNames=['vx1'], w_dir=w_dir, datatype=datatype)
+        Vx = getScalarArray_1d(D.vx1, UNIT_VELOCITY / c, axis, point1, point2)
+        if (np.amin(Vx) < minV):
+            minV = np.amin(Vx)
+        if (np.amax(Vx) > maxV):
+            maxV = np.amax(Vx)
 
     def update(frame_number):
         # f1 = plt.figure(figsize=[6, 6])
@@ -54,14 +53,14 @@ def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
         ax = f1.add_subplot(111)
 
         ax.set_ylim([minV, maxV])
-        D = pp.pload(frame_number + startOffset, varNames=['vx1','vx2','vx3'], w_dir=w_dir, datatype=datatype)
-        V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
+        D = pp.pload(frame_number + startOffset, varNames=['vx1'], w_dir=w_dir, datatype=datatype)
+        Vx = getScalarArray_1d(D.vx1, UNIT_VELOCITY / c, axis, point1, point2)
 
         ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
         ax.set_ylabel(r'$T$', fontsize=40, fontweight='bold')
         ax.minorticks_on()
 
-        im2 = plt.plot(x, V)  # plotting fluid data.
+        im2 = plt.plot(x, Vx)  # plotting fluid data.
         # time.sleep(1)
         return im2
 
@@ -69,7 +68,7 @@ def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
     # plt.show()
 
-    f = r"velocity_1d.gif"
+    f = r"velocity_x_1d.gif"
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()
