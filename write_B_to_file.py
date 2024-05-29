@@ -32,18 +32,32 @@ def write_B_to_file(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatyp
     outFile = open('B.dat','w')
 
     npx = nx
+    x1 = D.x1r[0]
+    x2 = D.x1r[-1]
     if ((xmin != None) and (xmax != None)):
         npx = xmax - xmin
+        x1 = D.x1r[xmin]
+        x2 = D.x1r[xmax]
 
     npy = ny
+    y1 = D.x2r[0]
+    y2 = D.x2r[-1]
     if ((ymin != None) and (ymax != None)):
         npy = ymax - ymin
+        y1 = D.x2r[ymin]
+        y2 = D.x2r[ymax]
 
     npz = nz
+    z1 = D.x3r[0]
+    z2 = D.x3r[-1]
     if ((zmin != None) and (zmax != None)):
         npz = zmax - zmin
+        z1 = D.x3r[zmin]
+        z2 = D.x3r[zmax]
 
     print(npx, npy, npz, sep=' ', file=outFile)
+    print(x1, y1, z1, sep=' ', file=outFile)
+    print(x2, y2, z2, sep=' ', file=outFile)
 
     for i in range(nx):
         if (((xmin == None) or (xmax == None)) or ((i >= xmin) and (i < xmax))):
