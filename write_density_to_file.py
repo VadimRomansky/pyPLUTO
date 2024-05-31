@@ -51,8 +51,21 @@ def write_density_to_file(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
         z2 = D.x3r[zmax]
 
     print(npx, npy, npz, sep = ' ', file = outFile)
-    print(x1, y1, z1, sep=' ', file=outFile)
-    print(x2, y2, z2, sep=' ', file=outFile)
+
+    if(D.geometry == 'CARTESIAN'):
+        print(x1*UNIT_LENGTH, y1*UNIT_LENGTH, z1*UNIT_LENGTH, sep=' ', file=outFile)
+        print(x2*UNIT_LENGTH, y2*UNIT_LENGTH, z2*UNIT_LENGTH, sep=' ', file=outFile)
+    elif(D.geometry == 'CYLINDRICAL'):
+        print(x1 * UNIT_LENGTH, y1 * UNIT_LENGTH, z1, sep=' ', file=outFile)
+        print(x2 * UNIT_LENGTH, y2 * UNIT_LENGTH, z2, sep=' ', file=outFile)
+    elif(D.geometry == 'POLAR'):
+        print(x1 * UNIT_LENGTH, y1, z1 * UNIT_LENGTH, sep=' ', file=outFile)
+        print(x2 * UNIT_LENGTH, y2, z2 * UNIT_LENGTH, sep=' ', file=outFile)
+    elif(D.geometry == 'SPHERICAL'):
+        print(x1 * UNIT_LENGTH, y1, z1, sep=' ', file=outFile)
+        print(x2 * UNIT_LENGTH, y2, z2, sep=' ', file=outFile)
+    else :
+        print("unknown geometry")
 
     for i in range(nx):
         if(((xmin == None) or (xmax == None)) or ((i >= xmin) and (i < xmax))):

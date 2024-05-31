@@ -119,7 +119,7 @@ plt.rcParams['image.cmap'] = 'jet'
 
 ########### density
 
-#plot_density(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+plot_density(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_density_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.1E19, 0.7E19, -0.3E19, 0.3E19, datatype)
 #plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.1E19, 0.7E19, -0.3E19, 0.3E19, datatype)
@@ -217,7 +217,7 @@ plt.rcParams['image.cmap'] = 'jet'
 
 ######## writedata
 ### 1 because change to concentration
-write_density_to_file(ntot, w_dir, 1, UNIT_LENGTH, UNIT_VELOCITY, datatype, 0, 100, 200, 300)
-write_B_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 0, 100, 200, 300)
-write_velocity_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 0, 100, 200, 300)
+write_density_to_file(ntot, w_dir, 1, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+write_B_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+write_velocity_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
