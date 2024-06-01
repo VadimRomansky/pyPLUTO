@@ -80,4 +80,5 @@ def write_density_to_file(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
                             elif(ndim == 3):
                                 print(Rho[i][j][k], file = outFile)
 
+
     outFile.close()
