@@ -93,7 +93,7 @@ def plot_velocity_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
             Y = D.x2 * UNIT_LENGTH
 
         V11 = V1[::Nsampling,::Nsampling]
-        V22 = V2[:Nsampling,::Nsampling]
+        V22 = V2[::Nsampling,::Nsampling]
         Vv = V[::Nsampling, ::Nsampling]
 
         im2 = ax.quiver(X[::Nsampling], Y[::Nsampling], V11, V22, Vv, width = 0.001)  # plotting fluid data.

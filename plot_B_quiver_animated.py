@@ -87,7 +87,7 @@ def plot_B_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
             B2 = getScalarArray(D.Bx2, UNIT_VELOCITY / c, excl_axis, point)
 
         B11 = B1[::Nsampling,::Nsampling]
-        B22 = B2[:Nsampling,::Nsampling]
+        B22 = B2[::Nsampling,::Nsampling]
         Bb = B[::Nsampling, ::Nsampling]
 
         im2 = ax.quiver(X[::Nsampling], Y[::Nsampling], B11, B22, Bb, width = 0.001)  # plotting fluid data.

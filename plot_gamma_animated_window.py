@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray import getVectorArray
 
 
-def plot_gamma_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5):
+def plot_gamma_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5, aspect = 'equal'):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
 
@@ -73,7 +73,7 @@ def plot_gamma_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELO
         V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, excl_axis, point)
         gamma = 1 / np.sqrt(1 - np.square((V)))
 
-        im2 = ax.imshow(gamma, origin='upper', norm=colors.LogNorm(vmin=minV, vmax=maxV), aspect = 'auto',
+        im2 = ax.imshow(gamma, origin='upper', norm=colors.LogNorm(vmin=minV, vmax=maxV), aspect = aspect,
                         extent=[xmin1, xmax1, ymin1, ymax1])  # plotting fluid data.
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([ymin, ymax])
