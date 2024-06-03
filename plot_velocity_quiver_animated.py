@@ -13,7 +13,7 @@ from getVectorArray import getVectorArray
 
 def plot_velocity_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
     c = 2.998E10
-    f1 = plt.figure(figsize=[8,6])
+    f1 = plt.figure(figsize=[40,30])
     Nsampling = 5
 
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
@@ -70,8 +70,8 @@ def plot_velocity_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
     def update(frame_number):
         #f1 = plt.figure(figsize=[6, 6])
         f1.clear()
-        f1.set_figheight(8)
-        f1.set_figwidth(6)
+        f1.set_figheight(40)
+        f1.set_figwidth(30)
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
