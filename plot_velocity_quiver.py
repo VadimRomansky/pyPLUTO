@@ -7,7 +7,7 @@ from getScalarArray import getScalarArray
 from getVectorArray import getVectorArray
 
 
-def plot_velocity_quiver(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
+def plot_velocity_quiver(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_quiver.png', excl_axis = 3, point = 0.5):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -69,5 +69,5 @@ def plot_velocity_quiver(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, da
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('velocity_quiver.png')
+    plt.savefig(file_name)
     plt.close()

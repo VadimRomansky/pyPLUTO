@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray_1d import getScalarArray_1d
 
 
-def plot_velocity_y_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_velocity_y_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_y_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
     # f1 = plt.figure(figsize=[10,8])
     c = 2.998E10
     f1 = plt.figure()
@@ -68,7 +68,7 @@ def plot_velocity_y_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VEL
 
     # plt.show()
 
-    f = r"velocity_y_1d.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

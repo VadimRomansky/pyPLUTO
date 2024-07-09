@@ -7,7 +7,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_rtheta.gif'):
     f1 = plt.figure(figsize=[10,3])
 
     D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
@@ -122,7 +122,7 @@ def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"density_rtheta.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

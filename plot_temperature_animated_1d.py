@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray_1d import getScalarArray_1d
 
 
-def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'temperature_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure()
@@ -68,7 +68,7 @@ def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
     # plt.show()
 
-    f = r"temperature_1d.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

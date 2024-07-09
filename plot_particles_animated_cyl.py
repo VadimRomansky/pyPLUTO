@@ -3,7 +3,7 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype):
+def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype, file_name = 'particles_cyl.gif'):
     f1 = plt.figure(figsize=[10,8])
     P = pr.ploadparticles(0, w_dir, datatype=datatype,ptype='CR') # Loading particle data : particles.00ns_ch00.flt
 
@@ -56,7 +56,7 @@ def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VEL
 
     #plt.show()
 
-    f = r"./particles_cyl.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

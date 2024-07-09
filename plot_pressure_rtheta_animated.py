@@ -7,7 +7,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_pressure_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+def plot_pressure_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'pressure_rtheta.gif'):
     f1 = plt.figure(figsize=[6,8])
 
     D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
@@ -120,7 +120,7 @@ def plot_pressure_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"pressure_rtheta.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

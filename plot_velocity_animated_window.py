@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray import getVectorArray
 
 
-def plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'velocity_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
 
@@ -99,7 +99,7 @@ def plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"velocity_window.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

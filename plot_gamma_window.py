@@ -6,7 +6,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getVectorArray import getVectorArray
 
 
-def plot_gamma_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_gamma_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'gamma_window.png', excl_axis = 3, point = 0.5, aspect = 'equal'):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -44,5 +44,5 @@ def plot_gamma_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin,
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('gamma_window.png')
+    plt.savefig(file_name)
     plt.close()

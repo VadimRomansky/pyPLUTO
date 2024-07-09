@@ -6,7 +6,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getScalarArray import getScalarArray
 
 
-def plot_temperature(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 3, aspect = 'equal'):
+def plot_temperature(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'temperature.png', excl_axis = 3, point = 3, aspect = 'equal'):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
@@ -39,5 +39,5 @@ def plot_temperature(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, dataty
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('temperature.png')
+    plt.savefig(file_name)
     plt.close()

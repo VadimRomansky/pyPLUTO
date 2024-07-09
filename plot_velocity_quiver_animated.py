@@ -11,7 +11,7 @@ from getScalarArray import getScalarArray
 from getVectorArray import getVectorArray
 
 
-def plot_velocity_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5):
+def plot_velocity_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_quiver.gif', excl_axis = 3, point = 0.5):
     c = 2.998E10
     f1 = plt.figure(figsize=[40,30])
     Nsampling = 5
@@ -118,7 +118,7 @@ def plot_velocity_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"velocity_quiver.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

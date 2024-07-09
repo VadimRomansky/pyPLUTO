@@ -8,7 +8,7 @@ from getScalarArray_1d import getScalarArray_1d
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_profile(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_profile(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'profile.png', axis = 1, point1 = 0.5, point2 = 0.5):
     c = 2.998E10
     f1 = plt.figure(figsize=[10, 8])
     ax = f1.add_subplot(111)
@@ -45,5 +45,5 @@ def plot_profile(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype
 
     im2 = plt.plot(x, V, 'r-', x, Prs, 'g-', x, Rho, 'b-')  # plotting fluid data.
     ax.legend(['vx', 'pressure', 'density'])
-    plt.savefig('profile.png')
+    plt.savefig(file_name)
     plt.close()
