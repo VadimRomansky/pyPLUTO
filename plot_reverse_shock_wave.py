@@ -26,6 +26,7 @@ def plot_reverse_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     x = dx * range(Rho.shape[0]) + xmin
 
     upstreamV = np.zeros([ntot+1])
+    currentShock = 0;
 
     for i in range(ntot+1):
         D = pp.pload(i, varNames = ['rho','vx1'], w_dir = w_dir, datatype=datatype) # Load fluid data.
@@ -33,10 +34,11 @@ def plot_reverse_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
         Rho = getScalarArray_1d(D.rho, UNIT_DENSITY, 1, 0.5, 0.5)
         V = getScalarArray_1d(D.vx1, UNIT_VELOCITY, 1, 0.5, 0.5)
 
-        for j in range(nx-10):
+        for j in range(currentShock,nx-10):
             if(Rho[j+10] > 2*Rho[j]):
-                X[i] = x[j+10]
+                X[i] = x[j]
                 upstreamV[i] = V[j]
+                currentShock = j
                 break
 
     X[0] = 4*24*3600*c
