@@ -14,7 +14,7 @@ def plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
-    gamma = 1 / np.sqrt(1 + np.square(V))
+    gamma = 1 / np.sqrt(1 - np.square(V))
 
     minV = np.amin(gamma)
     maxV = np.amax(gamma)

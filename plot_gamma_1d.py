@@ -17,7 +17,7 @@ def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatyp
     D = pp.pload(ntot, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
 
     V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
-    gamma = 1/np.sqrt(1 + np.square(V))
+    gamma = 1/np.sqrt(1 - np.square(V))
 
     if(axis == 1):
         xmin = D.x1.min()*UNIT_LENGTH
