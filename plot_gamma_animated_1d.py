@@ -43,7 +43,7 @@ def plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     for i in range(ntot - startOffset + 1):
         D = pp.pload(i, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
         V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
-        gamma = 1 / np.sqrt(1 + np.square(V))
+        gamma = 1 / np.sqrt(1 - np.square(V))
         if (np.amin(gamma) < minV):
             minV = np.amin(gamma)
         if (np.amax(gamma) > maxV):
@@ -57,7 +57,7 @@ def plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         ax.set_ylim([0.9*minV, 1.1*maxV])
         D = pp.pload(frame_number, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)
         V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
-        gamma = 1 / np.sqrt(1 + np.square(V))
+        gamma = 1 / np.sqrt(1 - np.square(V))
 
         ax.set_xlabel(r'x', fontsize=18)
         ax.set_ylabel(r'v/c', fontsize=18)

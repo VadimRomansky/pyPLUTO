@@ -7,8 +7,6 @@ from plot_B_1d_series import plot_B_1d_series
 from plot_B_animated import plot_B_animated
 from plot_B_animated_1d import plot_B_animated_1d
 from plot_B_animated_window import plot_B_animated_window
-from plot_B_quiver import plot_B_quiver
-from plot_B_quiver_animated import plot_B_quiver_animated
 from plot_B_window import plot_B_window
 from plot_Bx import plot_Bx
 from plot_Bx_window import plot_Bx_window
@@ -52,8 +50,8 @@ from plot_pressure_animated import plot_pressure_animated
 from plot_pressure_animated_1d import plot_pressure_animated_1d
 from plot_pressure_animated_window import plot_pressure_animated_window
 from plot_pressure_window import plot_pressure_window
-from plot_reverse_shock_wave import plot_reverse_shock_wave
 from plot_shock_wave import plot_shock_wave
+from plot_reverse_shock_wave import plot_reverse_shock_wave
 
 from plot_temperature import plot_temperature
 from plot_temperature_1d import plot_temperature_1d
@@ -69,39 +67,27 @@ from plot_velocity_1d_series import plot_velocity_1d_series
 from plot_velocity_animated import plot_velocity_animated
 from plot_velocity_animated_1d import plot_velocity_animated_1d
 from plot_velocity_animated_window import plot_velocity_animated_window
-from plot_velocity_quiver import plot_velocity_quiver
-from plot_velocity_quiver_animated import plot_velocity_quiver_animated
 from plot_velocity_window import plot_velocity_window
 from plot_velocity_x import plot_velocity_x
-from plot_velocity_x_1d import plot_velocity_x_1d
-from plot_velocity_x_animated import plot_velocity_x_animated
-from plot_velocity_x_animated_1d import plot_velocity_x_animated_1d
 from plot_velocity_x_window import plot_velocity_x_window
 from plot_velocity_y import plot_velocity_y
-from plot_velocity_y_animated import plot_velocity_y_animated
-from plot_velocity_y_animated_1d import plot_velocity_y_animated_1d
 from plot_velocity_y_window import plot_velocity_y_window
 from plot_velocity_z import plot_velocity_z
-from plot_velocity_z_animated import plot_velocity_z_animated
-from plot_velocity_z_animated_1d import plot_velocity_z_animated_1d
 from plot_velocity_z_window import plot_velocity_z_window
 
 from plot_profile import plot_profile
 from plot_profile_animated import plot_profile_animated
 from plot_profile_animated_window import plot_profile_animated_window
 from plot_profile_window import plot_profile_window
-from write_B_to_file import write_B_to_file
-from write_density_to_file import write_density_to_file
-from write_velocity_to_file import write_velocity_to_file
 
 w_dir='../../output/'
-#w_dir='../../output_2_winds_MWR1_1_4_4/'
+#w_dir='../../output_snr_rel_M0.005_E1E51_Mdot1E-6_V1E8_angle0.01/'
 #w_dir='../../output_snr_rel_M0.1_MWR4_4/'
 UNIT_DENSITY=1.672E-24;
 UNIT_LENGTH=3.086E17;
 UNIT_VELOCITY=2.998E10;
 datatype = 'dbl'
-ntot = 2
+ntot = 7
 
 plt.rcParams['image.cmap'] = 'jet'
 
@@ -109,11 +95,8 @@ plt.rcParams['image.cmap'] = 'jet'
 #plot_B(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_B_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_B_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.1E19, 0.7E19, -0.3E19, 0.3E19, datatype)
-plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+#plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.1E19, 0.7E19, -0.3E19, 0.3E19, datatype)
-
-#plot_B_quiver(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_B_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 #plot_Bx(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_Bx_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -1E16, 1E16, -1E16, 1E16, datatype)
@@ -134,10 +117,6 @@ plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.1E19, 0.7E19, -0.3E19, 0.3E19, datatype)
 
 #plot_density_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_density_1d(10, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d_10.png')
-#plot_density_1d(20, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d_20.png')
-#plot_density_1d(25, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d_25.png')
-#plot_density_1d(30, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d_30.png')
 #plot_density_1d_series(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_density_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
@@ -170,9 +149,9 @@ plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_gamma_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_gamma_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.1E19, 0.7E19, -0.3E19, 0.3E19, datatype)
 
-#plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_gamma_1d_series(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+plot_gamma_1d_series(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 #plot_gamma_rtheta(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_gamma_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
@@ -185,29 +164,12 @@ plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.1E19, 0.7E19, -0.3E19, 0.3E19, datatype)
 
-#plot_velocity_quiver(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_velocity_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-
 #plot_velocity_x(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_x_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -1E16, 1E16, -1E16, 1E16, datatype)
 #plot_velocity_y(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_y_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -1E16, 1E16, -1E16, 1E16, datatype)
 #plot_velocity_z(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_z_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -1E16, 1E16, -1E16, 1E16, datatype)
-
-#plot_velocity_x_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_velocity_y_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_velocity_z_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-
-#plot_velocity_x_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_velocity_x_1d(10, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_x_1d_10.png')
-#plot_velocity_x_1d(20, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_x_1d_20.png')
-#plot_velocity_x_1d(25, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_x_1d_25.png')
-#plot_velocity_x_1d(30, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_x_1d_30.pbg')
-
-#plot_velocity_x_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_velocity_y_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_velocity_z_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 #plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_velocity_1d_series(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
@@ -222,25 +184,19 @@ plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 ####### some
 
-plot_distribution(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-plot_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+#plot_distribution(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+#plot_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_escaped_distribution(150, 2500, w_dir, datatype)
 #plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_reverse_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 
 ######### particles
 
 #plot_particle_trajectory(ntot, 0, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-plot_particles(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, background='B')
+#plot_particles(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+#plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -100, 100, datatype)
 #plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -2E16, 2E16, datatype)
-
-######## writedata
-### 1 because change to concentration
-#write_density_to_file(ntot, w_dir, 1, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#write_B_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
-#write_velocity_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
