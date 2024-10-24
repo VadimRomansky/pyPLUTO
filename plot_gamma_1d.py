@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'gamma_1d.png', axis = 1, point1 = 0.5, point2 = 0.5):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -17,7 +17,7 @@ def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatyp
     D = pp.pload(ntot, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
 
     V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
-    gamma = 1/np.sqrt(1 + np.square(V))
+    gamma = 1/np.sqrt(1 - np.square(V))
 
     if(axis == 1):
         xmin = D.x1.min()*UNIT_LENGTH
@@ -46,5 +46,5 @@ def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatyp
     plt.plot(x, gamma)
 
     #plt.show()
-    plt.savefig('gamma_1d.png')
+    plt.savefig(file_name)
     plt.close()

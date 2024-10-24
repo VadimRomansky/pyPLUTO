@@ -5,7 +5,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getVectorArray import getVectorArray
 
 
-def plot_gamma(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_gamma(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'gamma.png', excl_axis = 3, point = 0.5, aspect = 'equal'):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     # plt.rcParams['text.usetex'] = True
@@ -41,5 +41,5 @@ def plot_gamma(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, ex
     ax.set_ylabel(r'Y-axis', fontsize=40, fontweight='bold')
     ax.minorticks_on()
     # plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('gamma.png')
+    plt.savefig(file_name)
     plt.close()

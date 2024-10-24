@@ -4,16 +4,17 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
+from getScalarArray_1d import getScalarArray_1d
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_1d.png', axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_velocity_x_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_x_1d.png', axis = 1, point1 = 0.5, point2 = 0.5):
     c = 2.998E10
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
 
-    D = pp.pload(ntot, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
-    V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
+    D = pp.pload(ntot, varNames = ['vx1'], w_dir = w_dir, datatype=datatype) # Load fluid data.
+    V = getScalarArray_1d(D.vx1, UNIT_VELOCITY/c, axis, point1, point2)
 
     minV = np.amin(V)
     maxV = np.amax(V)
@@ -37,7 +38,7 @@ def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, data
         print("wrong axis")
         return
     ax.set_ylabel(r'v/c',fontsize=18)
-    ax.set_yscale("log")
+    #ax.set_yscale("log")
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.plot(x, V)
