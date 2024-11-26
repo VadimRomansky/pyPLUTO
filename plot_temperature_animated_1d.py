@@ -11,7 +11,7 @@ def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure()
-    plt.rcParams["figure.dpi"] = 500
+    plt.rcParams["figure.dpi"] = 200
 
     D = pp.pload(ntot, varNames=['T'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     T = getScalarArray_1d(D.T, 1.0, axis, point1, point2)

@@ -14,7 +14,7 @@ from getVectorArray import getVectorArray
 def plot_velocity_z_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_z.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
-    plt.rcParams["figure.dpi"] = 500
+    plt.rcParams["figure.dpi"] = 200
 
     D = pp.pload(ntot, varNames=['vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx3.shape))

@@ -6,7 +6,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from matplotlib.animation import FuncAnimation
 def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'particles.gif'):
     f1 = plt.figure(figsize=[10,10])
-    plt.rcParams["figure.dpi"] = 500
+    plt.rcParams["figure.dpi"] = 200
 
     P = pr.ploadparticles(0, w_dir, datatype=datatype,ptype='CR') # Loading particle data : particles.00ns_ch00.flt
 

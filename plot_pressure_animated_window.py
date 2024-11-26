@@ -14,7 +14,7 @@ def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,6])
-    plt.rcParams["figure.dpi"] = 500
+    plt.rcParams["figure.dpi"] = 200
 
     D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.prs.shape))
