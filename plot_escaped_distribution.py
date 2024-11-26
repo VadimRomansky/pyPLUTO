@@ -4,6 +4,7 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 def plot_escaped_distribution(ns, npr, w_dir, datatype, file_name = 'escaped_distribution.png'):
     f1 = plt.figure(figsize=[6,6])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
     PVmag1 = np.zeros([npr])

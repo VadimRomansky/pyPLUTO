@@ -16,6 +16,7 @@ def plot_energy_in_region(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
 
     UNIT_FIELD = np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
     f1 = plt.figure(figsize=[10, 8])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho','Bx1','Bx2','Bx3'], w_dir=w_dir, datatype=datatype)
 

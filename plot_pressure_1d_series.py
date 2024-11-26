@@ -10,6 +10,7 @@ from getScalarArray_1d import getScalarArray_1d
 def plot_pressure_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'pressure_1d_series.png', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
+    plt.rcParams["figure.dpi"] = 500
 
     D = pp.pload(number, varNames = ['prs'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     Prs3 = getScalarArray_1d(D.prs, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)

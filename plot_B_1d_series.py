@@ -9,6 +9,7 @@ from getVectorArray_1d import getVectorArray_1d
 
 def plot_B_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, file_name = 'B_1d_series.png', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
+    plt.rcParams["figure.dpi"] = 500
     #plt.rcParams['text.usetex'] = True
 
     D = pp.pload(number, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.

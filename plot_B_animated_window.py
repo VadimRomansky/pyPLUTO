@@ -12,6 +12,7 @@ from getVectorArray import getVectorArray
 
 def plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'B_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
     f1 = plt.figure(figsize=[8,6])
+    plt.rcParams["figure.dpi"] = 500
 
     D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Bx1.shape))

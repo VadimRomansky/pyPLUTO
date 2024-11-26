@@ -8,9 +8,9 @@ from getScalarArray_1d import getScalarArray_1d
 
 
 def plot_velocity_y_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_y_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
-    # f1 = plt.figure(figsize=[10,8])
+    f1 = plt.figure(figsize=[10,8])
     c = 2.998E10
-    f1 = plt.figure()
+    plt.rcParams["figure.dpi"] = 500
 
     D = pp.pload(ntot, varNames=['vx2'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     Vy = getScalarArray_1d(D.vx2, UNIT_VELOCITY / c, axis, point1, point2)

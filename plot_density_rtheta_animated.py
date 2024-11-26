@@ -9,6 +9,7 @@ from matplotlib.animation import FuncAnimation
 
 def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_rtheta.gif'):
     f1 = plt.figure(figsize=[10,3])
+    plt.rcParams["figure.dpi"] = 500
 
     D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.rho.shape))

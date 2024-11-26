@@ -10,6 +10,7 @@ from getScalarArray_1d import getScalarArray_1d
 def plot_density_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
+    plt.rcParams["figure.dpi"] = 500
     f1 = plt.figure()
 
     D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.

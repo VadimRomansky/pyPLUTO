@@ -13,7 +13,8 @@ from getVectorArray import getVectorArray
 
 def plot_B_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B_quiver.gif', excl_axis = 3, point = 0.5):
     c = 2.998E10
-    f1 = plt.figure(figsize=[40,30])
+    f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 500
     Nsampling = 5
 
     D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
@@ -70,8 +71,8 @@ def plot_B_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     def update(frame_number):
         #f1 = plt.figure(figsize=[6, 6])
         f1.clear()
-        f1.set_figheight(40)
-        f1.set_figwidth(30)
+        f1.set_figheight(10)
+        f1.set_figwidth(8)
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.

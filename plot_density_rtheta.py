@@ -9,6 +9,7 @@ def plot_density_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,data
     #plt.rcParams['text.usetex'] = True
 
     f1 = plt.figure(figsize=[10,4])
+    plt.rcParams["figure.dpi"] = 500
 
     D = pp.pload(ns, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     xmin = D.x1.min() * UNIT_LENGTH
