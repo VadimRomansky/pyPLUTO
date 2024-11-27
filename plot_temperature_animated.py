@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray import getScalarArray
 
 
-def plot_temperature_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'temperature.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_temperature_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'temperature.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
@@ -78,6 +78,9 @@ def plot_temperature_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
         im2 = ax.imshow(T, origin='upper', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
+        if(transponse):
+            im2 = ax.imshow(T.T, origin='upper', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect=aspect,
+                            extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.

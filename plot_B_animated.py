@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray import getVectorArray
 
 
-def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     f1 = plt.figure(figsize=[6,8])
     plt.rcParams["figure.dpi"] = 200
 
@@ -76,6 +76,9 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
 
         im2 = ax.imshow(B, origin='upper', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
+        if(transponse):
+            im2 = ax.imshow(B.T, origin='upper', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
+                            extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.

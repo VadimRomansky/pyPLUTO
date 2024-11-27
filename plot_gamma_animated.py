@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray import getVectorArray
 
 
-def plot_gamma_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'gamma.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_gamma_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'gamma.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
     plt.rcParams["figure.dpi"] = 200
@@ -80,6 +80,9 @@ def plot_gamma_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
 
         im2 = ax.imshow(gamma, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
+        if(transponse):
+            im2 = ax.imshow(gamma.T, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect=aspect,
+                            extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.

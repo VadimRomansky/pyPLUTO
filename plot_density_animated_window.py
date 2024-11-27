@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray import getScalarArray
 
 
-def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'density_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'density_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,6])
@@ -80,6 +80,11 @@ def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
                         extent=[xmin1, xmax1, ymin1, ymax1])  # plotting fluid data.
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([ymin, ymax])
+        if(transponse):
+            im2 = ax.imshow(Rho.T, origin='upper', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect=aspect,
+                            extent=[ymin1, ymax1, xmin1, xmax1])  # plotting fluid data.
+            ax.set_xlim([ymin, ymax])
+            ax.set_ylim([xmin, xmax])
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
