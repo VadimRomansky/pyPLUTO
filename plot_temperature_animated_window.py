@@ -81,7 +81,8 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([ymin, ymax])
         if(transponse):
-            im2 = ax.imshow(T.T, origin='upper', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect=aspect,
+            #np.flip(T, 0)
+            im2 = ax.imshow(T.T, origin='lower', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect=aspect,
                             extent=[ymin1, ymax1, xmin1, xmax1])  # plotting fluid data.
             ax.set_xlim([ymin, ymax])
             ax.set_ylim([xmin, xmax])

@@ -80,7 +80,8 @@ def plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([ymin, ymax])
         if(transponse):
-            im2 = ax.imshow(V.T, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect=aspect,
+            #np.flip(V, 0)
+            im2 = ax.imshow(V.T, origin='lower', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect=aspect,
                             extent=[ymin1, ymax1, xmin1, xmax1])  # plotting fluid data.
             ax.set_xlim([ymin, ymax])
             ax.set_ylim([xmin, xmax])

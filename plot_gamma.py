@@ -36,7 +36,8 @@ def plot_gamma(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, fi
                     extent=[D.x1.min() * UNIT_LENGTH, D.x1.max() * UNIT_LENGTH, D.x2.min() * UNIT_LENGTH,
                             D.x2.max() * UNIT_LENGTH])  # plotting fluid data.
     if(transponse):
-        im2 = ax.imshow(gamma.T, origin='upper', norm=colors.LogNorm(vmin=minV, vmax=maxV), aspect=aspect,
+        #np.flip(gamma, 0)
+        im2 = ax.imshow(gamma.T, origin='lower', norm=colors.LogNorm(vmin=minV, vmax=maxV), aspect=aspect,
                         extent=[D.x2.min() * UNIT_LENGTH, D.x2.max() * UNIT_LENGTH, D.x1.min() * UNIT_LENGTH,
                                 D.x1.max() * UNIT_LENGTH])  # plotting fluid data.
     cax2 = f1.add_axes([0.125, 0.92, 0.775, 0.03])

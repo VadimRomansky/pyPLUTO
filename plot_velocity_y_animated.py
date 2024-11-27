@@ -77,7 +77,8 @@ def plot_velocity_y_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
         im2 = ax.imshow(Vy, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         if(transponse):
-            im2 = ax.imshow(Vy.T, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect=aspect,
+            #np.flip(Vy, 0)
+            im2 = ax.imshow(Vy.T, origin='lower', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect=aspect,
                         extent = [ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()

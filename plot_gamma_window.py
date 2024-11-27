@@ -42,7 +42,8 @@ def plot_gamma_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin,
 
     im2 = ax.imshow(gamma, origin='upper', norm = colors.LogNorm(vmin = minV, vmax = maxV), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
     if(transponse):
-        im2 = ax.imshow(gamma.T, origin='upper', norm = colors.LogNorm(vmin = minV, vmax = maxV), aspect=aspect,extent=[D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
+        #np.flip(gamma, 0)
+        im2 = ax.imshow(gamma.T, origin='lower', norm = colors.LogNorm(vmin = minV, vmax = maxV), aspect=aspect,extent=[D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
     cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
     #im2.set_clim(minB, maxB)
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.

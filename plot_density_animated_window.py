@@ -81,7 +81,8 @@ def plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([ymin, ymax])
         if(transponse):
-            im2 = ax.imshow(Rho.T, origin='upper', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect=aspect,
+            #np.flip(Rho, 0)
+            im2 = ax.imshow(Rho.T, origin='lower', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect=aspect,
                             extent=[ymin1, ymax1, xmin1, xmax1])  # plotting fluid data.
             ax.set_xlim([ymin, ymax])
             ax.set_ylim([xmin, xmax])

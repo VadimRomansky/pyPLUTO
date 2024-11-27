@@ -81,7 +81,8 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
         im2 = ax.imshow(Rho, origin='upper', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         if(transponse):
-            im2 = ax.imshow(Rho.T, origin='upper', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect=aspect,
+            #np.flip(Rho, 0)
+            im2 = ax.imshow(Rho.T, origin='lower', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect=aspect,
                             extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()

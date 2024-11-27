@@ -80,7 +80,8 @@ def plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         ax.set_ylim([ymin, ymax])
 
         if(transponse):
-            im2 = ax.imshow(B.T, origin='upper', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
+            #np.flip(B, 0)
+            im2 = ax.imshow(B.T, origin='lower', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
                         extent=[ymin1, ymax1, xmin1, xmax1])  # plotting fluid data.
             ax.set_xlim([ymin, ymax])
             ax.set_ylim([xmin, xmax])

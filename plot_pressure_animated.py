@@ -79,7 +79,8 @@ def plot_pressure_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         im2 = ax.imshow(Prs, origin='upper', norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         if(transponse):
-            im2 = ax.imshow(Prs.T, origin='upper', norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs), aspect=aspect,
+            #np.flip(Prs, 0)
+            im2 = ax.imshow(Prs.T, origin='lower', norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs), aspect=aspect,
                             extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()

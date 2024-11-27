@@ -79,7 +79,8 @@ def plot_temperature_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
         im2 = ax.imshow(T, origin='upper', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         if(transponse):
-            im2 = ax.imshow(T.T, origin='upper', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect=aspect,
+            #np.flip(T, 0)
+            im2 = ax.imshow(T.T, origin='lower', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect=aspect,
                             extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()

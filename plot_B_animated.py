@@ -77,7 +77,8 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
         im2 = ax.imshow(B, origin='upper', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         if(transponse):
-            im2 = ax.imshow(B.T, origin='upper', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
+            #np.flip(B, 0)
+            im2 = ax.imshow(B.T, origin='lower', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
                             extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
