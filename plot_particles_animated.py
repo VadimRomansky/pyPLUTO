@@ -4,7 +4,11 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'particles.gif'):
+
+from getVectorArray import getVectorArray
+
+
+def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'particles.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
     f1 = plt.figure(figsize=[10,10])
     plt.rcParams["figure.dpi"] = 200
 
@@ -48,37 +52,14 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
 
     nx = D.Bx1.shape[0]
     ny = D.Bx1.shape[1]
-    B = np.zeros([ny, nx])
-
-    if (ndim == 2):
-        Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    if (ndim == 3):
-        zpoint = math.floor(D.Bx1.T.shape[0] / 2)
-        Bz = D.Bx3.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    np.flip(B, 0)
+    B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
 
     minB = np.amin(B)
     maxB = np.amax(B)
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            Bz = D.Bx3[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        if (ndim == 3):
-            zpoint = math.floor(D.Bx1.T.shape[0] / 2)
-            Bz = D.Bx3[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
+        B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
         if (np.amin(B) < minB):
             minB = np.amin(B)
         if (np.amax(B) > maxB):
@@ -114,21 +95,9 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
         im1 = ax.scatter(particles[:,0], particles[:,1], s=10, c=PVmag, cmap=plt.get_cmap('hot'), vmin = 0, vmax = maxU)  # scatter plot
         plt.colorbar(im1, cax=cax1)  # vertical colorbar for particle data.
         D = pp.pload(frame_number, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            Bz = D.Bx3[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        if (ndim == 3):
-            zpoint = math.floor(D.Bx1.shape[2] / 2)
-            Bz = D.Bx3[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-
-        np.flip(B, 0)
+        B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
         #V=D.rho.T
-        im2 = ax.imshow(B, origin='upper', norm=colors.Normalize(vmin=minB, vmax=maxB), aspect = 'auto',
+        im2 = ax.imshow(B, origin='upper', norm=colors.Normalize(vmin=minB, vmax=maxB), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
 
