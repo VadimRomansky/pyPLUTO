@@ -26,13 +26,13 @@ def plot_B_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, fi
     elif(axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / B.shape[1]
-        x = dx * range(B.shape[1]) + xmin
+        dx = (xmax - xmin) / B.shape[0]
+        x = dx * range(B.shape[0]) + xmin
     elif(axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / B.shape[2]
-        x = dx * range(B.shape[2]) + xmin
+        dx = (xmax - xmin) / B.shape[0]
+        x = dx * range(B.shape[0]) + xmin
     else:
         print("wrong axis")
         return

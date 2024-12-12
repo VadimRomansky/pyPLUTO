@@ -30,13 +30,13 @@ def plot_pressure_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
     elif (axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / Prs1.shape[1]
-        x = dx * range(Prs1.shape[1]) + xmin
+        dx = (xmax - xmin) / Prs1.shape[0]
+        x = dx * range(Prs1.shape[0]) + xmin
     elif (axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / Prs1.shape[2]
-        x = dx * range(Prs1.shape[2]) + xmin
+        dx = (xmax - xmin) / Prs1.shape[0]
+        x = dx * range(Prs1.shape[0]) + xmin
     else:
         print("wrong axis")
         return

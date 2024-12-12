@@ -41,30 +41,30 @@ def plot_density_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     elif(axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / Rho.shape[1]
-        x = dx * range(Rho.shape[1]) + xmin
+        dx = (xmax - xmin) / Rho.shape[0]
+        x = dx * range(Rho.shape[0]) + xmin
         N1 = 0
-        N2 = Rho.shape[1] - 1
-        for i in range(Rho.shape[1]):
+        N2 = Rho.shape[0] - 1
+        for i in range(Rho.shape[0]):
             if(x[i] > xmin1):
                 N1 = i;
                 break;
-        for i in range(Rho.shape[1]):
+        for i in range(Rho.shape[0]):
             if(x[i] > xmax1):
                 N2 = i-1;
                 break;
     elif(axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / Rho.shape[2]
-        x = dx * range(Rho.shape[2]) + xmin
+        dx = (xmax - xmin) / Rho.shape[0]
+        x = dx * range(Rho.shape[0]) + xmin
         N1 = 0
-        N2 = Rho.shape[2] - 1
-        for i in range(Rho.shape[2]):
+        N2 = Rho.shape[0] - 1
+        for i in range(Rho.shape[0]):
             if(x[i] > xmin1):
                 N1 = i;
                 break;
-        for i in range(Rho.shape[2]):
+        for i in range(Rho.shape[0]):
             if(x[i] > xmax1):
                 N2 = i-1;
                 break;
