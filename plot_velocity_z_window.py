@@ -16,6 +16,9 @@ def plot_velocity_z_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 
     ax = f1.add_subplot(111)
     ax.set_xlim([xmin, xmax])
     ax.set_ylim([ymin, ymax])
+    if(transponse):
+        ax.set_xlim([ymin, ymax])
+        ax.set_ylim([xmin, xmax])
 
     D = pp.pload(ns, varNames = ['vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx3.shape))
