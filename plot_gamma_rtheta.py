@@ -9,6 +9,7 @@ def plot_gamma_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,dataty
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     plt.rcParams["figure.dpi"] = 500
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ns, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     xmin = D.x1.min() * UNIT_LENGTH

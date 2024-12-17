@@ -15,6 +15,7 @@ def plot_velocity_z_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
     plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx3.shape))

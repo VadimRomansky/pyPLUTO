@@ -15,6 +15,7 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
     plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['T'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.T.shape))

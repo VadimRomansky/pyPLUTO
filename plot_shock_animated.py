@@ -15,6 +15,7 @@ def plot_shock_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
     plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['Shock'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Shock.shape))
