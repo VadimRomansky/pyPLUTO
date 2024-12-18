@@ -22,7 +22,7 @@ def plot_entropy_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
 
     S = np.zeros([nx])
     for i in range(nx):
-        S[i] = Prs[i] * pow(Rho[i], gam)
+        S[i] = Prs[i] / pow(Rho[i], gam)
 
     minS = np.amin(S)
     maxS = np.amax(S)
@@ -39,7 +39,7 @@ def plot_entropy_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
         Prs = getScalarArray_1d(D.prs, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
         S = np.zeros([nx])
         for i in range(nx):
-            S[i] = Prs[i] * pow(Rho[i], gam)
+            S[i] = Prs[i] / pow(Rho[i], gam)
         if (np.amin(S) < minS):
             minS = np.amin(S)
         if (np.amax(S) > maxS):
@@ -56,7 +56,7 @@ def plot_entropy_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
         Prs = getScalarArray_1d(D.prs, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
         S = np.zeros([nx])
         for i in range(nx):
-            S[i] = Prs[i] * pow(Rho[i], gam)
+            S[i] = Prs[i] / pow(Rho[i], gam)
 
         ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
         ax.set_ylabel(r'$\rho~g~cm^{-3}$', fontsize=40, fontweight='bold')

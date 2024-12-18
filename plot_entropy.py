@@ -38,7 +38,7 @@ def plot_entropy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 
 
     for i in range(nx):
         for j in range(ny):
-            S[i][j] = Prs[i][j]*pow(Rho[i][j], gam)
+            S[i][j] = Prs[i][j]/pow(Rho[i][j], gam)
 
     minS = np.amin(S)
     maxS = np.amax(S)

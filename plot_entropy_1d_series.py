@@ -33,9 +33,9 @@ def plot_entropy_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
     S3 = np.zeros([nx])
 
     for i in range(nx):
-        S1[i] = Prs1[i]*pow(Rho1[i],gam)
-        S2[i] = Prs2[i]*pow(Rho2[i],gam)
-        S3[i] = Prs3[i]*pow(Rho3[i],gam)
+        S1[i] = Prs1[i]/pow(Rho1[i],gam)
+        S2[i] = Prs2[i]/pow(Rho2[i],gam)
+        S3[i] = Prs3[i]/pow(Rho3[i],gam)
 
     minS = min(np.amin(S1), np.amin(S2), np.amin(S3))
     maxS = max(np.amax(S1), np.amax(S2), np.amax(S3))

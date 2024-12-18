@@ -25,7 +25,7 @@ def plot_entropy_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
 
     S = np.zeros([nx])
     for i in range(nx):
-        S[i] = Prs[i] * pow(Rho[i], gam)
+        S[i] = Prs[i] / pow(Rho[i], gam)
 
     minS = np.amin(S)
     maxS = np.amax(S)

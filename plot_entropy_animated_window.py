@@ -40,7 +40,7 @@ def plot_entropy_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
     for i in range(nx):
         for j in range(ny):
-            S[i][j] = Prs[i][j] * pow(Rho[i][j], gam)
+            S[i][j] = Prs[i][j] / pow(Rho[i][j], gam)
 
     minS = np.amin(S)
     maxS = np.amax(S)
@@ -58,7 +58,7 @@ def plot_entropy_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
         for i in range(nx):
             for j in range(ny):
-                S[i][j] = Prs[i][j] * pow(Rho[i][j], gam)
+                S[i][j] = Prs[i][j] / pow(Rho[i][j], gam)
         if(np.amin(S) < minS):
             minS = np.amin(S)
         if(np.amax(S) > maxS):
@@ -106,7 +106,7 @@ def plot_entropy_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
         for i in range(nx):
             for j in range(ny):
-                S[i][j] = Prs[i][j] * pow(Rho[i][j], gam)
+                S[i][j] = Prs[i][j] / pow(Rho[i][j], gam)
 
         im2 = ax.imshow(S, origin='upper', norm=colors.LogNorm(vmin=minS, vmax=maxS), aspect = aspect,
                         extent=[xmin1, xmax1, ymin1, ymax1])  # plotting fluid data.
