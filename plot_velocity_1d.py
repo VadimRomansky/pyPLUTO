@@ -38,7 +38,7 @@ def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, data
         print("wrong axis")
         return
     ax.set_ylabel(r'v/c',fontsize=18)
-    ax.set_yscale("log")
+    #ax.set_yscale("log")
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.plot(x, V)
