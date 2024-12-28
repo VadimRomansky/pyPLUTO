@@ -10,6 +10,7 @@ from getVectorArray_1d import getVectorArray_1d
 def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_1d.png', axis = 1, point1 = 0.5, point2 = 0.5):
     c = 2.998E10
     f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
     D = pp.pload(ntot, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
@@ -26,18 +27,18 @@ def plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, data
     elif(axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[1]
-        x = dx * range(V.shape[1]) + xmin
+        dx = (xmax - xmin) / V.shape[0]
+        x = dx * range(V.shape[0]) + xmin
     elif(axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[2]
-        x = dx * range(V.shape[2]) + xmin
+        dx = (xmax - xmin) / V.shape[0]
+        x = dx * range(V.shape[0]) + xmin
     else:
         print("wrong axis")
         return
     ax.set_ylabel(r'v/c',fontsize=18)
-    ax.set_yscale("log")
+    #ax.set_yscale("log")
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.plot(x, V)

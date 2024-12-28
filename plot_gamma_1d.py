@@ -12,12 +12,13 @@ def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatyp
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
     D = pp.pload(ntot, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
 
     V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
-    gamma = 1/np.sqrt(1 + np.square(V))
+    gamma = 1/np.sqrt(1 - np.square(V))
 
     if(axis == 1):
         xmin = D.x1.min()*UNIT_LENGTH
@@ -27,13 +28,13 @@ def plot_gamma_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatyp
     elif(axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[1]
-        x = dx * range(V.shape[1]) + xmin
+        dx = (xmax - xmin) / V.shape[0]
+        x = dx * range(V.shape[0]) + xmin
     elif(axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[2]
-        x = dx * range(V.shape[2]) + xmin
+        dx = (xmax - xmin) / V.shape[0]
+        x = dx * range(V.shape[0]) + xmin
     else:
         print("wrong axis")
         return

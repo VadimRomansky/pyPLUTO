@@ -7,6 +7,7 @@ def plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
     X=np.zeros([ntot])

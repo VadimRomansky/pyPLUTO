@@ -9,6 +9,7 @@ from getVectorArray_1d import getVectorArray_1d
 
 def plot_B_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, file_name = 'B_1d_series.png', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
+    plt.rcParams["figure.dpi"] = 500
     #plt.rcParams['text.usetex'] = True
 
     D = pp.pload(number, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
@@ -33,13 +34,13 @@ def plot_B_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,dat
     elif (axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / B1.shape[1]
-        x = dx * range(B1.shape[1]) + xmin
+        dx = (xmax - xmin) / B1.shape[0]
+        x = dx * range(B1.shape[0]) + xmin
     elif (axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / B1.shape[2]
-        x = dx * range(B1.shape[2]) + xmin
+        dx = (xmax - xmin) / B1.shape[0]
+        x = dx * range(B1.shape[0]) + xmin
     else:
         print("wrong axis")
         return

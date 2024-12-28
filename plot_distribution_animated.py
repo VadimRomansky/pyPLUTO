@@ -5,6 +5,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from matplotlib.animation import FuncAnimation
 def plot_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'distribution.gif'):
     f1 = plt.figure(figsize=[8,12])
+    plt.rcParams["figure.dpi"] = 200
 
     P = pr.ploadparticles(0, w_dir=w_dir, datatype=datatype,ptype='CR') # Loading particle data : particles.00ns_ch00.flt
 

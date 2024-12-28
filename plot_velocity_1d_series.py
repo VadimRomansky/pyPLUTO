@@ -11,6 +11,7 @@ def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
+    plt.rcParams["figure.dpi"] = 500
 
     D = pp.pload(number, varNames = ['vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
     V3 = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, axis, point1, point2)
@@ -31,13 +32,13 @@ def plot_velocity_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
     elif (axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V1.shape[1]
-        x = dx * range(V1.shape[1]) + xmin
+        dx = (xmax - xmin) / V1.shape[0]
+        x = dx * range(V1.shape[0]) + xmin
     elif (axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V1.shape[2]
-        x = dx * range(V1.shape[2]) + xmin
+        dx = (xmax - xmin) / V1.shape[0]
+        x = dx * range(V1.shape[0]) + xmin
     else:
         print("wrong axis")
         return

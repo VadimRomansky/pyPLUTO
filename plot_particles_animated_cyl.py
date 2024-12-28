@@ -5,6 +5,8 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from matplotlib.animation import FuncAnimation
 def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype, file_name = 'particles_cyl.gif'):
     f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
     P = pr.ploadparticles(0, w_dir, datatype=datatype,ptype='CR') # Loading particle data : particles.00ns_ch00.flt
 
     PVmag = np.sqrt(P.vx1**2 + P.vx2**2 + P.vx3**2) # estimating the velocity magnitude

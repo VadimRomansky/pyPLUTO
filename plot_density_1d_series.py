@@ -9,6 +9,9 @@ from getScalarArray_1d import getScalarArray_1d
 
 def plot_density_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d_series.png', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
+    f1 = plt.figure(figsize=[12, 10])
+    ax = f1.add_subplot(111)
+    plt.rcParams["figure.dpi"] = 500
     #plt.rcParams['text.usetex'] = True
 
     D = pp.pload(number, varNames = ['rho'], w_dir = w_dir, datatype=datatype) # Load fluid data.
@@ -29,19 +32,18 @@ def plot_density_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
     elif (axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / Rho1.shape[1]
-        x = dx * range(Rho1.shape[1]) + xmin
+        dx = (xmax - xmin) / Rho1.shape[0]
+        x = dx * range(Rho1.shape[0]) + xmin
     elif (axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / Rho1.shape[2]
-        x = dx * range(Rho1.shape[2]) + xmin
+        dx = (xmax - xmin) / Rho1.shape[0]
+        x = dx * range(Rho1.shape[0]) + xmin
     else:
         print("wrong axis")
         return
     
-    f1 = plt.figure(figsize=[12, 10])
-    ax = f1.add_subplot(111)
+
     ax.set_xlabel(r'$r~cm$', fontsize=40,fontweight='bold')
     ax.set_ylabel(r'$\rho~g~cm^{-3}$', fontsize=40,fontweight='bold')
     ax.tick_params(axis='x', size=10, width = 4)

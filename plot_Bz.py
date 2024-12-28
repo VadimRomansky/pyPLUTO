@@ -6,10 +6,12 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getScalarArray import getScalarArray
 
 
-def plot_Bz(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Bz.png', excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_Bz(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Bz.png', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 500
+    plt.rcParams['axes.linewidth'] = 0.1
     ax = f1.add_subplot(111)
 
     D = pp.pload(ns, varNames = ['Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
@@ -32,6 +34,9 @@ def plot_Bz(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_
 
 
     im2 = ax.imshow(Bz, origin='upper', norm = colors.Normalize(vmin = minB, vmax = maxB), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+    if(transponse):
+        #np.flip(Bz, 0)
+        im2 = ax.imshow(Bz.T, origin='lower', norm = colors.Normalize(vmin = minB, vmax = maxB), aspect=aspect,extent=[D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
     cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
     #im2.set_clim(minB, maxB)
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.

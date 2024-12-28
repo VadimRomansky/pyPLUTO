@@ -10,9 +10,11 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray import getVectorArray
 
 
-def plot_gamma_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'gamma_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_gamma_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'gamma_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
+    plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx1.shape))
@@ -77,6 +79,12 @@ def plot_gamma_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELO
                         extent=[xmin1, xmax1, ymin1, ymax1])  # plotting fluid data.
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([ymin, ymax])
+        if(transponse):
+            #np.flip(gamma, 0)
+            im2 = ax.imshow(gamma.T, origin='lower', norm=colors.LogNorm(vmin=minV, vmax=maxV), aspect=aspect,
+                            extent=[ymin1, ymax1, xmin1, xmax1])  # plotting fluid data.
+            ax.set_xlim([ymin, ymax])
+            ax.set_ylim([xmin, xmax])
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.

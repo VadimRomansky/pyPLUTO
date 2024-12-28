@@ -11,6 +11,7 @@ from getVectorArray_1d import getVectorArray_1d
 def plot_profile(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'profile.png', axis = 1, point1 = 0.5, point2 = 0.5):
     c = 2.998E10
     f1 = plt.figure(figsize=[10, 8])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
     ax.set_xlabel(r'R', fontsize=18)

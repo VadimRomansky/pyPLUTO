@@ -11,9 +11,11 @@ from getScalarArray import getScalarArray
 from getVectorArray import getVectorArray
 
 
-def plot_velocity_x_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_x.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_velocity_x_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_x.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
+    plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['vx1'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx1.shape))
@@ -75,6 +77,10 @@ def plot_velocity_x_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
 
         im2 = ax.imshow(Vx, origin='upper', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
+        if(transponse):
+            #np.flip(Vx, 0)
+            im2 = ax.imshow(Vx.T, origin='lower', norm=colors.Normalize(vmin=minV, vmax=maxV), aspect=aspect,
+                            extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.

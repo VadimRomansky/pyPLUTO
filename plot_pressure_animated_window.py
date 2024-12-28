@@ -10,10 +10,12 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray import getScalarArray
 
 
-def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'pressure_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal'):
+def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'pressure_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,6])
+    plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.prs.shape))
@@ -79,6 +81,12 @@ def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
                         extent=[xmin1, xmax1, ymin1, ymax1])  # plotting fluid data.
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([ymin, ymax])
+        if(transponse):
+            #np.flip(Prs, 0)
+            im2 = ax.imshow(Prs.T, origin='lower', norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs), aspect=aspect,
+                            extent=[ymin1, ymax1, xmin1, xmax1])  # plotting fluid data.
+            ax.set_xlim([ymin, ymax])
+            ax.set_ylim([xmin, xmax])
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.

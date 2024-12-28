@@ -8,13 +8,13 @@ from getVectorArray_1d import getVectorArray_1d
 
 
 def plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'gamma_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
-    # f1 = plt.figure(figsize=[10,8])
+    f1 = plt.figure(figsize=[10,8])
     c = 2.998E10
-    f1 = plt.figure()
+    plt.rcParams["figure.dpi"] = 200
 
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
-    gamma = 1 / np.sqrt(1 + np.square(V))
+    gamma = 1 / np.sqrt(1 - np.square(V))
 
     minV = np.amin(gamma)
     maxV = np.amax(gamma)
@@ -27,13 +27,13 @@ def plot_gamma_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     elif(axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[1]
-        x = dx * range(V.shape[1]) + xmin
+        dx = (xmax - xmin) / V.shape[0]
+        x = dx * range(V.shape[0]) + xmin
     elif(axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / V.shape[2]
-        x = dx * range(V.shape[2]) + xmin
+        dx = (xmax - xmin) / V.shape[0]
+        x = dx * range(V.shape[0]) + xmin
     else:
         print("wrong axis")
         return

@@ -11,6 +11,7 @@ def plot_pressure_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, data
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
     D = pp.pload(ntot, varNames = ['prs'], w_dir = w_dir, datatype=datatype) # Load fluid data.
@@ -27,13 +28,13 @@ def plot_pressure_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, data
     elif(axis == 2):
         xmin = D.x2.min() * UNIT_LENGTH
         xmax = D.x2.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / Prs.shape[1]
-        x = dx * range(Prs.shape[1]) + xmin
+        dx = (xmax - xmin) / Prs.shape[0]
+        x = dx * range(Prs.shape[0]) + xmin
     elif(axis == 3):
         xmin = D.x3.min() * UNIT_LENGTH
         xmax = D.x3.max() * UNIT_LENGTH
-        dx = (xmax - xmin) / Prs.shape[2]
-        x = dx * range(Prs.shape[2]) + xmin
+        dx = (xmax - xmin) / Prs.shape[0]
+        x = dx * range(Prs.shape[0]) + xmin
     else:
         print("wrong axis")
         return

@@ -11,6 +11,7 @@ from getVectorArray_1d import getVectorArray_1d
 def plot_profile_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'profile.gif', axis = 1, point1 = 0.5, point2 = 0.5):
     c = 2.998E10
     f1 = plt.figure(figsize=[10, 8])
+    plt.rcParams["figure.dpi"] = 200
 
     D = pp.pload(ntot, varNames=['vx1', 'vx2', 'vx3', 'prs', 'rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
