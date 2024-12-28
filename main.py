@@ -10,12 +10,14 @@ from plot_B_animated_window import plot_B_animated_window
 from plot_B_quiver import plot_B_quiver
 from plot_B_quiver_animated import plot_B_quiver_animated
 from plot_B_window import plot_B_window
+from plot_Bturb import plot_Bturb
 from plot_Bx import plot_Bx
 from plot_Bx_window import plot_Bx_window
 from plot_By import plot_By
 from plot_By_window import plot_By_window
 from plot_Bz import plot_Bz
 from plot_Bz_window import plot_Bz_window
+from plot_Jmc import plot_Jmc
 
 from plot_density import plot_density
 from plot_density_animated import plot_density_animated
@@ -282,6 +284,10 @@ plot_velocity_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype
 #plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 2E20,2E20, datatype)
 #plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -2E16, 2E16, datatype)
+
+######## turb
+#plot_Bturb(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+#plot_Jmc(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
 ######## writedata
 ### 1 because change to concentration
