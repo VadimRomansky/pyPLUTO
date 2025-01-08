@@ -10,18 +10,18 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray import getScalarArray
 
 
-def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
+def plot_Bturb_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Bturb.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams["figure.dpi"] = 200
     plt.rcParams['axes.linewidth'] = 0.1
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,6])
 
-    D = pp.pload(ntot, varNames=['rho'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    ndim = len((D.rho.shape))
+    D = pp.pload(ntot, varNames=['Bturb'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
+    ndim = len((D.Bturb.shape))
 
-    minRho = 0
-    maxRho = 0
+    minBturb = 0
+    maxBturb = 0
     nx = 0
     ny = 0
 
@@ -29,23 +29,23 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
         print("cant plot 2d image of 1d setup\n")
         return
 
-    Rho = getScalarArray(D.rho, UNIT_DENSITY, excl_axis, point)
+    Bturb = getScalarArray(D.Bturb, UNIT_VELOCITY*np.sqrt(4*np.pi*UNIT_DENSITY), excl_axis, point)
 
-    minRho = np.amin(Rho)
-    maxRho = np.amax(Rho)
+    minBturb = np.amin(Bturb)
+    maxBturb = np.amax(Bturb)
 
 
     for i in range(ntot + 1):
-        D = pp.pload(i, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        Rho = getScalarArray(D.rho, UNIT_DENSITY, excl_axis, point)
-        if(np.amin(Rho) < minRho):
-            minRho = np.amin(Rho)
-        if(np.amax(Rho) > maxRho):
-            maxRho = np.amax(Rho)
+        D = pp.pload(i, varNames = ['Bturb'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
+        Bturb = getScalarArray(D.Bturb, UNIT_VELOCITY*np.sqrt(4*np.pi*UNIT_DENSITY), excl_axis, point)
+        if(np.amin(Bturb) < minBturb):
+            minBturb = np.amin(Bturb)
+        if(np.amax(Bturb) > maxBturb):
+            maxBturb = np.amax(Bturb)
 
 
-    print("maxRho = ", maxRho)
-    print("minRho = ", minRho)
+    print("maxBturb = ", maxBturb)
+    print("minBturb = ", minBturb)
 
     if(excl_axis == 3):
         xmin = D.x1.min() * UNIT_LENGTH
@@ -74,16 +74,16 @@ def plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
         f1.set_figwidth(6)
         ax = f1.add_subplot(111)
 
-        D = pp.pload(frame_number, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        Rho = getScalarArray(D.rho, UNIT_DENSITY, excl_axis, point)
+        D = pp.pload(frame_number, varNames = ['Bturb'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
+        Bturb = getScalarArray(D.Bturb, UNIT_VELOCITY*np.sqrt(4*np.pi*UNIT_DENSITY), excl_axis, point)
 
-        np.flip(Rho, 0)
+        np.flip(Bturb, 0)
 
-        im2 = ax.imshow(Rho, origin='upper', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect = aspect,
+        im2 = ax.imshow(Bturb, origin='upper', norm=colors.Normalize(vmin=minBturb, vmax=maxBturb), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         if(transponse):
-            #np.flip(Rho, 0)
-            im2 = ax.imshow(Rho.T, origin='lower', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect=aspect,
+            #np.flip(Bturb, 0)
+            im2 = ax.imshow(Bturb.T, origin='lower', norm=colors.Normalize(vmin=minBturb, vmax=maxBturb), aspect=aspect,
                             extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()

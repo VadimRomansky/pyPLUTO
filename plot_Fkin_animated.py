@@ -10,15 +10,15 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray import getScalarArray
 
 
-def plot_Jmc_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Jmc.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
+def plot_Fkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Fkin.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams["figure.dpi"] = 200
     plt.rcParams['axes.linewidth'] = 0.1
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,6])
 
-    D = pp.pload(ntot, varNames=['Jmc'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    ndim = len((D.Jmc.shape))
+    D = pp.pload(ntot, varNames=['Fkin'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
+    ndim = len((D.Fkin.shape))
 
     minRho = 0
     maxRho = 0
@@ -29,15 +29,23 @@ def plot_Jmc_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, dat
         print("cant plot 2d image of 1d setup\n")
         return
 
-    Jmc = getScalarArray(D.Jmc, UNIT_VELOCITY*UNIT_VELOCITY*np.sqrt(UNIT_DENSITY)/UNIT_LENGTH, excl_axis, point)
+    Jmc = getScalarArray(D.Fkin, 1.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), excl_axis, point)
+    for i in range(Jmc.shape[0]):
+        for j in range(Jmc.shape[1]):
+            if(Jmc[i,j] <= 0):
+                Jmc[i,j] = 1E-100
 
     minRho = np.amin(Jmc)
     maxRho = np.amax(Jmc)
 
 
     for i in range(ntot + 1):
-        D = pp.pload(i, varNames = ['Jmc'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        Jmc = getScalarArray(D.Jmc, UNIT_VELOCITY*UNIT_VELOCITY*np.sqrt(UNIT_DENSITY)/UNIT_LENGTH, excl_axis, point)
+        D = pp.pload(i, varNames = ['Fkin'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
+        Jmc = getScalarArray(D.Fkin, 1.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), excl_axis, point)
+        for i in range(Jmc.shape[0]):
+            for j in range(Jmc.shape[1]):
+                if (Jmc[i, j] <= 0):
+                    Jmc[i, j] = 1E-100
         if(np.amin(Jmc) < minRho):
             minRho = np.amin(Jmc)
         if(np.amax(Jmc) > maxRho):
@@ -74,16 +82,20 @@ def plot_Jmc_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, dat
         f1.set_figwidth(6)
         ax = f1.add_subplot(111)
 
-        D = pp.pload(frame_number, varNames = ['Jmc'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        Jmc = getScalarArray(D.Jmc, UNIT_VELOCITY*UNIT_VELOCITY*np.sqrt(UNIT_DENSITY)/UNIT_LENGTH, excl_axis, point)
+        D = pp.pload(frame_number, varNames = ['Fkin'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
+        Jmc = getScalarArray(D.Fkin, 2.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), excl_axis, point)
+        for i in range(Jmc.shape[0]):
+            for j in range(Jmc.shape[1]):
+                if (Jmc[i, j] <= 0):
+                    Jmc[i, j] = 1E-100
 
         np.flip(Jmc, 0)
 
-        im2 = ax.imshow(Jmc, origin='upper', norm=colors.Normalize(vmin=minRho, vmax=maxRho), aspect = aspect,
+        im2 = ax.imshow(Jmc, origin='upper', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         if(transponse):
             #np.flip(Jmc, 0)
-            im2 = ax.imshow(Jmc.T, origin='lower', norm=colors.Normalize(vmin=minRho, vmax=maxRho), aspect=aspect,
+            im2 = ax.imshow(Jmc.T, origin='lower', norm=colors.LogNorm(vmin=minRho, vmax=maxRho), aspect=aspect,
                             extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
