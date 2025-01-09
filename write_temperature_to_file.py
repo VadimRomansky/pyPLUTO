@@ -6,25 +6,25 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getScalarArray import getScalarArray
 
 
-def write_density_to_file(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, xmin = None, xmax = None, ymin = None, ymax = None, zmin = None, zmax = None):
+def write_temperature_to_file(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, xmin = None, xmax = None, ymin = None, ymax = None, zmin = None, zmax = None):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
 
-    D = pp.pload(ns, varNames = ['rho'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-    ndim = len((D.rho.shape))
+    D = pp.pload(ns, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
+    ndim = len((D.T.shape))
 
-    nx = D.rho.shape[0]
+    nx = D.T.shape[0]
     ny = 1
     if(ndim > 1):
-        ny = D.rho.shape[1]
+        ny = D.T.shape[1]
     nz = 1
     if(ndim > 2):
-        nz = D.rho.shape[2]
-    Rho = D.rho*UNIT_DENSITY
+        nz = D.T.shape[2]
+    T = D.T*UNIT_DENSITY
 
-    outFile = open('density.dat','w')
+    outFile = open('T.dat','w')
 
     npx = nx
     x1 = D.x1r[0]
@@ -74,11 +74,11 @@ def write_density_to_file(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
                     for k in range(nz):
                         if (((zmin == None) or (zmax == None)) or ((k >= zmin) and (k < zmax))):
                             if(ndim == 1):
-                                print(Rho[i],file=outFile)
+                                print(T[i],file=outFile)
                             elif(ndim == 2):
-                                print(Rho[i][j], file = outFile)
+                                print(T[i][j], file = outFile)
                             elif(ndim == 3):
-                                print(Rho[i][j][k], file = outFile)
+                                print(T[i][j][k], file = outFile)
 
 
     outFile.close()

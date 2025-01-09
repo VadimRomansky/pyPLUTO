@@ -116,6 +116,7 @@ from plot_profile_animated_window import plot_profile_animated_window
 from plot_profile_window import plot_profile_window
 from write_B_to_file import write_B_to_file
 from write_density_to_file import write_density_to_file
+from write_temperature_to_file import write_temperature_to_file
 from write_velocity_to_file import write_velocity_to_file
 
 from plot_energy_flux import plot_energy_flux_cyl
@@ -309,4 +310,5 @@ plot_Fkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, dataty
 #write_density_to_file(ntot, w_dir, 1, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #write_B_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 #write_velocity_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
+write_temperature_to_file(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
 
