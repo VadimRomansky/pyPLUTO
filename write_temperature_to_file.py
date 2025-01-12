@@ -68,7 +68,7 @@ def write_temperature_to_file(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
         print("unknown geometry")
 
     eV = 1.6E-12
-    kBoltzman = 1.38E-12
+    kBoltzman = 1.38E-16
 
     for i in range(nx):
         if(((xmin == None) or (xmax == None)) or ((i >= xmin) and (i < xmax))):
