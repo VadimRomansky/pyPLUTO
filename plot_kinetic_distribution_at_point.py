@@ -2,7 +2,7 @@ import numpy as np
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'distribution_kinetic.png'):
+def plot_kinetic_distribution_at_point(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, ii,jj,kk, file_name = 'distribution_kinetic_at_point.png'):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[6,6])
@@ -16,9 +16,9 @@ def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     V = 0
 
     for i in range(len(P.id)):
-        for j in range(Nmomentum):
-            F[j] = F[j] + P.F[i][j]*P.dV[i]
-            V = V + P.dV[i]
+        if((P.i[i] == ii) and (P.j[i] == jj) and (P.k[i] == kk)):
+            for j in range(Nmomentum):
+                F[j] = P.F[i][j]
 
     for j in range(Nmomentum):
         if(F[j] <= 0):
@@ -28,17 +28,15 @@ def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
 
     Fa = np.zeros([Nmomentum])
 
-    Fa[0] = F[0];
-
     for i in range(Nmomentum):
         Fa[i] = F[0]*(p[0]/p[i])**4
+
+    ax.set_ylim([1E-30, 1E1])
 
     plt.plot(p, F)
     plt.plot(p, Fa)
     plt.xscale('log')
     plt.yscale('log')
-
-    ax.set_ylim([1E-14, 1E1])
 
     plt.savefig(file_name)
     plt.close()
