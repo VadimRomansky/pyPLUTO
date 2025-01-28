@@ -39,9 +39,9 @@ def plot_density(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 
     cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
 
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
-    ax.set_xlabel(r'X-axis', fontsize=40,fontweight='bold')
-    ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
+    #ax.set_xlabel(r'X-axis', fontsize=40,fontweight='bold')
+    #ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig(file_name)
+    plt.savefig(file_name, bbox_inches='tight')
     plt.close()
