@@ -21,7 +21,7 @@ def write_density_to_file(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
         ny = D.rho.shape[1]
     nz = 1
     if(ndim > 2):
-        nz = D.rho.shzpe[2]
+        nz = D.rho.shape[2]
     Rho = D.rho*UNIT_DENSITY
 
     outFile = open('density.dat','w')
