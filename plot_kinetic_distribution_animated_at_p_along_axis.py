@@ -71,7 +71,7 @@ def plot_kinetic_distribution_animated_at_p_along_axis(ns, w_dir, UNIT_DENSITY, 
 
     Diff = u*mp*c*c*c/(3.0*q*B)
 
-    Diff = 1E24
+    Diff = 1E25
 
     Fa = np.zeros([Nx])
 
@@ -91,7 +91,7 @@ def plot_kinetic_distribution_animated_at_p_along_axis(ns, w_dir, UNIT_DENSITY, 
             if ((int(P.j[i]) == jj) and (int(P.k[i]) == kk)):
                 F[int(P.i[i]) - 3] = P.F[i][ppoint]
 
-        for j in range(Nmomentum):
+        for j in range(Nx):
             if (F[j] <= 0):
                 F[j] = 1E-100
 
@@ -118,7 +118,7 @@ def plot_kinetic_distribution_animated_at_p_along_axis(ns, w_dir, UNIT_DENSITY, 
             if ((int(P.j[i]) == jj) and (int(P.k[i]) == kk)):
                 F[int(P.i[i]) - 3] = P.F[i][ppoint]
 
-        for j in range(Nmomentum):
+        for j in range(Nx):
             if (F[j] <= 0):
                 F[j] = 1E-100
 
