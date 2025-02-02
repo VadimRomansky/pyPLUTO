@@ -7,14 +7,14 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray_1d import getScalarArray_1d
 
 
-def plot_Fkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Fkin_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_Pkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Pkin_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     plt.rcParams["figure.dpi"] = 200
     f1 = plt.figure()
 
-    D = pp.pload(ntot, varNames=['Fkin'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    Rho = getScalarArray_1d(D.Fkin, 1.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), axis, point1, point2)
+    D = pp.pload(ntot, varNames=['Pkin'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
+    Rho = getScalarArray_1d(D.Pkin, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
 
     minRho = np.amin(Rho)
     maxRho = np.amax(Rho)
@@ -26,8 +26,8 @@ def plot_Fkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
     startOffset = 0
 
     for i in range(ntot - startOffset + 1):
-        D = pp.pload(i, varNames=['Fkin'], w_dir=w_dir, datatype=datatype)
-        Rho = getScalarArray_1d(D.Fkin, 1.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), axis, point1, point2)
+        D = pp.pload(i, varNames=['Pkin'], w_dir=w_dir, datatype=datatype)
+        Rho = getScalarArray_1d(D.Pkin, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
         if (np.amin(Rho) < minRho):
             minRho = np.amin(Rho)
         if (np.amax(Rho) > maxRho):
@@ -41,8 +41,8 @@ def plot_Fkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
         ax = f1.add_subplot(111)
 
         ax.set_ylim([0.9*minRho, 1.1*maxRho])
-        D = pp.pload(frame_number, varNames=['Fkin'], w_dir=w_dir, datatype=datatype)
-        Rho = getScalarArray_1d(D.Fkin, 1.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), axis, point1, point2)
+        D = pp.pload(frame_number, varNames=['Pkin'], w_dir=w_dir, datatype=datatype)
+        Rho = getScalarArray_1d(D.Pkin, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
 
         ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
         ax.set_ylabel(r'$n_{CR}~cm^{-3}$', fontsize=40, fontweight='bold')

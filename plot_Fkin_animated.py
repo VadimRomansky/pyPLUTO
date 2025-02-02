@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray import getScalarArray
 
 
-def plot_Fkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Fkin.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
+def plot_Fkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Pkin.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams["figure.dpi"] = 200
     plt.rcParams['axes.linewidth'] = 0.1
@@ -83,7 +83,7 @@ def plot_Fkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, da
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['Fkin'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        Jmc = getScalarArray(D.Fkin, 2.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), excl_axis, point)
+        Jmc = getScalarArray(D.Fkin, 1.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), excl_axis, point)
         for i in range(Jmc.shape[0]):
             for j in range(Jmc.shape[1]):
                 if (Jmc[i, j] <= 0):

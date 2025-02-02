@@ -7,16 +7,16 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray_1d import getScalarArray_1d
 
 
-def plot_Fkin_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Fkin_1d.png', axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_Pkin_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'Pkin_1d.png', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
-    D = pp.pload(ntot, varNames = ['Fkin'], w_dir = w_dir, datatype=datatype) # Load fluid data.
+    D = pp.pload(ntot, varNames = ['Pkin'], w_dir = w_dir, datatype=datatype) # Load fluid data.
 
-    Rho = getScalarArray_1d(D.Fkin, 1.0/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH), axis, point1, point2)
+    Rho = getScalarArray_1d(D.Pkin, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
 
     minRho = np.amin(Rho)
     maxRho = np.amax(Rho)

@@ -66,7 +66,7 @@ def plot_kinetic_distribution_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENG
 
     Diff = u*mp*c*c*c/(3.0*q*B)
 
-    Diff = 1E25
+    Diff = 1E26
 
     Fa = np.zeros([Nx])
 
