@@ -3,13 +3,21 @@ from matplotlib import colors
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_temperature_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
+from getScalarArray import getScalarArray
+
+
+def plot_temperature_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'temperature_window.png', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 500
+    plt.rcParams['axes.linewidth'] = 0.1
     ax = f1.add_subplot(111)
     ax.set_xlim([xmin, xmax])
     ax.set_ylim([ymin, ymax])
+    if(transponse):
+        ax.set_xlim([ymin, ymax])
+        ax.set_ylim([xmin, xmax])
 
     D = pp.pload(ns, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.T.shape))
@@ -23,23 +31,17 @@ def plot_temperature_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.T.shape[0]
-    ny = D.T.shape[1]
-    T = np.zeros([ny,nx])
-
-    if(ndim == 2):
-        T = D.T.T[:, :]
-    if(ndim == 3):
-        zpoint = math.floor(D.T.T.shape[0] / 2)
-        T = D.T.T[zpoint, :, :]
-    np.flip(T,0)
+    T = getScalarArray(D.T, 1.0, excl_axis, point)
 
     minT = np.amin(T)
     maxT = np.amax(T)
 
 
 
-    im2 = ax.imshow(T, origin='upper', norm = colors.LogNorm(vmin = minT, vmax = maxT), aspect='auto',extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+    im2 = ax.imshow(T, origin='upper', norm = colors.LogNorm(vmin = minT, vmax = maxT), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+    if(transponse):
+        #np.flip(T, 0)
+        im2 = ax.imshow(T.T, origin='lower', norm = colors.LogNorm(vmin = minT, vmax = maxT), aspect=aspect,extent=[D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
     cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
 
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
@@ -47,5 +49,5 @@ def plot_temperature_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('temperature_window.png')
+    plt.savefig(file_name, bbox_inches='tight')
     plt.close()

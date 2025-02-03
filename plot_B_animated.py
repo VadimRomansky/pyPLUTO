@@ -7,8 +7,13 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+from getVectorArray import getVectorArray
+
+
+def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     f1 = plt.figure(figsize=[6,8])
+    plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['Bx1', 'Bx2', 'Bx3'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Bx1.shape))
@@ -22,22 +27,7 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.Bx1.shape[0]
-    ny = D.Bx1.shape[1]
-    B = np.zeros([ny, nx])
-
-    if (ndim == 2):
-        Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    if (ndim == 3):
-        zpoint = math.floor(D.Bx1.T.shape[0] / 2)
-        Bz = D.Bx3.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    np.flip(B, 0)
+    B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
 
     minB = np.amin(B)
     maxB = np.amax(B)
@@ -45,17 +35,7 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        if (ndim == 3):
-            zpoint = math.floor(D.Bx1.T.shape[0] / 2)
-            Bz = D.Bx3.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
+        B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
         if(np.amin(B) < minB):
             minB = np.amin(B)
         if(np.amax(B) > maxB):
@@ -65,10 +45,24 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     print("maxB = ", maxB)
     print("minB = ", minB)
 
-    xmin = D.x1.min() * UNIT_LENGTH
-    xmax = D.x1.max() * UNIT_LENGTH
-    ymin = D.x2.min() * UNIT_LENGTH
-    ymax = D.x2.max() * UNIT_LENGTH
+    if(excl_axis == 3):
+        xmin = D.x1.min() * UNIT_LENGTH
+        xmax = D.x1.max() * UNIT_LENGTH
+        ymin = D.x2.min() * UNIT_LENGTH
+        ymax = D.x2.max() * UNIT_LENGTH
+    elif(excl_axis == 2):
+        xmin = D.x1.min() * UNIT_LENGTH
+        xmax = D.x1.max() * UNIT_LENGTH
+        ymin = D.x3.min() * UNIT_LENGTH
+        ymax = D.x3.max() * UNIT_LENGTH
+    elif(excl_axis == 1):
+        xmin = D.x2.min() * UNIT_LENGTH
+        xmax = D.x2.max() * UNIT_LENGTH
+        ymin = D.x3.min() * UNIT_LENGTH
+        ymax = D.x3.max() * UNIT_LENGTH
+    else:
+        print("wrong exclude axis\n")
+        return
 
 
     def update(frame_number):
@@ -79,22 +73,14 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-        if (ndim == 3):
-            zpoint = math.floor(D.Bx1.shape[2] / 2)
-            Bz = D.Bx3.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-            B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
+        B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
 
-        np.flip(B, 0)
-
-        im2 = ax.imshow(B, origin='upper', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect = 'auto',
+        im2 = ax.imshow(B, origin='upper', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
+        if(transponse):
+            #np.flip(B, 0)
+            im2 = ax.imshow(B.T, origin='lower', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
+                            extent=[ymin, ymax, xmin, xmax])  # plotting fluid data.
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
@@ -116,6 +102,7 @@ def plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"B.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

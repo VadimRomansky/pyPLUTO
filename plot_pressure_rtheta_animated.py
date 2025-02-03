@@ -7,8 +7,10 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_pressure_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+def plot_pressure_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'pressure_rtheta.gif'):
     f1 = plt.figure(figsize=[6,8])
+    plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.prs.shape))
@@ -88,10 +90,14 @@ def plot_pressure_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
 
         Nfraction = 1
         rad = np.linspace(0, xmax/Nfraction, int(nx/Nfraction))
-        azm = np.linspace(-np.pi / 2, np.pi / 2, ny)
+        azm = np.linspace(D.x2.min() - np.pi/2, D.x2.max() - np.pi/2, ny)
         r, th = np.meshgrid(rad, azm)
 
         ax = plt.subplot(projection="polar")
+        ax.axis("off")
+
+        ax.set_thetamin(D.x2.min() * 180 / np.pi - 90)
+        ax.set_thetamax(D.x2.max() * 180 / np.pi - 90)
         prs2=prs[:,range(int(nx/Nfraction))]
         im2 = plt.pcolormesh(th, r, prs2, norm=colors.LogNorm(vmin=minPrs, vmax=maxPrs))
 
@@ -116,6 +122,7 @@ def plot_pressure_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"pressure_rtheta.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

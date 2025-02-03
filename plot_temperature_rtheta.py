@@ -4,11 +4,12 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 
-def plot_temperature_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype):
+def plot_temperature_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, file_name = 'temperature_rtheta.png'):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
-    ax = f1.add_subplot(111)
+    plt.rcParams["figure.dpi"] = 500
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ns, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     xmin = D.x1.min() * UNIT_LENGTH
@@ -45,10 +46,14 @@ def plot_temperature_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
 
     Nfraction = 1
     rad = np.linspace(0, xmax/Nfraction, int(nx/Nfraction))
-    azm = np.linspace(-np.pi/2, np.pi/2, ny)
+    azm = np.linspace(D.x2.min() - np.pi/2, D.x2.max() - np.pi/2, ny)
     r, th = np.meshgrid(rad, azm)
-            
-    plt.subplot(projection="polar")
+
+    ax = plt.subplot(projection="polar")
+    ax.axis("off")
+
+    ax.set_thetamin(D.x2.min() * 180 / np.pi - 90)
+    ax.set_thetamax(D.x2.max() * 180 / np.pi - 90)
 
     T2 = T[:,range(int(nx/Nfraction))]
     im2 = plt.pcolormesh(th, r, T2, norm = colors.Normalize(vmin = minT, vmax = maxT))
@@ -59,5 +64,5 @@ def plot_temperature_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('temperature_rtheta.png')
+    plt.savefig(file_name)
     plt.close()

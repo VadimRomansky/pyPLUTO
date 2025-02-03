@@ -7,10 +7,15 @@ import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
-def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype):
+from getScalarArray import getScalarArray
+
+
+def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'temperature_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[8,12])
+    plt.rcParams["figure.dpi"] = 200
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['T'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.T.shape))
@@ -24,15 +29,7 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.T.shape[0]
-    ny = D.T.shape[1]
-    T = np.zeros([ny, nx])
-
-    if (ndim == 2):
-        T = D.T.T[:, :]
-    if (ndim == 3):
-        zpoint = math.floor(D.T.T.shape[0] / 2)
-        T = D.T.T[zpoint, :, :]
+    T = getScalarArray(D.T, 1.0, excl_axis, point)
 
     minT = np.amin(T)
     maxT = np.amax(T)
@@ -40,11 +37,7 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
 
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            T = D.T.T[:, :]
-        if (ndim == 3):
-            zpoint = math.floor(D.T.T.shape[0] / 2)
-            T = D.T.T[zpoint, :, :]
+        T = getScalarArray(D.T, 1.0, excl_axis, point)
         if(np.amin(T) < minT):
             minT = np.amin(T)
         if(np.amax(T) > maxT):
@@ -54,10 +47,24 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
     print("maxT = ", maxT)
     print("minT = ", minT)
 
-    xmin1 = D.x1.min() * UNIT_LENGTH
-    xmax1 = D.x1.max() * UNIT_LENGTH
-    ymin1 = D.x2.min() * UNIT_LENGTH
-    ymax1 = D.x2.max() * UNIT_LENGTH
+    if(excl_axis == 3):
+        xmin1 = D.x1.min() * UNIT_LENGTH
+        xmax1 = D.x1.max() * UNIT_LENGTH
+        ymin1 = D.x2.min() * UNIT_LENGTH
+        ymax1 = D.x2.max() * UNIT_LENGTH
+    elif(excl_axis == 2):
+        xmin1 = D.x1.min() * UNIT_LENGTH
+        xmax1 = D.x1.max() * UNIT_LENGTH
+        ymin1 = D.x3.min() * UNIT_LENGTH
+        ymax1 = D.x3.max() * UNIT_LENGTH
+    elif(excl_axis == 1):
+        xmin1 = D.x2.min() * UNIT_LENGTH
+        xmax1 = D.x2.max() * UNIT_LENGTH
+        ymin1 = D.x3.min() * UNIT_LENGTH
+        ymax1 = D.x3.max() * UNIT_LENGTH
+    else:
+        print("wrong exclude axis\n")
+        return
 
 
     def update(frame_number):
@@ -68,18 +75,18 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
-        if (ndim == 2):
-            T = D.T.T[:, :]
-        if (ndim == 3):
-            zpoint = math.floor(D.T.shape[2] / 2)
-            T = D.T.T[zpoint, :, :]
+        T = getScalarArray(D.T, 1.0, excl_axis, point)
 
-        np.flip(T, 0)
-
-        im2 = ax.imshow(T, origin='upper', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect = 'auto',
+        im2 = ax.imshow(T, origin='upper', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect = aspect,
                         extent=[xmin1, xmax1, ymin1, ymax1])  # plotting fluid data.
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([ymin, ymax])
+        if(transponse):
+            #np.flip(T, 0)
+            im2 = ax.imshow(T.T, origin='lower', norm=colors.LogNorm(vmin=minT, vmax=maxT), aspect=aspect,
+                            extent=[ymin1, ymax1, xmin1, xmax1])  # plotting fluid data.
+            ax.set_xlim([ymin, ymax])
+            ax.set_ylim([xmin, xmax])
         #cax2 = f1.add_axes([0.125, 0.92, 0.75, 0.03])
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
@@ -101,6 +108,7 @@ def plot_temperature_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = r"temperature_window.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

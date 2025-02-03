@@ -4,30 +4,17 @@ import pyPLUTO.pload as pp  # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
+from getScalarArray_1d import getScalarArray_1d
 
-def plot_pressure_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+
+def plot_pressure_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'pressure_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure()
+    plt.rcParams["figure.dpi"] = 200
 
     D = pp.pload(ntot, varNames=['prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    ndim = len((D.prs.shape))
-
-    minPrs = 0
-    maxPrs = 0
-
-    nx = D.prs.shape[0]
-    Prs = np.zeros([nx])
-
-    if (ndim == 1):
-        Prs = D.prs[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-    if (ndim == 2):
-        ypoint = math.floor(D.prs.shape[1] / 2)
-        Prs = D.prs[:, ypoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-    if (ndim == 3):
-        ypoint = math.floor(D.prs.shape[1] / 2)
-        zpoint = math.floor(D.prs.shape[2] / 2)
-        Prs = D.prs[:, ypoint, zpoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+    Prs = getScalarArray_1d(D.prs, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
 
     minPrs = np.amin(Prs)
     maxPrs = np.amax(Prs)
@@ -40,15 +27,7 @@ def plot_pressure_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
     for i in range(ntot - startOffset + 1):
         D = pp.pload(i, varNames=['prs'], w_dir=w_dir, datatype=datatype)
-        if (ndim == 1):
-            Prs = D.prs[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        if (ndim == 2):
-            ypoint = math.floor(D.prs.shape[1] / 2)
-            Prs = D.prs[:, ypoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        if (ndim == 3):
-            ypoint = math.floor(D.prs.shape[1] / 2)
-            zpoint = math.floor(D.prs.shape[2] / 2)
-            Prs = D.prs[:, ypoint, zpoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        Prs = getScalarArray_1d(D.prs, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
         if (np.amin(Prs) < minPrs):
             minPrs = np.amin(Prs)
         if (np.amax(Prs) > maxPrs):
@@ -61,15 +40,7 @@ def plot_pressure_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
         ax.set_ylim([0.9*minPrs, 1.1*maxPrs])
         D = pp.pload(frame_number, varNames=['prs'], w_dir=w_dir, datatype=datatype)
-        if (ndim == 1):
-            Prs = D.prs[:] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        if (ndim == 2):
-            ypoint = math.floor(D.prs.shape[1] / 2)
-            Prs = D.prs[:, ypoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
-        if (ndim == 3):
-            ypoint = math.floor(D.prs.shape[1] / 2)
-            zpoint = math.floor(D.prs.shape[2] / 2)
-            Prs = D.prs[:, ypoint, zpoint] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
+        Prs = getScalarArray_1d(D.prs, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
 
         ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
         ax.set_ylabel(r'$P~g~cm^{-1}~s^{-2}$', fontsize=40, fontweight='bold')
@@ -84,6 +55,7 @@ def plot_pressure_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
     # plt.show()
 
-    f = r"pressure_1d.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

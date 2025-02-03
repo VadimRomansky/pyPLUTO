@@ -6,8 +6,9 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 
-def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocity, datatype):
+def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocity, datatype, file_name = 'energy_1d.gif'):
     f1 = plt.figure(figsize=[10, 8])
+    plt.rcParams["figure.dpi"] = 200
 
     D = pp.pload(ntot, varNames = ['rho','vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     density = D.rho.T * unit_density
@@ -76,6 +77,7 @@ def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocit
 
     # plt.show()
 
-    f = r"energy_1d.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

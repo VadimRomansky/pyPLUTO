@@ -3,38 +3,43 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_density_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+
+from getScalarArray_1d import getScalarArray_1d
+
+
+def plot_density_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d.png', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
     D = pp.pload(ntot, varNames = ['rho'], w_dir = w_dir, datatype=datatype) # Load fluid data.
-    ndim = len((D.rho.shape))
 
-    minRho = 0
-    maxRho = 0
-
-    nx = D.rho.shape[0]
-    Rho = np.zeros([nx])
-
-    if (ndim == 1):
-        Rho = D.rho[:] * UNIT_DENSITY
-    if (ndim == 2):
-        ypoint = math.floor(D.rho.shape[1] / 2)
-        Rho = D.rho[:, ypoint] * UNIT_DENSITY
-    if (ndim == 3):
-        ypoint = math.floor(D.rho.shape[1] / 2)
-        zpoint = math.floor(D.rho.shape[2] / 2)
-        Rho = D.rho[:,ypoint, zpoint] * UNIT_DENSITY
+    Rho = getScalarArray_1d(D.rho, UNIT_DENSITY, axis, point1, point2)
 
     minRho = np.amin(Rho)
     maxRho = np.amax(Rho)
 
-    xmin = D.x1.min()*UNIT_LENGTH
-    xmax = D.x1.max()*UNIT_LENGTH
-    dx = (xmax - xmin) / Rho.shape[0]
-    x = dx * range(Rho.shape[0]) + xmin
+    if(axis == 1):
+        xmin = D.x1.min()*UNIT_LENGTH
+        xmax = D.x1.max()*UNIT_LENGTH
+        dx = (xmax - xmin) / Rho.shape[0]
+        x = dx * range(Rho.shape[0]) + xmin
+    elif(axis == 2):
+        xmin = D.x2.min() * UNIT_LENGTH
+        xmax = D.x2.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / Rho.shape[0]
+        x = dx * range(Rho.shape[0]) + xmin
+    elif(axis == 3):
+        xmin = D.x3.min() * UNIT_LENGTH
+        xmax = D.x3.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / Rho.shape[0]
+        x = dx * range(Rho.shape[0]) + xmin
+    else:
+        print("wrong axis")
+        return
+
     ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
     ax.set_ylabel(r'$\rho~g~cm^{-3}$', fontsize=40,fontweight='bold')
     ax.minorticks_on()
@@ -43,4 +48,5 @@ def plot_density_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     plt.plot(x, Rho)
 
     #plt.show()
-    plt.savefig('density_1d.png')
+    plt.savefig(file_name)
+    plt.close()

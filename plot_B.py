@@ -3,8 +3,13 @@ from matplotlib import colors
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_B(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+from getVectorArray import getVectorArray
+
+
+def plot_B(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B.png', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
     plt.rcParams.update({'font.size': 15})
+    plt.rcParams["figure.dpi"] = 500
+    plt.rcParams['axes.linewidth'] = 0.1
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     ax = f1.add_subplot(111)
@@ -21,29 +26,21 @@ def plot_B(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
         print("cant plot 2d image of 1d setup\n")
         return
 
-    nx = D.Bx1.shape[0]
-    ny = D.Bx1.shape[1]
-    B = np.zeros([ny,nx])
-
-    if(ndim == 2):
-        Bz = D.Bx3.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1.T[:, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    if(ndim == 3):
-        zpoint = math.floor(D.Bx1.T.shape[0] / 2)
-        Bz = D.Bx3.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        By = D.Bx2.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        Bx = D.Bx1.T[zpoint, :, :] * np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY)
-        B = np.sqrt(np.square(Bx) + np.square(By) + np.square(Bz))
-    np.flip(B,0)
+    B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
 
     minB = np.amin(B)
     maxB = np.amax(B)
 
 
 
-    im2 = ax.imshow(B, origin='upper', norm = colors.LogNorm(vmin = minB, vmax = maxB), aspect='auto',extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+    if(not transponse):
+        im2 = ax.imshow(B, origin='upper', norm = colors.LogNorm(vmin = minB, vmax = maxB), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+    if(transponse):
+        #np.flip(B,0)
+        im2 = ax.imshow(B.T, origin='lower', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
+                        extent=[D.x2.min() * UNIT_LENGTH, D.x2.max() * UNIT_LENGTH, D.x1.min() * UNIT_LENGTH,
+                                D.x1.max() * UNIT_LENGTH])  # plotting fluid data.
+                                
     cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
     #im2.set_clim(minB, maxB)
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
@@ -51,5 +48,5 @@ def plot_B(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig('B.png')
+    plt.savefig(file_name, bbox_inches='tight')
     plt.close()

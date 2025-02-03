@@ -4,51 +4,45 @@ import pyPLUTO.pload as pp  # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
 
+from getScalarArray_1d import getScalarArray_1d
 
-def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+
+def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'temperature_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure()
+    plt.rcParams["figure.dpi"] = 200
 
     D = pp.pload(ntot, varNames=['T'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
-    ndim = len((D.T.shape))
-
-    minT = 0
-    maxT = 0
-
-    nx = D.T.shape[0]
-    T = np.zeros([nx])
-
-    if (ndim == 1):
-        T = D.T[:]
-    if (ndim == 2):
-        ypoint = math.floor(D.T.shape[1] / 2)
-        T = D.T[:, ypoint]
-    if (ndim == 3):
-        ypoint = math.floor(D.T.shape[1] / 2)
-        zpoint = math.floor(D.T.shape[2] / 2)
-        T = D.T[:, ypoint, zpoint]
+    T = getScalarArray_1d(D.T, 1.0, axis, point1, point2)
 
     minT = np.amin(T)
     maxT = np.amax(T)
 
-    xmin = D.x1.min() * UNIT_LENGTH
-    xmax = D.x1.max() * UNIT_LENGTH
-    dx = (xmax - xmin) / T.shape[0]
-    x = dx * range(T.shape[0]) + xmin
-    startOffset = 20
+    if (axis == 1):
+        xmin = D.x1.min() * UNIT_LENGTH
+        xmax = D.x1.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / T.shape[0]
+        x = dx * range(T.shape[0]) + xmin
+    elif (axis == 2):
+        xmin = D.x2.min() * UNIT_LENGTH
+        xmax = D.x2.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / T.shape[0]
+        x = dx * range(T.shape[0]) + xmin
+    elif (axis == 3):
+        xmin = D.x3.min() * UNIT_LENGTH
+        xmax = D.x3.max() * UNIT_LENGTH
+        dx = (xmax - xmin) / T.shape[0]
+        x = dx * range(T.shape[0]) + xmin
+    else:
+        print("wrong axis")
+        return
+
+    startOffset = 0
 
     for i in range(ntot - startOffset + 1):
-        D = pp.pload(i, varNames=['T'], w_dir=w_dir, datatype=datatype)
-        if (ndim == 1):
-            T = D.T[:]
-        if (ndim == 2):
-            ypoint = math.floor(D.T.shape[1] / 2)
-            T = D.T[:, ypoint]
-        if (ndim == 3):
-            ypoint = math.floor(D.T.shape[1] / 2)
-            zpoint = math.floor(D.T.shape[2] / 2)
-            T = D.T[:, ypoint, zpoint]
+        D = pp.pload(i+startOffset, varNames=['T'], w_dir=w_dir, datatype=datatype)
+        T = getScalarArray_1d(D.T, 1.0, axis, point1, point2)
         if (np.amin(T) < minT):
             minT = np.amin(T)
         if (np.amax(T) > maxT):
@@ -60,16 +54,8 @@ def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         ax = f1.add_subplot(111)
 
         ax.set_ylim([0.9*minT, 1.1*maxT])
-        D = pp.pload(frame_number, varNames=['T'], w_dir=w_dir, datatype=datatype)
-        if (ndim == 1):
-            T = D.T[:]
-        if (ndim == 2):
-            ypoint = math.floor(D.T.shape[1] / 2)
-            T = D.T[:, ypoint]
-        if (ndim == 3):
-            ypoint = math.floor(D.T.shape[1] / 2)
-            zpoint = math.floor(D.T.shape[2] / 2)
-            T = D.T[:, ypoint, zpoint]
+        D = pp.pload(frame_number+startOffset, varNames=['T'], w_dir=w_dir, datatype=datatype)
+        T = getScalarArray_1d(D.T, 1.0, axis, point1, point2)
 
         ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
         ax.set_ylabel(r'$T$', fontsize=40, fontweight='bold')
@@ -83,6 +69,7 @@ def plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
     # plt.show()
 
-    f = r"temperature_1d.gif"
+    f = file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
+    plt.close()

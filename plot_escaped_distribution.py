@@ -2,8 +2,9 @@ import matplotlib.pyplot as plt
 from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
-def plot_escaped_distribution(ns, npr, w_dir, datatype):
+def plot_escaped_distribution(ns, npr, w_dir, datatype, file_name = 'escaped_distribution.png'):
     f1 = plt.figure(figsize=[6,6])
+    plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
     PVmag1 = np.zeros([npr])
@@ -35,4 +36,5 @@ def plot_escaped_distribution(ns, npr, w_dir, datatype):
     plt.plot(x, y)
     plt.xscale('log')
     plt.yscale('log')
-    plt.savefig('escaped_distribution.png')
+    plt.savefig(file_name)
+    plt.close()
