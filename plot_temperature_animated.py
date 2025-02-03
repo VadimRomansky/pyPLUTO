@@ -41,10 +41,10 @@ def plot_temperature_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
     for i in range(ntot + 1):
         D = pp.pload(i, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
-            T = D.T[:, :]
+            T = D.T.T[:, :]
         if (ndim == 3):
             zpoint = math.floor(D.T.T.shape[0] / 2)
-            T = D.T[zpoint, :, :]
+            T = D.T.T[zpoint, :, :]
         if(np.amin(T) < minT):
             minT = np.amin(T)
         if(np.amax(T) > maxT):
@@ -69,10 +69,10 @@ def plot_temperature_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
         D = pp.pload(frame_number, varNames = ['T'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
         if (ndim == 2):
-            T = D.T[:, :]
+            T = D.T.T[:, :]
         if (ndim == 3):
             zpoint = math.floor(D.T.shape[2] / 2)
-            T = D.T[zpoint, :, :]
+            T = D.T.T[zpoint, :, :]
 
         np.flip(T, 0)
 
