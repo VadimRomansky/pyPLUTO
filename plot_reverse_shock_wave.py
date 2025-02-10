@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray_1d import getScalarArray_1d
 
 
-def plot_reverse_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype):
+def plot_reverse_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = "reverse_shock.png", out_dir = ""):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
@@ -84,6 +84,6 @@ def plot_reverse_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     ax2.minorticks_on()
     plt.plot(t, V1/c, 'r-')
 
-    plt.savefig('v1_reverse_shock_x.png')
+    plt.savefig(out_dir + file_name)
     plt.close()
 

@@ -4,7 +4,7 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 
-def plot_density_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, file_name = 'density_rtheta.png'):
+def plot_density_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, file_name = 'density_rtheta.png', out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
 
@@ -68,5 +68,5 @@ def plot_density_rtheta(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,data
     #ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     #ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()

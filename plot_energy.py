@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray_1d import getScalarArray_1d
 from getVectorArray_1d import getVectorArray_1d
 
-def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'energy.png'):
+def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'energy.png', out_dir = ""):
     c = 2.998E10
     gam = 5.0/3.0
     mp = 1.6E-24
@@ -188,5 +188,5 @@ def plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype,
     ax.legend(['full energy', 'kinetic energy', 'thermal energy', 'magnetic energy'])
     ax.set_yscale("log")
     ax.set_ylim([min,max])
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()

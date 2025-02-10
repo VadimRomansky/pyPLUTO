@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_B_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, file_name = 'B_1d.png', axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_B_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, file_name = 'B_1d.png', axis = 1, point1 = 0.5, point2 = 0.5, out_dir = ""):
     f1 = plt.figure(figsize=[10,8])
     plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
@@ -43,5 +43,5 @@ def plot_B_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,datatype, fi
     plt.plot(x, B)
 
     #plt.show()
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()

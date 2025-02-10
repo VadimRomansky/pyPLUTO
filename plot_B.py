@@ -6,7 +6,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getVectorArray import getVectorArray
 
 
-def plot_B(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B.png', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
+def plot_B(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B.png', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False, out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     plt.rcParams["figure.dpi"] = 500
     plt.rcParams['axes.linewidth'] = 0.1
@@ -48,5 +48,5 @@ def plot_B(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_n
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig(file_name, bbox_inches='tight')
+    plt.savefig(out_dir + file_name, bbox_inches='tight')
     plt.close()

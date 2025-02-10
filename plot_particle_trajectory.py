@@ -3,7 +3,7 @@ from pylab import *
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_particle_trajectory(ntot, npar, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'particle_trajectory.png'):
+def plot_particle_trajectory(ntot, npar, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'particle_trajectory.png', out_dir = ""):
     f1 = plt.figure(figsize=[10,8])
     plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
@@ -38,7 +38,7 @@ def plot_particle_trajectory(ntot, npar, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_
     ax.set_ylabel(r'y',fontsize=18)
     ax.minorticks_on()
     #plt.show()
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()
 
 

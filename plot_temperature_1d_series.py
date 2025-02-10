@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getScalarArray_1d import getScalarArray_1d
 
 
-def plot_temperature_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'temperature_1d_series.png', axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_temperature_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'temperature_1d_series.png', axis = 1, point1 = 0.5, point2 = 0.5, out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     plt.rcParams["figure.dpi"] = 500
@@ -58,5 +58,5 @@ def plot_temperature_1d_series(number, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
     ax.legend([r'$t = 10^6$', r'$t = 2\cdot10^7$', r'$t = 4\cdot10^7$'], fontsize="40")
 
     #plt.show()
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()

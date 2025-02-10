@@ -8,7 +8,7 @@ from getScalarArray_1d import getScalarArray_1d
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_1d.gif', axis = 1, point1 = 0.5, point2 = 0.5, out_dir = ""):
     f1 = plt.figure(figsize=[10,8])
     c = 2.998E10
     plt.rcParams["figure.dpi"] = 200

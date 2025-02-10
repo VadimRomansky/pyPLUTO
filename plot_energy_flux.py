@@ -6,7 +6,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getScalarArray import getScalarArray
 from getVectorArray import getVectorArray
 
-def plot_energy_flux_cyl(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, zmin1, zmax1, rmax1, zmin2, zmax2, rmax2, datatype, file_name ='density.png', excl_axis = 3, point = 0.5, aspect ='equal', transponse = False):
+def plot_energy_flux_cyl(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, zmin1, zmax1, rmax1, zmin2, zmax2, rmax2, datatype, file_name ='density.png', excl_axis = 3, point = 0.5, aspect ='equal', transponse = False, out_dir = ""):
     c = 2.998E10
     plt.rcParams.update({'font.size': 15})
     # plt.rcParams['text.usetex'] = True
@@ -144,7 +144,7 @@ def plot_energy_flux_cyl(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, zm
     ax.set_ylabel(r'Y-axis', fontsize=40, fontweight='bold')
     ax.minorticks_on()
     # plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()
 
 

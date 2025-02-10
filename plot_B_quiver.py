@@ -7,7 +7,7 @@ from getScalarArray import getScalarArray
 from getVectorArray import getVectorArray
 
 
-def plot_B_quiver(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B_quiver.png', excl_axis = 3, point = 0.5):
+def plot_B_quiver(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B_quiver.png', excl_axis = 3, point = 0.5, out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
@@ -69,5 +69,5 @@ def plot_B_quiver(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype,
     ax.set_ylabel(r'Y-axis', fontsize=40,fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()

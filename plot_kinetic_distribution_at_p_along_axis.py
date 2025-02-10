@@ -5,7 +5,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getScalarArray_1d import getScalarArray_1d
 
 
-def plot_kinetic_distribution_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, ppoint, axis = 1, point1 = 0.5, point2 = 0.5, file_name = 'distribution_kinetic_at_p.png'):
+def plot_kinetic_distribution_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, ppoint, axis = 1, point1 = 0.5, point2 = 0.5, file_name = 'distribution_kinetic_at_p.png', out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[6,6])
@@ -82,5 +82,5 @@ def plot_kinetic_distribution_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENG
     #plt.xscale('log')
     plt.yscale('log')
 
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()

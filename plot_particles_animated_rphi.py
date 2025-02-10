@@ -4,7 +4,7 @@ import matplotlib.colors as colors
 import pyPLUTO.pload as pp # importing the pyPLUTO pload module.
 import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles module.
 from matplotlib.animation import FuncAnimation
-def plot_particles_animated_rphi(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype, file_name = 'particles_rphi.gif'):
+def plot_particles_animated_rphi(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype, file_name = 'particles_rphi.gif', out_dir = ""):
     f1 = plt.figure(figsize=[10,8])
     plt.rcParams["figure.dpi"] = 200
     plt.rcParams['axes.linewidth'] = 0.1
@@ -169,7 +169,7 @@ def plot_particles_animated_rphi(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
 
     #plt.show()
 
-    f = file_name
+    f = out_dir + file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

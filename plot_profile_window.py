@@ -8,7 +8,7 @@ from getScalarArray_1d import getScalarArray_1d
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_profile_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype, file_name = 'profile_window', axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_profile_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, datatype, file_name = 'profile_window', axis = 1, point1 = 0.5, point2 = 0.5, out_dir = ""):
     c = 2.998E10
     f1 = plt.figure(figsize=[10, 8])
     plt.rcParams["figure.dpi"] = 500
@@ -64,5 +64,5 @@ def plot_profile_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, x
 
     im2 = plt.plot(x1, V1, 'r-', x1, Prs1, 'g-', x1, Rho1, 'b-')  # plotting fluid data.
     ax.legend(['vx', 'pressure', 'density'])
-    plt.savefig(file_name)
+    plt.savefig(out_dir + file_name)
     plt.close()

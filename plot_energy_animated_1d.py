@@ -6,7 +6,7 @@ import pyPLUTO.ploadparticles as pr  # importing the pyPLUTO ploadparticles modu
 from matplotlib.animation import FuncAnimation
 
 
-def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocity, datatype, file_name = 'energy_1d.gif'):
+def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocity, datatype, file_name = 'energy_1d.gif', out_dir = ""):
     f1 = plt.figure(figsize=[10, 8])
     plt.rcParams["figure.dpi"] = 200
 
@@ -77,7 +77,7 @@ def plot_energy_animated_1d(ntot, w_dir, unit_density, unit_length, unit_velocit
 
     # plt.show()
 
-    f = file_name
+    f = out_dir + file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

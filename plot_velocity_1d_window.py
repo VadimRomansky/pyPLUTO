@@ -7,7 +7,7 @@ from matplotlib.animation import FuncAnimation
 from getVectorArray_1d import getVectorArray_1d
 
 
-def plot_velocity_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin1, xmax1, datatype, axis = 1, point1 = 0.5, point2 = 0.5):
+def plot_velocity_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin1, xmax1, datatype, axis = 1, point1 = 0.5, point2 = 0.5, file_name = "velocity_1d_window.png", out_dir = ""):
     c = 2.998E10
     f1 = plt.figure(figsize=[10,8])
     plt.rcParams["figure.dpi"] = 500
@@ -45,5 +45,5 @@ def plot_velocity_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     plt.plot(x, V)
 
     #plt.show()
-    plt.savefig('velocity_1d.png')
+    plt.savefig(out_dir + file_name)
     plt.close()

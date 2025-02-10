@@ -11,11 +11,11 @@ from getScalarArray import getScalarArray
 from getVectorArray import getVectorArray
 
 
-def plot_velocity_y_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_y.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False):
+def plot_velocity_y_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'velocity_y.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False, out_dir = ""):
     c = 2.998E10
     f1 = plt.figure(figsize=[8,6])
     plt.rcParams["figure.dpi"] = 200
-    plr.rcParams['axes.linewidth'] = 0.1
+    plt.rcParams['axes.linewidth'] = 0.1
 
     D = pp.pload(ntot, varNames=['vx2'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.vx2.shape))
@@ -102,7 +102,7 @@ def plot_velocity_y_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
 
     anim = FuncAnimation(f1, update, interval=10, frames=ntot + 1)
 
-    f = file_name
+    f = out_dir + file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()

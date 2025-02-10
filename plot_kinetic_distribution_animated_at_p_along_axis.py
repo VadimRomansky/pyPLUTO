@@ -7,7 +7,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getScalarArray_1d import getScalarArray_1d
 
 
-def plot_kinetic_distribution_animated_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, ppoint, axis = 1, point1 = 0.5, point2 = 0.5, file_name = 'distribution_kinetic_at_p.gif'):
+def plot_kinetic_distribution_animated_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, ppoint, axis = 1, point1 = 0.5, point2 = 0.5, file_name = 'distribution_kinetic_at_p.gif', out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[6,6])
@@ -131,7 +131,7 @@ def plot_kinetic_distribution_animated_at_p_along_axis(ns, w_dir, UNIT_DENSITY, 
 
     # plt.show()
 
-    f = file_name
+    f = out_dir + file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()
