@@ -69,6 +69,7 @@ from plot_particles import plot_particles
 from plot_particle_trajectory import plot_particle_trajectory
 from plot_particles_animated import plot_particles_animated
 from plot_particles_animated_cyl import plot_particles_animated_cyl
+from plot_particles_energy import plot_particles_energy
 
 from plot_pressure import plot_pressure
 from plot_pressure_1d import plot_pressure_1d
@@ -314,6 +315,8 @@ plot_Pkin(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_d
 plot_Pkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 plot_Pkin_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 plot_Pkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+
+plot_particles_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 
 ######### particles
 
