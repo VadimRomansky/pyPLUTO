@@ -12,7 +12,7 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
     plt.rcParams["figure.dpi"] = 500
     ax = f1.add_subplot(111)
 
-    mass = 1.5E-24
+    mass = 1.672E-24
     c = 2.998E10
 
     mc2 = mass*c*c
@@ -28,9 +28,14 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
 
     Ecr = np.zeros([ns+1])
     ugradP = np.zeros([ns+1])
+    Einj = np.zeros([ns+1])
+
+    outputstep = 2
+
+    outputstep = outputstep**ndim
 
     for k in range(ns+1):
-        P = pr.ploadparticles(ns, w_dir, datatype=datatype, ptype='CR')
+        P = pr.ploadparticles(k, w_dir, datatype=datatype, ptype='CR')
         for i in range(len(P.id)):
             for j in range(Nmomentum):
                 dp = 0
@@ -41,7 +46,8 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
 
                 E = mc2*sqrt(1 + p[j]*p[j])
 
-                Ecr[k] = Ecr + P.F[i][j]*p[j]*p[j]*E*dp*P.dV[i]
+                Ecr[k] = Ecr[k] + outputstep*4*np.pi*P.F[i][j]*p[j]*p[j]*E*dp*P.dV[i]
+                Einj[k] = Einj[k] + outputstep*P.Einj[i]
 
 
         ugradP1dV = getUgradP(k, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype)
@@ -63,7 +69,9 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
         else :
             Nx = ugradP1dV.shape[0]
             for i in range(Nx):
-                ugradP[k] = ugradP[k] + ugradP1dV[i]*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_LENGTH*UNIT_LENGTH
+                ugradP[k] = ugradP[k] + ugradP1dV[i]
+
+        ugradP[k] = ugradP[k]*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_LENGTH*UNIT_LENGTH
 
 
     time = np.zeros([ns+1])
@@ -71,6 +79,12 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
         time[k] = k
 
     plt.plot(time, Ecr)
+    plt.plot(time, ugradP)
+    plt.plot(time, Einj)
+
+    ax.set_yscale("log")
+
+    print(Ecr[1]/ugradP[1])
 
     plt.savefig(out_dir + file_name)
     plt.close()
