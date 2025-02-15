@@ -62,8 +62,10 @@ from plot_gamma_window import plot_gamma_window
 from plot_kinetic_distribution import plot_kinetic_distribution
 from plot_kinetic_distribution_animated import plot_kinetic_distribution_animated
 from plot_kinetic_distribution_animated_at_p_along_axis import plot_kinetic_distribution_animated_at_p_along_axis
+from plot_kinetic_distribution_animated_window import plot_kinetic_distribution_animated_window
 from plot_kinetic_distribution_at_p_along_axis import plot_kinetic_distribution_at_p_along_axis
 from plot_kinetic_distribution_at_point import plot_kinetic_distribution_at_point
+from plot_kinetic_distribution_window import plot_kinetic_distribution_window
 
 from plot_particles import plot_particles
 from plot_particle_trajectory import plot_particle_trajectory
@@ -300,6 +302,8 @@ plot_kinetic_distribution(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
 #plot_kinetic_distribution_at_p_along_axis(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 8, file_name = 'distribution_at_momentum_mid_p.png', out_dir = out_dir)
 #plot_kinetic_distribution_at_p_along_axis(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 14, file_name = 'distribution_at_momentum_high_p.png', out_dir = out_dir)
 #plot_kinetic_distribution_animated_at_p_along_axis(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 10, out_dir = out_dir)
+plot_kinetic_distribution_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0, 3E19, 5E19, 1E20, -1E20, 1E20, datatype, out_dir = out_dir)
+plot_kinetic_distribution_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0, 3E19, 5E19, 1E20, -1E20, 1E20, datatype, out_dir = out_dir)
 #plot_distribution(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_escaped_distribution(150, 2500, w_dir, datatype, out_dir = out_dir)
@@ -307,9 +311,9 @@ plot_kinetic_distribution(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
 #plot_reverse_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 plot_Fkin(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
-#plot_Fkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+plot_Fkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 plot_Fkin_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
-#plot_Fkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+plot_Fkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 
 plot_Pkin(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_Pkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
