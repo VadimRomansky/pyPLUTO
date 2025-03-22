@@ -52,6 +52,8 @@ def plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VEL
         ax.set_title('Number of particles = ' + str(len(particles)))
         im1 = ax.scatter(particles[:,0], particles[:,1], s=10, c=PVmag, cmap=plt.get_cmap('hot'))  # scatter plot
         plt.colorbar(im1, cax=cax1)  # vertical colorbar for particle data.
+        ax.set_xlabel(r'x, cm', fontsize=20, fontweight='bold')
+        ax.set_ylabel(r'y, cm', fontsize=20, fontweight='bold')
         return im1
 
     anim = FuncAnimation(f1, update, interval=10, frames = ntot+1)

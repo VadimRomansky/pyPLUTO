@@ -129,8 +129,8 @@ def plot_velocity_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
         plt.colorbar(im2, orientation='horizontal')  # vertical colorbar for fluid data.
-        ax.set_xlabel(r'R-axis', fontsize=14)
-        ax.set_ylabel(r'Z-axis', fontsize=14)
+        ax.set_xlabel(r'r, cm', fontsize=20, fontweight='bold')
+        ax.set_ylabel(r'z, cm', fontsize=20, fontweight='bold')
         ax.minorticks_on()
         # plt.axis([0.0,1.0,0.0,1.0])
         #plt.savefig(f'B_3d_slice2d_{frame_number}.png')
