@@ -91,8 +91,8 @@ def plot_pressure_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_V
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
         plt.colorbar(im2, orientation='horizontal')  # vertical colorbar for fluid data.
-        ax.set_xlabel(r'X-axis', fontsize=14)
-        ax.set_ylabel(r'Y-axis', fontsize=14)
+        ax.set_xlabel(r'x, cm', fontsize=14, fontweight='bold')
+        ax.set_ylabel(r'y, cm', fontsize=14, fontweight='bold')
         ax.minorticks_on()
         # plt.axis([0.0,1.0,0.0,1.0])
         #plt.savefig(f'B_3d_slice2d_{frame_number}.png')

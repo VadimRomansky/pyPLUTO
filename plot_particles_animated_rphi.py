@@ -155,8 +155,9 @@ def plot_particles_animated_rphi(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         #im1 = ax.scatter(particles[:,0], particles[:,1], s=10, c=PVmag, cmap=colors.Normalize(vmin=0, vmax=maxU))  # scatter plot
         im1 = ax.scatter(particles[:,0], particles[:,1], s=10, c=PVmag, cmap=plt.get_cmap('hot'), vmin = 0, vmax = maxU)  # scatter plot
         plt.colorbar(im1, cax=cax1)  # vertical colorbar for particle data.
-            
 
+        ax.set_xlabel(r'x, cm', fontsize=20, fontweight='bold')
+        ax.set_ylabel(r'y, cm', fontsize=20, fontweight='bold')
             
         #plt.subplot(projection="polar")
 

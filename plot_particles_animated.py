@@ -101,6 +101,8 @@ def plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
         im2 = ax.imshow(B, origin='upper', norm=colors.Normalize(vmin=minB, vmax=maxB), aspect = aspect,
                         extent=[xmin, xmax, ymin, ymax])  # plotting fluid data.
         plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
+        ax.set_xlabel(r'x, cm', fontsize=20, fontweight='bold')
+        ax.set_ylabel(r'y, cm', fontsize=20, fontweight='bold')
 
         return im1
 

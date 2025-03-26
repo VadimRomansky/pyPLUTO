@@ -34,8 +34,8 @@ def plot_particle_trajectory(ntot, npar, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_
     V = np.sqrt(D.Bx1.T ** 2 + D.Bx2.T ** 2 + D.Bx3.T ** 2)
     #im2 = ax.imshow(V, origin='lower',extent=[D.x1.min(), D.x1.max(), D.x2.min(), D.x2.max()]) # plotting fluid data.
     #plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
-    ax.set_xlabel(r'x',fontsize=18)
-    ax.set_ylabel(r'y',fontsize=18)
+    ax.set_xlabel(r'x, cm', fontsize=20, fontweight='bold')
+    ax.set_ylabel(r'y, cm', fontsize=20, fontweight='bold')
     ax.minorticks_on()
     #plt.show()
     plt.savefig(out_dir + file_name)

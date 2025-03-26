@@ -106,8 +106,8 @@ def plot_density_rtheta_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VE
         #cax2 = f1.add_axes()
         #plt.colorbar(im2, cax=cax2, orientation='horizontal')  # vertical colorbar for fluid data.
         plt.colorbar(im2, orientation='horizontal')  # vertical colorbar for fluid data.
-        ax.set_xlabel(r'R-axis', fontsize=14)
-        ax.set_ylabel(r'Z-axis', fontsize=14)
+        ax.set_xlabel(r'R, cm', fontsize=14)
+        ax.set_ylabel(r'Z, cm', fontsize=14)
         ax.minorticks_on()
         ax.set_position([0.05, -0.55, 0.9, 2.5])
         # plt.axis([0.0,1.0,0.0,1.0])

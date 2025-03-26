@@ -18,8 +18,8 @@ def plot_particles(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype
     im2 = ax.imshow(D.vx1.T, origin='upper',extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
     cax2 = f1.add_axes([0.125,0.92,0.75,0.03])
     plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
-    ax.set_xlabel(r'X-axis',fontsize=18)
-    ax.set_ylabel(r'Y-axis',fontsize=18)
+    ax.set_xlabel(r'x, cm', fontsize=20, fontweight='bold')
+    ax.set_ylabel(r'y, cm', fontsize=20, fontweight='bold')
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.savefig(out_dir + file_name)
