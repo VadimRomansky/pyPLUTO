@@ -6,12 +6,16 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from getScalarArray import getScalarArray
 
 
-def plot_density_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'density_window.png', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False, out_dir = ""):
+def plot_density_window_W50(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'density_window.png', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False, out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
-    f1 = plt.figure(figsize=[10,8])
+    f1 = plt.figure(figsize=[10,3])
     plt.rcParams["figure.dpi"] = 500
     plt.rcParams['axes.linewidth'] = 0.1
+    plt.rcParams.update({
+        "text.usetex": True,
+        "font.family": 'Times New Roman'
+    })
     ax = f1.add_subplot(111)
     ax.set_xlim([xmin, xmax])
     ax.set_ylim([ymin, ymax])
@@ -42,11 +46,16 @@ def plot_density_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmi
     if(transponse):
         #np.flip(Rho, 0)
         im2 = ax.imshow(Rho.T, origin='lower', norm = colors.LogNorm(vmin = minRho, vmax = maxRho), aspect=aspect,extent=[D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
-    cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
+    cax2 = f1.add_axes([0.92,0.17,0.02,0.65])
 
-    plt.colorbar(im2,cax=cax2,orientation='horizontal') # vertical colorbar for fluid data.
-    ax.set_xlabel(r'z cm', fontsize=20)
-    ax.set_ylabel(r'r cm', fontsize=20)
+    cbar = plt.colorbar(im2, cax=cax2, orientation='vertical')  # vertical colorbar for fluid data.
+    # cbar = plt.colorbar(im2, orientation='vertical')
+    cbar.set_label(r'$\rho$ [g/cm$^3$]', rotation=270)
+    cbar.ax.get_yaxis().labelpad = 15
+    cbar.ax.tick_params(labelsize=10)
+
+    ax.set_xlabel(r'z [pc]', fontsize=20)
+    ax.set_ylabel(r'r [pc]', fontsize=20)
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.savefig(out_dir + file_name, bbox_inches='tight')

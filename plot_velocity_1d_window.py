@@ -37,12 +37,13 @@ def plot_velocity_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     else:
         print("wrong axis")
         return
-    ax.set_ylabel(r'v/c',fontsize=18)
-    ax.set_yscale("log")
+    ax.set_xlabel(r'$z~cm$', fontsize=20)
+    ax.set_ylabel(r'$v/c$', fontsize=20)
+    #ax.set_yscale("log")
     ax.minorticks_on()
     ax.set_xlim([xmin1, xmax1])
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.plot(x, V)
+    plt.plot(x, V, linewidth = 4)
 
     #plt.show()
     plt.savefig(out_dir + file_name)

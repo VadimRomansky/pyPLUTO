@@ -73,12 +73,12 @@ def plot_density_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         return
 
 
-    ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
-    ax.set_ylabel(r'$\rho~g~cm^{-3}$', fontsize=40,fontweight='bold')
+    ax.set_xlabel(r'$z~cm$', fontsize=20)
+    ax.set_ylabel(r'$\rho~g~cm^{-3}$', fontsize=20)
     ax.minorticks_on()
     ax.set_yscale("log")
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.plot(x[N1:N2], Rho[N1:N2])
+    plt.plot(x[N1:N2], Rho[N1:N2], linewidth = 4)
 
     #plt.show()
     plt.savefig(out_dir + file_name)

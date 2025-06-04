@@ -40,12 +40,12 @@ def plot_density_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
         print("wrong axis")
         return
 
-    ax.set_xlabel(r'$x~cm$', fontsize=40, fontweight='bold')
-    ax.set_ylabel(r'$\rho~g~cm^{-3}$', fontsize=40,fontweight='bold')
+    ax.set_xlabel(r'$z~cm$', fontsize=20)
+    ax.set_ylabel(r'$\rho~g~cm^{-3}$')
     ax.minorticks_on()
     ax.set_yscale("log")
     #plt.axis([0.0,1.0,0.0,1.0])
-    plt.plot(x, Rho)
+    plt.plot(x, Rho, linewidth = 4)
 
     #plt.show()
     plt.savefig(out_dir + file_name)
