@@ -7,14 +7,14 @@ from getScalarArray import getScalarArray
 from getVectorArray import getVectorArray
 
 
-def plot_B_quiver(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'B_quiver.png', excl_axis = 3, point = 0.5, out_dir = ""):
+def plot_B_quiver_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'B_quiver_window.png', excl_axis = 3, point = 0.5, out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
     f1 = plt.figure(figsize=[10,8])
     plt.rcParams["figure.dpi"] = 1000
     ax = f1.add_subplot(111)
 
-    Nsampling = 10
+    Nsampling = 4
 
     D = pp.pload(ns, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Bx1.shape))
@@ -51,16 +51,62 @@ def plot_B_quiver(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype,
     B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY),
                        excl_axis, point)
 
-    B11 = B1[::Nsampling, ::Nsampling]
-    B22 = B2[::Nsampling, ::Nsampling]
-    Bb = B[::Nsampling, ::Nsampling]
+    B = B.T
+    B1 = B1.T
+    B2 = B2.T
 
-    minB = np.amin(Bb)
-    maxB = np.amax(Bb)
+    Nx = U.shape[0]
+    Ny = V.shape[0]
+    minXindex = 0
+    for i in range(Nx):
+        if(U[i] >= xmin):
+            minXindex = i
+            break
+
+    maxXindex = Nx-1
+    for i in range(Nx):
+        if(U[Nx - i - 1] <= xmax):
+            maxXindex = Nx - i - 1
+            break
+
+    minYindex = 0
+    for i in range(Ny):
+        if (V[i] >= ymin):
+            minYindex = i
+            break
+
+    maxYindex = Ny-1
+    for i in range(Ny):
+        if (V[Ny - i - 1] <= ymax):
+            maxYindex = Ny - i - 1
+            break
+
+    U1 = U[minXindex:maxXindex]
+    V1 = V[minYindex:maxYindex]
+
+    print(minXindex, maxXindex, minYindex, maxYindex)
+
+    B111 = B1[minXindex:maxXindex, minYindex:maxYindex]
+    B222 = B2[minXindex:maxXindex, minYindex:maxYindex]
+    Bbb = B[minXindex:maxXindex, minYindex:maxYindex]
+
+    B11 = B111[::Nsampling, ::Nsampling]
+    B22 = B222[::Nsampling, ::Nsampling]
+    Bb = Bbb[::Nsampling, ::Nsampling]
+
+    U11 = U1[::Nsampling]
+    V11 = V1[::Nsampling]
+
+    #minB = np.amin(Bb)
+    #maxB = np.amax(Bb)
 
     #U1, V1 = np.meshgrid(V, U)
 
-    im2 = ax.quiver(U[::Nsampling], V[::Nsampling], B11, B22, Bb, width = 0.001) # plotting fluid data.
+    ax.set_xlim([ymin, ymax])
+    ax.set_ylim([xmin, xmax])
+
+    #im2 = ax.quiver(U11, V11, B11.T, B22.T, Bb.T, width = 0.001) # plotting fluid data.
+    im2 = ax.quiver(V11, U11, B22, B11, Bb, width=0.001)  # plotting fluid data.
     #im2 = ax.quiver(U[::Nsampling], V[::Nsampling], B11, B22, Bb) # plotting fluid data.
     #cax2 = f1.add_axes([0.125,0.92,0.775,0.03])
     #im2.set_clim(minB, maxB)
