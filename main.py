@@ -4,6 +4,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from plot_B import plot_B
 from plot_B_1d import plot_B_1d
 from plot_B_1d_series import plot_B_1d_series
+from plot_B_W50 import plot_B_W50
 from plot_B_animated import plot_B_animated
 from plot_B_animated_1d import plot_B_animated_1d
 from plot_B_animated_window import plot_B_animated_window
@@ -11,6 +12,7 @@ from plot_B_quiver import plot_B_quiver
 from plot_B_quiver_animated import plot_B_quiver_animated
 from plot_B_quiver_window import plot_B_quiver_window
 from plot_B_window import plot_B_window
+from plot_B_window_W50 import plot_B_window_W50
 from plot_Bx import plot_Bx
 from plot_Bx_window import plot_Bx_window
 from plot_By import plot_By
@@ -134,13 +136,14 @@ plt.rcParams['image.cmap'] = 'jet'
 
 plot_velocity_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
 plot_density_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
-plot_density_window_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, 0.0, 50, datatype, file_name = 'density_west.png', transponse = True, out_dir = out_dir)
-plot_density_window_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, -50, 0.0, datatype, file_name = 'density_east.png', transponse = True, out_dir = out_dir)
-plot_velocity_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, -50, 0, datatype, transponse = True, out_dir = out_dir)
+plot_density_window_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, 0.0, 60, datatype, file_name = 'density_west.png', transponse = True, out_dir = out_dir)
+plot_density_window_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, -60, 0.0, datatype, file_name = 'density_east.png', transponse = True, out_dir = out_dir)
+plot_velocity_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, -60, 0, datatype, transponse = True, out_dir = out_dir)
 plot_profile_1d(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'profile_1d_0.png', axis = 2, point1 = 0.0, out_dir = out_dir)
-plot_profile_1d_window(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -50, -15.0, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
+plot_profile_1d_window(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -60, -15.0, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
 plot_velocity_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
-
+plot_B_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
+plot_B_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 5E19, -1.5E20, -0.5E20, datatype, transponse = True, out_dir = out_dir)
 #plot_energy_flux_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -2E19, 2E19, 2E18, -7E19, 7E19, 2E18, datatype, transponse = True)
 
 ######### B
