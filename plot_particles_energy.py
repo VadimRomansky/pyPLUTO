@@ -49,7 +49,7 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
 
                 E = mc2*sqrt(1 + p[j]*p[j])
 
-                Ecr[k] = Ecr[k] + outputstep*P.F[i][j]*p[j]*p[j]*E*dp*P.dV[i]
+                Ecr[k] = Ecr[k] + outputstep*P.F[i][j]*p[j]*p[j]*E*dp*P.dV[i] * UNIT_LENGTH * UNIT_LENGTH * UNIT_LENGTH
             Einj[k] = Einj[k] + outputstep * P.Einj[i] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY * UNIT_LENGTH * UNIT_LENGTH * UNIT_LENGTH
 
         D = pp.pload(k, varNames=['vx1', 'vx2', 'vx3', 'Pkin'], w_dir=w_dir, datatype=datatype)
@@ -93,7 +93,7 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
     plt.plot(time, Einj, label = 'injected energy')
     plt.plot(time, sum, label = 'injected + u grad P')
 
-    #ax.set_yscale("log")
+    ax.set_yscale("log")
     ax.legend()
 
     print("Ecr[1]/ugradP[1] = ",Ecr[1]/ugradP[1])
