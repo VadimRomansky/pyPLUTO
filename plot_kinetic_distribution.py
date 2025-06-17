@@ -17,7 +17,7 @@ def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
 
     for i in range(len(P.id)):
         for j in range(Nmomentum):
-            F[j] = F[j] + P.F[i][j]*P.dV[i]
+            F[j] = F[j] + P.F[i][j]*P.dV[i]*p[j]**4
             V = V + P.dV[i]
 
     for j in range(Nmomentum):
@@ -31,14 +31,17 @@ def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     Fa[0] = F[0];
 
     for i in range(Nmomentum):
-        Fa[i] = F[0]*(p[0]/p[i])**4
+        #Fa[i] = F[0]*(p[0]/p[i])**4
+        Fa[i] = F[0]
 
     plt.plot(p, F)
     plt.plot(p, Fa)
     plt.xscale('log')
     plt.yscale('log')
+    ax.set_xlabel(r'p/mc', fontsize=20)
+    ax.set_ylabel(r'F(p)p^4', fontsize=20)
 
-    ax.set_ylim([1E-14, 1E1])
+    #ax.set_ylim([1E-14, 1E1])
 
     plt.savefig(out_dir + file_name)
     plt.close()

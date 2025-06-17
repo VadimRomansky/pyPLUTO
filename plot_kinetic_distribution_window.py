@@ -18,7 +18,7 @@ def plot_kinetic_distribution_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_
     for i in range(len(P.id)):
         if((P.x[i] >= xmin) and (P.x[i] <= xmax) and (P.y[i] >= ymin) and (P.y[i] <= ymax) and (P.z[i] >= zmin) and (P.z[i] <= zmax)):
             for j in range(Nmomentum):
-                F[j] = F[j] + P.F[i][j]*P.dV[i]
+                F[j] = F[j] + P.F[i][j]*P.dV[i]*p[j]**4
                 V = V + P.dV[i]
 
     for j in range(Nmomentum):
@@ -32,12 +32,15 @@ def plot_kinetic_distribution_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_
     Fa[0] = F[0];
 
     for i in range(Nmomentum):
-        Fa[i] = F[0]*(p[0]/p[i])**4
+        #Fa[i] = F[0]*(p[0]/p[i])**4
+        Fa[i] = F[0]
 
     plt.plot(p, F)
     plt.plot(p, Fa)
     plt.xscale('log')
     plt.yscale('log')
+    ax.set_xlabel(r'p/mc', fontsize=20)
+    ax.set_ylabel(r'F(p)p^4', fontsize=20)
 
     #ax.set_ylim([1E-14, 1E1])
 

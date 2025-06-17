@@ -81,6 +81,8 @@ def plot_kinetic_distribution_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENG
     plt.plot(D.x1*UNIT_LENGTH, Fa)
     #plt.xscale('log')
     plt.yscale('log')
+    ax.set_xlabel(r'x', fontsize=20)
+    ax.set_ylabel(r'F(p)', fontsize=20)
 
     plt.savefig(out_dir + file_name)
     plt.close()

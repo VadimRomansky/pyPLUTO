@@ -19,6 +19,8 @@ from plot_By import plot_By
 from plot_By_window import plot_By_window
 from plot_Bz import plot_Bz
 from plot_Bz_window import plot_Bz_window
+from plot_Fkin_1d import plot_Fkin_1d
+from plot_Fkin_animated_1d import plot_Fkin_animated_1d
 
 from plot_density import plot_density
 from plot_density_1d_window import plot_density_1d_window
@@ -53,11 +55,19 @@ from plot_gamma_animated_window import plot_gamma_animated_window
 from plot_gamma_rtheta import plot_gamma_rtheta
 from plot_gamma_rtheta_animated import plot_gamma_rtheta_animated
 from plot_gamma_window import plot_gamma_window
+from plot_kinetic_distribution import plot_kinetic_distribution
+from plot_kinetic_distribution_animated import plot_kinetic_distribution_animated
+from plot_kinetic_distribution_animated_at_p_along_axis import plot_kinetic_distribution_animated_at_p_along_axis
+from plot_kinetic_distribution_animated_window import plot_kinetic_distribution_animated_window
+from plot_kinetic_distribution_at_p_along_axis import plot_kinetic_distribution_at_p_along_axis
+from plot_kinetic_distribution_at_point import plot_kinetic_distribution_at_point
+from plot_kinetic_distribution_window import plot_kinetic_distribution_window
 
 from plot_particles import plot_particles
 from plot_particle_trajectory import plot_particle_trajectory
 from plot_particles_animated import plot_particles_animated
 from plot_particles_animated_cyl import plot_particles_animated_cyl
+from plot_particles_energy import plot_particles_energy
 
 from plot_pressure import plot_pressure
 from plot_pressure_1d import plot_pressure_1d
@@ -119,7 +129,7 @@ from write_velocity_to_file import write_velocity_to_file
 
 from plot_energy_flux import plot_energy_flux_cyl
 
-w_dir='../../output_best/'
+w_dir='../../output/'
 out_dir = w_dir
 #w_dir='../../output_2_winds_MWR1_1_4_4/'
 #w_dir='../../output_snr_rel_M0.1_MWR4_4/'
@@ -136,14 +146,14 @@ plt.rcParams['image.cmap'] = 'jet'
 
 plot_velocity_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
 plot_density_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
-plot_density_window_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, 0.0, 60, datatype, file_name = 'density_west.png', transponse = True, out_dir = out_dir)
-plot_density_window_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, -60, 0.0, datatype, file_name = 'density_east.png', transponse = True, out_dir = out_dir)
-plot_velocity_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 12.5, -60, 0, datatype, transponse = True, out_dir = out_dir)
+plot_density_window_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 15, 0.0, 60, datatype, file_name = 'density_west.png', transponse = True, out_dir = out_dir)
+plot_density_window_W50(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 15, -60, 0.0, datatype, file_name = 'density_east.png', transponse = True, out_dir = out_dir)
+plot_velocity_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 15, -60, 0, datatype, transponse = True, out_dir = out_dir)
 plot_profile_1d(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'profile_1d_0.png', axis = 2, point1 = 0.0, out_dir = out_dir)
 plot_profile_1d_window(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -60, -15.0, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
 plot_velocity_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
 plot_B_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
-plot_B_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 5E19, -1.5E20, -0.5E20, datatype, transponse = True, out_dir = out_dir)
+plot_B_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 15, -60, 0.0, datatype, transponse = True, out_dir = out_dir)
 #plot_energy_flux_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -2E19, 2E19, 2E18, -7E19, 7E19, 2E18, datatype, transponse = True)
 
 ######### B
@@ -215,7 +225,7 @@ plot_temperature(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype
 #plot_temperature_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 
 ####### entropy
-plot_entropy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
+#plot_entropy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
 plot_entropy_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'entropy_1d_0.png', axis = 2, point1 = 0.0, out_dir = out_dir)
 plot_entropy_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'entropy_1d_1.png', axis = 2, point1 = 0.01, out_dir = out_dir)
 plot_entropy_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'entropy_1d_2.png', axis = 2, point1 = 0.02, out_dir = out_dir)
@@ -224,7 +234,7 @@ plot_entropy_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype,
 #plot_entropy_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
 #plot_entropy_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0, 2E19, 2E19, 3E19, datatype, transponse = True, out_dir = out_dir)
 #plot_entropy_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
-plot_entropy_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 1E19, 0.0, 6E19, datatype, transponse = True, out_dir = out_dir)
+#plot_entropy_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 1E19, 0.0, 6E19, datatype, transponse = True, out_dir = out_dir)
 
 ########### shock
 plot_shock(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
@@ -304,12 +314,34 @@ plot_velocity_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -
 
 ####### some
 
+#plot_kinetic_distribution(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_kinetic_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_kinetic_distribution_at_point(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 10, 5, 0, file_name = 'distribution_at_point_upstream.png', out_dir = out_dir)
+#plot_kinetic_distribution_at_point(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 202, 5, 0, file_name = 'distribution_at_point_front.png', out_dir = out_dir)
+#plot_kinetic_distribution_at_point(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 39, 5, 0, file_name = 'distribution_at_point_downstream.png', out_dir = out_dir)
+#plot_kinetic_distribution_at_p_along_axis(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 1, file_name = 'distribution_at_momentum_low_p.png', out_dir = out_dir)
+#plot_kinetic_distribution_at_p_along_axis(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 1000, file_name = 'distribution_at_momentum_mid_p.png', out_dir = out_dir)
+#plot_kinetic_distribution_at_p_along_axis(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 1998, file_name = 'distribution_at_momentum_high_p.png', out_dir = out_dir)
+#plot_kinetic_distribution_animated_at_p_along_axis(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, 1, out_dir = out_dir)
+#plot_kinetic_distribution_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0, 3E19, 5E19, 1E20, -1E20, 1E20, datatype, out_dir = out_dir)
+#plot_kinetic_distribution_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0, 3E19, 5E19, 1E20, -1E20, 1E20, datatype, out_dir = out_dir)
 #plot_distribution(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_escaped_distribution(150, 2500, w_dir, datatype, out_dir = out_dir)
 #plot_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_reverse_shock_wave(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Fkin(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Fkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Fkin_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Fkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+
+#plot_Pkin(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Pkin_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Pkin_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Pkin_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+
+#plot_particles_energy(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 
 
 ######### particles

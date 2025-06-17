@@ -54,8 +54,8 @@ def plot_velocity_window_W50(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     cbar.set_label(r'v/c', rotation=270)
     cbar.ax.get_yaxis().labelpad = 15
     cbar.ax.tick_params(labelsize=10)
-    ax.set_xlabel(r'z [cm]', fontsize=20)
-    ax.set_ylabel(r'r [cm]', fontsize=20)
+    ax.set_xlabel(r'z [pc]', fontsize=20)
+    ax.set_ylabel(r'r [pc]', fontsize=20)
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.savefig(out_dir + file_name, bbox_inches='tight')

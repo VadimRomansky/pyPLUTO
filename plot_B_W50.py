@@ -50,7 +50,7 @@ def plot_B_W50(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, fi
     # im2.set_clim(minB, maxB)
     cbar = plt.colorbar(im2, cax=cax2, orientation='vertical')  # vertical colorbar for fluid data.
     # cbar = plt.colorbar(im2, orientation='vertical')
-    cbar.set_label('B', rotation=270)
+    cbar.set_label('B [$\mu$G]', rotation=270)
     cbar.ax.get_yaxis().labelpad = 15
     cbar.ax.tick_params(labelsize=10)
 

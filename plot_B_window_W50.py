@@ -19,18 +19,17 @@ def plot_B_window_W50(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin,
         "font.family": 'Times New Roman'
     })
     ax = f1.add_subplot(111)
-
     ax.set_xlim([xmin, xmax])
     ax.set_ylim([ymin, ymax])
-    if (transponse):
+    if(transponse):
         ax.set_xlim([ymin, ymax])
         ax.set_ylim([xmin, xmax])
 
     D = pp.pload(ns, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
     ndim = len((D.Bx1.shape))
 
-    minB = 0
-    maxB = 0
+    minV = 0
+    maxV = 0
     nx = 0
     ny = 0
 
@@ -38,26 +37,27 @@ def plot_B_window_W50(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin,
         print("cant plot 2d image of 1d setup\n")
         return
 
-    B = getVectorArray(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
+    #V = getVectorArray(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY/c, excl_axis, point)
+    V = getVectorArray(D.Bx1, D.Bx2, D.Bx3, 1000000*np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), excl_axis, point)
 
-    minB = np.amin(B)
-    maxB = np.amax(B)
+    minV = np.amin(V)
+    maxV = np.amax(V)
 
 
 
-    im2 = ax.imshow(B, origin='upper', norm = colors.LogNorm(vmin = minB, vmax = maxB), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+    im2 = ax.imshow(V, origin='upper', norm = colors.LogNorm(vmin = minV, vmax = maxV), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
     if(transponse):
-        #np.flip(B, 0)
-        im2 = ax.imshow(B.T, origin='lower', norm = colors.LogNorm(vmin = minB, vmax = maxB), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
-    cax2 = f1.add_axes([0.92, 0.17, 0.02, 0.65])
+        #np.flip(V, 0)
+        im2 = ax.imshow(V.T, origin='lower', norm = colors.LogNorm(vmin = minV, vmax = maxV), aspect=aspect,extent=[D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
+    cax2 = f1.add_axes([0.92,0.17,0.02,0.65])
 
     cbar = plt.colorbar(im2, cax=cax2, orientation='vertical')  # vertical colorbar for fluid data.
     # cbar = plt.colorbar(im2, orientation='vertical')
-    cbar.set_label(r'v/c', rotation=270)
+    cbar.set_label(r'B [$\mu$G]', rotation=270)
     cbar.ax.get_yaxis().labelpad = 15
     cbar.ax.tick_params(labelsize=10)
-    ax.set_xlabel(r'z [cm]', fontsize=20)
-    ax.set_ylabel(r'r [cm]', fontsize=20)
+    ax.set_xlabel(r'z [pc]', fontsize=20)
+    ax.set_ylabel(r'r [pc]', fontsize=20)
     ax.minorticks_on()
     #plt.axis([0.0,1.0,0.0,1.0])
     plt.savefig(out_dir + file_name, bbox_inches='tight')
