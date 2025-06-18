@@ -33,7 +33,7 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
     Einj = np.zeros([ns+1])
     sum = np.zeros([ns + 1])
 
-    outputstep = 2
+    outputstep = 1
 
     outputstep = outputstep**ndim
 
@@ -49,8 +49,8 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
 
                 E = mc2*sqrt(1 + p[j]*p[j])
 
-                Ecr[k] = Ecr[k] + outputstep*P.F[i][j]*p[j]*p[j]*E*dp*P.dV[i] * UNIT_LENGTH * UNIT_LENGTH * UNIT_LENGTH
-            Einj[k] = Einj[k] + outputstep * P.Einj[i] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY * UNIT_LENGTH * UNIT_LENGTH * UNIT_LENGTH
+                Ecr[k] = Ecr[k] + outputstep*P.F[i][j]*p[j]*p[j]*E*dp*P.dV[i]/(UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH)
+            Einj[k] = Einj[k] + outputstep * P.Einj[i] * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY
 
         D = pp.pload(k, varNames=['vx1', 'vx2', 'vx3', 'Pkin'], w_dir=w_dir, datatype=datatype)
         simTime = D.SimTime
@@ -65,17 +65,17 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
             for i in range(Nx):
                 for j in range(Ny):
                     for l in range(Nz):
-                        ugradP[k] = ugradP[k] + ugradP1dV[i][j][l]*(simTime - prevSimTime)*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH
+                        ugradP[k] = ugradP[k] + ugradP1dV[i][j][l]*(simTime - prevSimTime)*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY
         elif (ndim == 2):
             Nx = ugradP1dV.shape[0]
             Ny = ugradP1dV.shape[1]
             for i in range(Nx):
                 for j in range(Ny):
-                    ugradP[k] = ugradP[k] + ugradP1dV[i][j]*(simTime - prevSimTime)*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH
+                    ugradP[k] = ugradP[k] + ugradP1dV[i][j]*(simTime - prevSimTime)*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY
         else :
             Nx = ugradP1dV.shape[0]
             for i in range(Nx):
-                ugradP[k] = ugradP[k] + ugradP1dV[i]*(simTime - prevSimTime)*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_LENGTH*UNIT_LENGTH*UNIT_LENGTH
+                ugradP[k] = ugradP[k] + ugradP1dV[i]*(simTime - prevSimTime)*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY
 
         prevSimTime = simTime
         #ugradP[k] = ugradP[k]*UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_VELOCITY*UNIT_LENGTH*UNIT_LENGTH
@@ -93,7 +93,7 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
     plt.plot(time, Einj, label = 'injected energy')
     plt.plot(time, sum, label = 'injected + u grad P')
 
-    ax.set_yscale("log")
+    #ax.set_yscale("log")
     ax.legend()
 
     print("Ecr[1]/ugradP[1] = ",Ecr[1]/ugradP[1])
