@@ -18,19 +18,18 @@ def plot_kinetic_distribution_at_point(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
     for i in range(len(P.id)):
         if((P.i[i] == ii) and (P.j[i] == jj) and (P.k[i] == kk)):
             for j in range(Nmomentum):
-                F[j] = P.F[i][j]*p[j]**4
+                F[j] = P.F[i][j]
 
-    for j in range(Nmomentum):
-        if(F[j] <= 0):
-            F[j] = 1E-100
+    #for j in range(Nmomentum):
+        #if(F[j] <= 0):
+            #F[j] = 1E-100
     #for i in range(len(y)):
         #y = y/PVmag[i]
 
     Fa = np.zeros([Nmomentum])
 
     for i in range(Nmomentum):
-        #Fa[i] = F[0]*(p[0]/p[i])**4
-        Fa[i] = F[0]
+        Fa[i] = F[0]*(p[0]/p[i])**4
 
     ax.set_ylim([1E-30, 1E1])
 
@@ -38,8 +37,6 @@ def plot_kinetic_distribution_at_point(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNI
     plt.plot(p, Fa)
     plt.xscale('log')
     plt.yscale('log')
-    ax.set_xlabel(r'p/mc', fontsize=20)
-    ax.set_ylabel(r'F(p)p^4', fontsize=20)
 
     plt.savefig(out_dir + file_name)
     plt.close()

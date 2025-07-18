@@ -35,8 +35,8 @@ def plot_kinetic_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, U
     Fa[0] = F[0]
 
     for i in range(Nmomentum):
-        #Fa[i] = F[0] * (p[0] / p[i]) ** 4
         Fa[i] = F[0]
+        #Fa[i] = F[0] * (p[0] / p[i]) ** 4
 
     for i in range(ntot+1):
         P = pr.ploadparticles(i, w_dir, datatype=datatype,
@@ -47,7 +47,7 @@ def plot_kinetic_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, U
 
         for k in range(len(P.id)):
             for j in range(Nmomentum):
-                F[j] = F[j] + P.F[k][j] * P.dV[k] *p[j]**4
+                F[j] = F[j] + P.F[k][j] * P.dV[k]*p[j]**4
                 V = V + P.dV[k]
 
         for j in range(Nmomentum):
@@ -64,10 +64,8 @@ def plot_kinetic_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, U
         ax = f1.add_subplot(111)
         ax.set_xscale("log")
         ax.set_yscale("log")
-        ax.set_xlabel(r'p/mc', fontsize=20)
-        ax.set_ylabel(r'F(p)p^4', fontsize=20)
         #ax.set_xlim([1E3, 1E8])
-        ax.set_ylim([minF, maxF])
+        #ax.set_ylim([minF, maxF])
         #ax.set_ylim([1E-16, 1E1])
         P = pr.ploadparticles(frame_number, w_dir, datatype=datatype,
                               ptype='CR')  # Loading particle data : particles.00ns_ch00.flt
@@ -79,9 +77,9 @@ def plot_kinetic_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, U
             for j in range(Nmomentum):
                 F[j] = F[j] + P.F[k][j] * P.dV[k]*p[j]**4
                 V = V + P.dV[k]
-        for j in range(Nmomentum):
-            if (F[j] <= 0):
-                F[j] = 1E-100
+        #for j in range(Nmomentum):
+            #if (F[j] <= 0):
+                #F[j] = 1E-100
 
         im1 = ax.plot(p, F)
         ax.plot(p, Fa)
