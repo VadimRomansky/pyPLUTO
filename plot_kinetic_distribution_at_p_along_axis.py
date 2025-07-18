@@ -41,9 +41,9 @@ def plot_kinetic_distribution_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENG
         if((int(P.j[i]) == jj) and (int(P.k[i]) == kk)):
                 F[int(P.i[i])-3] = P.F[i][ppoint]
 
-    for j in range(Nx):
-        if(F[j] <= 0):
-            F[j] = 1E-100
+    #for j in range(Nx):
+        #if(F[j] <= 0):
+            #F[j] = 1E-100
     #for i in range(len(y)):
         #y = y/PVmag[i]
 
@@ -81,8 +81,6 @@ def plot_kinetic_distribution_at_p_along_axis(ns, w_dir, UNIT_DENSITY, UNIT_LENG
     plt.plot(D.x1*UNIT_LENGTH, Fa)
     #plt.xscale('log')
     plt.yscale('log')
-    ax.set_xlabel(r'x', fontsize=20)
-    ax.set_ylabel(r'F(p)', fontsize=20)
 
     plt.savefig(out_dir + file_name)
     plt.close()

@@ -43,9 +43,9 @@ def plot_kinetic_distribution_animated_at_p_along_axis(ns, w_dir, UNIT_DENSITY, 
         if((int(P.j[i]) == jj) and (int(P.k[i]) == kk)):
                 F[int(P.i[i])-3] = P.F[i][ppoint]
 
-    for j in range(Nmomentum):
-        if(F[j] <= 0):
-            F[j] = 1E-100
+    #for j in range(Nmomentum):
+        #if(F[j] <= 0):
+            #F[j] = 1E-100
     #for i in range(len(y)):
         #y = y/PVmag[i]
 
@@ -108,8 +108,6 @@ def plot_kinetic_distribution_animated_at_p_along_axis(ns, w_dir, UNIT_DENSITY, 
         #ax.set_xscale("log")
         ax.set_yscale("log")
         #ax.set_xlim([1E3, 1E8])
-        ax.set_xlabel(r'x', fontsize=20)
-        ax.set_ylabel(r'F(p)', fontsize=20)
         ax.set_ylim([1E-200, 1E-10])
         P = pr.ploadparticles(frame_number, w_dir, datatype=datatype,
                               ptype='CR')  # Loading particle data : particles.00ns_ch00.flt

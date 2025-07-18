@@ -18,14 +18,14 @@ def plot_kinetic_distribution_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LE
     V = 0
 
     for i in range(len(P.id)):
-        if ((P.x[i] >= xmin) and (P.x[i] <= xmax) and (P.y[i] >= ymin) and (P.y[i] <= ymax) and (P.z[i] >= zmin) and (P.z[i] <= zmax)):
+        if ((P.x1[i] >= xmin) and (P.x1[i] <= xmax) and (P.x2[i] >= ymin) and (P.x2[i] <= ymax) and (P.x3[i] >= zmin) and (P.x3[i] <= zmax)):
             for j in range(Nmomentum):
-                F[j] = F[j] + P.F[i][j]*P.dV[i]*p[j]**4
+                F[j] = F[j] + P.F[i][j]*P.dV[i]
                 V = V + P.dV[i]
 
-    for j in range(Nmomentum):
-        if(F[j] <= 0):
-            F[j] = 1E-100
+    #for j in range(Nmomentum):
+        #if(F[j] <= 0):
+            #F[j] = 1E-100
     #for i in range(len(y)):
         #y = y/PVmag[i]
     minF = np.amin(F)
@@ -36,8 +36,7 @@ def plot_kinetic_distribution_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LE
     Fa[0] = F[0]
 
     for i in range(Nmomentum):
-       #Fa[i] = F[0] * (p[0] / p[i]) ** 4
-       Fa[i] = F[0]
+        Fa[i] = F[0] * (p[0] / p[i]) ** 4
 
     for i in range(ntot+1):
         P = pr.ploadparticles(i, w_dir, datatype=datatype,
@@ -47,14 +46,14 @@ def plot_kinetic_distribution_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LE
         V = 0
 
         for k in range(len(P.id)):
-            if ((P.x[k] >= xmin) and (P.x[k] <= xmax) and (P.y[k] >= ymin) and (P.y[k] <= ymax) and (P.z[k] >= zmin) and (P.z[k] <= zmax)):
+            if ((P.x1[k] >= xmin) and (P.x1[k] <= xmax) and (P.x2[k] >= ymin) and (P.x2[k] <= ymax) and (P.x3[k] >= zmin) and (P.x3[k] <= zmax)):
                 for j in range(Nmomentum):
-                    F[j] = F[j] + P.F[k][j] * P.dV[k]*p[j]**4
+                    F[j] = F[j] + P.F[k][j] * P.dV[k]
                     V = V + P.dV[k]
 
-        for j in range(Nmomentum):
-            if (F[j] <= 0):
-                F[j] = 1E-100
+        #for j in range(Nmomentum):
+            #if (F[j] <= 0):
+                #F[j] = 1E-100
 
         if(np.amin(F) < minF):
             minF = np.amin(F)
@@ -66,10 +65,8 @@ def plot_kinetic_distribution_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LE
         ax = f1.add_subplot(111)
         ax.set_xscale("log")
         ax.set_yscale("log")
-        ax.set_xlabel(r'p/mc', fontsize=20)
-        ax.set_ylabel(r'F(p)p^4', fontsize=20)
         #ax.set_xlim([1E3, 1E8])
-        ax.set_ylim([minF, maxF])
+        #ax.set_ylim([minF, maxF])
         #ax.set_ylim([1E-16, 1E1])
         P = pr.ploadparticles(frame_number, w_dir, datatype=datatype,
                               ptype='CR')  # Loading particle data : particles.00ns_ch00.flt
@@ -79,11 +76,11 @@ def plot_kinetic_distribution_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LE
 
         for k in range(len(P.id)):
             for j in range(Nmomentum):
-                F[j] = F[j] + P.F[k][j] * P.dV[k]*p[j]**4
+                F[j] = F[j] + P.F[k][j] * P.dV[k]
                 V = V + P.dV[k]
-        for j in range(Nmomentum):
-            if (F[j] <= 0):
-                F[j] = 1E-100
+        #for j in range(Nmomentum):
+            #if (F[j] <= 0):
+                #F[j] = 1E-100
 
         im1 = ax.plot(p, F)
         ax.plot(p, Fa)
