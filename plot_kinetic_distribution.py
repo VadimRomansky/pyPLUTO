@@ -34,6 +34,10 @@ def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
         #Fa[i] = F[0]*(p[0]/p[i])**4
         Fa[i] = F[0]
 
+    minF = np.amin(F)
+    maxF = np.amax(F)
+
+
     plt.plot(p, F)
     plt.plot(p, Fa)
     plt.xscale('log')
@@ -41,7 +45,7 @@ def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     ax.set_xlabel(r'p/mc', fontsize=20)
     ax.set_ylabel(r'F(p)p^4', fontsize=20)
 
-    #ax.set_ylim([1E-14, 1E1])
+    ax.set_ylim([maxF/1E20, 2*maxF])
 
     plt.savefig(out_dir + file_name)
     plt.close()

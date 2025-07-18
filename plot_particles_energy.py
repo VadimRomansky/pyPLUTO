@@ -33,7 +33,7 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
     Einj = np.zeros([ns+1])
     sum = np.zeros([ns + 1])
 
-    outputstep = 1
+    outputstep = 8
 
     outputstep = outputstep**ndim
 
@@ -93,7 +93,7 @@ def plot_particles_energy(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, d
     plt.plot(time, Einj, label = 'injected energy')
     plt.plot(time, sum, label = 'injected + u grad P')
 
-    #ax.set_yscale("log")
+    ax.set_yscale("log")
     ax.legend()
 
     print("Ecr[1]/ugradP[1] = ",Ecr[1]/ugradP[1])

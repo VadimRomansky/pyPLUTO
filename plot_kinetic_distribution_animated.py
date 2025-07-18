@@ -67,8 +67,8 @@ def plot_kinetic_distribution_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, U
         ax.set_xlabel(r'p/mc', fontsize=20)
         ax.set_ylabel(r'F(p)p^4', fontsize=20)
         #ax.set_xlim([1E3, 1E8])
-        ax.set_ylim([minF, maxF])
-        #ax.set_ylim([1E-16, 1E1])
+        ax.set_ylim([maxF/1E20, 2*maxF])
+        #ax.set_ylim([1E0, 1E6])
         P = pr.ploadparticles(frame_number, w_dir, datatype=datatype,
                               ptype='CR')  # Loading particle data : particles.00ns_ch00.flt
 
