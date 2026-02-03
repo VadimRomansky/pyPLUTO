@@ -11,7 +11,10 @@ def plot_Bturb(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, fi
     plt.rcParams["figure.dpi"] = 500
     plt.rcParams['axes.linewidth'] = 0.1
     #plt.rcParams['text.usetex'] = True
-    f1 = plt.figure(figsize=[10,8])
+    if (transponse):
+        f1 = plt.figure(figsize=[6, 8])
+    else:
+        f1 = plt.figure(figsize=[8, 6])
     ax = f1.add_subplot(111)
 
     D = pp.pload(ns, varNames = ['Bturb'], w_dir = w_dir, datatype=datatype)  # Load fluid data.

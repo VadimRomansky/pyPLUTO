@@ -15,7 +15,10 @@ def plot_entropy_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
     plt.rcParams["figure.dpi"] = 200
     plt.rcParams['axes.linewidth'] = 0.1
     #plt.rcParams['text.usetex'] = True
-    f1 = plt.figure(figsize=[8,6])
+    if (transponse):
+        f1 = plt.figure(figsize=[6, 8])
+    else:
+        f1 = plt.figure(figsize=[8, 6])
     gam = 5.0/3.0
 
     D = pp.pload(ntot, varNames=['rho','prs'], w_dir=w_dir, datatype=datatype)  # Load fluid data.
@@ -85,8 +88,12 @@ def plot_entropy_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
     def update(frame_number):
         #f1 = plt.figure(figsize=[6, 6])
         f1.clear()
-        f1.set_figheight(8)
-        f1.set_figwidth(6)
+        if(transponse):
+            f1.set_figheight(6)
+            f1.set_figwidth(8)
+        else:
+            f1.set_figheight(8)
+            f1.set_figwidth(6)
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['rho','prs'], w_dir = w_dir, datatype=datatype)  # Load fluid data.

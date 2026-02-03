@@ -13,7 +13,10 @@ from getScalarArray import getScalarArray
 def plot_temperature_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'temperature.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False, out_dir = ""):
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
-    f1 = plt.figure(figsize=[8,12])
+    if (transponse):
+        f1 = plt.figure(figsize=[6, 8])
+    else:
+        f1 = plt.figure(figsize=[8, 6])
     plt.rcParams["figure.dpi"] = 200
     plt.rcParams['axes.linewidth'] = 0.1
 

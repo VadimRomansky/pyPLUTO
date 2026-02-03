@@ -28,8 +28,8 @@ def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
         #y = y/PVmag[i]
     maxF = np.amax(F)
 
-    startPower = 10
-    endPower = 40
+    startPower = 15
+    endPower = 45
     Fp = np.log(F[startPower:endPower])
     pp = np.log(p[startPower:endPower])[:,None]
     reg = sklearn.linear_model.LinearRegression().fit(pp, Fp)
@@ -53,7 +53,7 @@ def plot_kinetic_distribution(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCIT
     plt.xscale('log')
     plt.yscale('log')
 
-    ax.set_ylim([maxF/1E5, 2*maxF])
+    ax.set_ylim([maxF/1E3, 2*maxF])
     ax.legend()
 
     plt.savefig(out_dir + file_name)

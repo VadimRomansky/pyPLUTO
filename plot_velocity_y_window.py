@@ -10,7 +10,10 @@ def plot_velocity_y_window(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 
     c=2.998E10
     plt.rcParams.update({'font.size': 15})
     #plt.rcParams['text.usetex'] = True
-    f1 = plt.figure(figsize=[10,8])
+    if (transponse):
+        f1 = plt.figure(figsize=[6, 8])
+    else:
+        f1 = plt.figure(figsize=[8, 6])
     plt.rcParams["figure.dpi"] = 500
     plt.rcParams['axes.linewidth'] = 0.1
     ax = f1.add_subplot(111)

@@ -11,7 +11,10 @@ from getVectorArray import getVectorArray
 
 
 def plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, xmin, xmax, ymin, ymax, datatype, file_name = 'B_window.gif', excl_axis = 3, point = 0.5, aspect = 'equal', transponse = False, out_dir = ""):
-    f1 = plt.figure(figsize=[8,6])
+    if (transponse):
+        f1 = plt.figure(figsize=[6, 8])
+    else:
+        f1 = plt.figure(figsize=[8, 6])
     plt.rcParams["figure.dpi"] = 200
     plt.rcParams['axes.linewidth'] = 0.1
 
@@ -68,8 +71,12 @@ def plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     def update(frame_number):
         #f1 = plt.figure(figsize=[6, 6])
         f1.clear()
-        f1.set_figheight(8)
-        f1.set_figwidth(6)
+        if(transponse):
+            f1.set_figheight(6)
+            f1.set_figwidth(8)
+        else:
+            f1.set_figheight(8)
+            f1.set_figwidth(6)
         ax = f1.add_subplot(111)
 
         D = pp.pload(frame_number, varNames = ['Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype)  # Load fluid data.
