@@ -38,6 +38,7 @@ def plot_profile_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         S[i] = Prs[i]/pow(Rho[i], gam)
 
     S0 = S[int(0.4*nx)]
+    S0 = 1
 
     S = S/S0
 
@@ -105,7 +106,7 @@ def plot_profile_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     ax1.set_ylabel(r'$\rho$ [g/cm]$^3$', fontsize=20)
     ax1.set_yscale('log')
     ax2.set_ylabel(r'$v/c$', fontsize=20)
-    ax3.set_ylabel(r'S/S$_0$')
+    ax3.set_ylabel(r'S')
     ax3.set_yscale('log')
 
     ax1.set_xlabel(r'z [pc]', fontsize=20)

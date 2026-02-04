@@ -62,6 +62,8 @@ from plot_pressure_animated import plot_pressure_animated
 from plot_pressure_animated_1d import plot_pressure_animated_1d
 from plot_pressure_animated_window import plot_pressure_animated_window
 from plot_pressure_window import plot_pressure_window
+from plot_profile_1d import plot_profile_1d
+from plot_profile_1d_window import plot_profile_1d_window
 from plot_reverse_shock_wave import plot_reverse_shock_wave
 from plot_shock import plot_shock
 from plot_shock_animated import plot_shock_animated
@@ -132,8 +134,8 @@ plt.rcParams['image.cmap'] = 'jet'
 #plot_B(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
 #plot_B_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 plot_B_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, transponse = True, out_dir = out_dir)
-plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
-plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, transponse = True, out_dir = out_dir)
+#plot_B_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
+#plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, transponse = True, out_dir = out_dir)
 
 #plot_B_quiver(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_B_quiver_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0, 5E19, 0, 3E20, datatype, out_dir = out_dir)
@@ -158,8 +160,8 @@ plot_B_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.
 plot_density_window(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, file_name = 'density_east.png', transponse = True, out_dir = out_dir)
 for i in range(10):
     plot_density_window(i+15, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, file_name = 'density_' + str(i) + '.png', transponse = True, out_dir = out_dir)
-plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
-plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, out_dir = out_dir, transponse = True)
+#plot_density_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
+#plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, out_dir = out_dir, transponse = True)
 
 #plot_density_1d(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d_0.png', axis = 2, point1 = 0.0, out_dir = out_dir)
 #plot_density_1d(ntot, w_dir, 0.5*UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'density_1d_1.png', axis = 2, point1 = 0.01, out_dir = out_dir)
@@ -202,7 +204,7 @@ plot_density_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCI
 #plot_entropy_1d_series(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
 #plot_entropy_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 2E19, 3E19, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
 #plot_entropy_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
-plot_entropy_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, transponse = True, out_dir = out_dir)
+#plot_entropy_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, transponse = True, out_dir = out_dir)
 #plot_entropy_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
 plot_entropy_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, transponse = True, out_dir = out_dir)
 for i in range(10):
@@ -237,8 +239,8 @@ for i in range(10):
 #plot_velocity_window(29, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 100*UNIT_LENGTH, -600*UNIT_LENGTH, 0.0, datatype, filename = 'velocity_window29.png', transponse = True, out_dir = out_dir)
 #plot_velocity_window(30, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 100*UNIT_LENGTH, -600*UNIT_LENGTH, 0.0, datatype, filename = 'velocity_window30.png', transponse = True, out_dir = out_dir)
 #plot_velocity_window(31, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 100*UNIT_LENGTH, -600*UNIT_LENGTH, 0.0, datatype, filename = 'velocity_window31.png', transponse = True, out_dir = out_dir)
-plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
-plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, out_dir = out_dir, transponse = True)
+#plot_velocity_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
+#plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.5E20, -2E20, -0.5E20, datatype, out_dir = out_dir, transponse = True)
 
 #plot_velocity_quiver(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_velocity_quiver_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
@@ -283,9 +285,13 @@ plot_velocity_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
 ######### profile
 
-#plot_profile(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+for i in range(10):
+    plot_profile_1d(i+15, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'profile_'+ str(i) + '.png', axis = 2, point1 = 0.0, out_dir = out_dir)
+
+for i in range(10):
+    plot_profile_1d_window(i+15, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -2E20, -0.5E20, datatype, file_name = 'profile_window_'+ str(i) + '.png', axis = 2, point1 = 0.0, out_dir = out_dir)
 #plot_profile_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -1E17, 1E17, datatype, out_dir = out_dir)
-plot_profile_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
+#plot_profile_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, axis = 2, point1 = 0.0, out_dir = out_dir)
 #plot_profile_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -1E17, 1E17, datatype, out_dir = out_dir)
 
 ####### some
