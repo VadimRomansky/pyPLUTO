@@ -37,7 +37,7 @@ def plot_profile_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     for i in range(nx):
         S[i] = Prs[i]/pow(Rho[i], gam)
 
-    S0 = S[int(0.4*nx)]
+    S0 = 1
 
     S = S/S0
 
