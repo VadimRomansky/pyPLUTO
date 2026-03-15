@@ -14,10 +14,10 @@ def plot_profile_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     #plt.rcParams['text.usetex'] = True
     plt.rcParams["figure.dpi"] = 500
     plt.rcParams['axes.linewidth'] = 1.0
-    plt.rcParams.update({
-        "text.usetex": True,
-        "font.family": 'Times New Roman'
-    })
+    #plt.rcParams.update({
+    #    "text.usetex": True,
+    #    "font.family": 'Times New Roman'
+    #})
     f1, (ax1, ax2, ax3) = plt.subplots(3, 1, sharex='col')
     f1.set_figheight(8)
     f1.set_figwidth(10)

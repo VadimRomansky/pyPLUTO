@@ -4,6 +4,7 @@ import pyPLUTO.ploadparticles as pr # importing the pyPLUTO ploadparticles modul
 from plot_B import plot_B
 from plot_B_1d import plot_B_1d
 from plot_B_1d_series import plot_B_1d_series
+from plot_B_W50 import plot_B_W50
 from plot_B_animated import plot_B_animated
 from plot_B_animated_1d import plot_B_animated_1d
 from plot_B_animated_window import plot_B_animated_window
@@ -11,6 +12,7 @@ from plot_B_quiver import plot_B_quiver
 from plot_B_quiver_animated import plot_B_quiver_animated
 from plot_B_quiver_window import plot_B_quiver_window
 from plot_B_window import plot_B_window
+from plot_B_window_W50 import plot_B_window_W50
 from plot_Bx import plot_Bx
 from plot_Bx_window import plot_Bx_window
 from plot_By import plot_By
@@ -20,12 +22,14 @@ from plot_Bz_window import plot_Bz_window
 
 from plot_density import plot_density
 from plot_density_1d_window import plot_density_1d_window
+from plot_density_W50 import plot_density_W50
 from plot_density_animated import plot_density_animated
 from plot_density_1d import plot_density_1d
 from plot_density_1d_series import plot_density_1d_series
 from plot_density_animated_window import plot_density_animated_window
 from plot_density_window import plot_density_window
 from plot_density_animated_1d import plot_density_animated_1d
+from plot_density_window_W50 import plot_density_window_W50
 
 from plot_distribution import plot_distribution
 from plot_distribution_animated import plot_distribution_animated
@@ -81,12 +85,14 @@ from plot_velocity import plot_velocity
 from plot_velocity_1d import plot_velocity_1d
 from plot_velocity_1d_series import plot_velocity_1d_series
 from plot_velocity_1d_window import plot_velocity_1d_window
+from plot_velocity_W50 import plot_velocity_W50
 from plot_velocity_animated import plot_velocity_animated
 from plot_velocity_animated_1d import plot_velocity_animated_1d
 from plot_velocity_animated_window import plot_velocity_animated_window
 from plot_velocity_quiver import plot_velocity_quiver
 from plot_velocity_quiver_animated import plot_velocity_quiver_animated
 from plot_velocity_window import plot_velocity_window
+from plot_velocity_window_W50 import plot_velocity_window_W50
 from plot_velocity_x import plot_velocity_x
 from plot_velocity_x_1d import plot_velocity_x_1d
 from plot_velocity_x_animated import plot_velocity_x_animated
@@ -120,13 +126,35 @@ out_dir = w_dir
 #w_dir='../../output_snr_rel_M0.1_MWR4_4/'
 UNIT_DENSITY=1.672E-24;
 UNIT_LENGTH=3.086E17;
-#UNIT_LENGTH = 0.1;
+parsec=3.086E18;
+UNIT_LENGTH = 0.1;
 UNIT_VELOCITY=2.998E10;
 datatype = 'dbl'
-ntot = 40
+ntot = 12
 
 plt.rcParams['image.cmap'] = 'jet'
 #plt.rcParams["figure.dpi"] = 1000
+
+####for paper
+plot_B_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
+plot_B_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.4E20 / parsec, 0.25E20 / parsec, 1.5E20 / parsec, datatype, transponse = True, out_dir = out_dir)
+
+plot_density_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
+plot_density_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.4E20 / parsec, 0.25E20 / parsec, 1.5E20 / parsec, datatype, transponse = True, out_dir = out_dir)
+
+plot_velocity_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, transponse = True, out_dir = out_dir)
+plot_velocity_window_W50(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 0.4E20 / parsec, 0.25E20 / parsec, 1.5E20 / parsec, datatype, transponse = True, out_dir = out_dir)
+
+plot_profile_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'profile.png', axis = 2, point1 = 0.0, out_dir = out_dir)
+
+plot_profile_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.5E20 / parsec, 1.5E20 / parsec, datatype, file_name ='profile_window.png', axis = 2, point1 = 0.01, out_dir = out_dir)
+
+plot_profile_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, file_name = 'profile_r.png', axis = 1, point1 = 0.5, out_dir = out_dir)
+
+plot_profile_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.35E20 / parsec, 1.6E20 / parsec, datatype, file_name ='profile_r_window.png', axis = 1, point1 = 0.5, out_dir = out_dir)
+
+
+exit()
 
 #plot_energy_flux_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -2E19, 2E19, 2E18, -7E19, 7E19, 2E18, datatype, transponse = True)
 

@@ -14,20 +14,21 @@ def plot_profile_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     #plt.rcParams['text.usetex'] = True
     plt.rcParams["figure.dpi"] = 500
     plt.rcParams['axes.linewidth'] = 1.0
-    plt.rcParams.update({
-        "text.usetex": True,
-        "font.family": 'Times New Roman'
-    })
-    f1, (ax1, ax2, ax3) = plt.subplots(3, 1, sharex='col')
-    f1.set_figheight(8)
+    #plt.rcParams.update({
+    #    "text.usetex": True,
+    #    "font.family": 'Times New Roman'
+    #})
+    f1, (ax1, ax2, ax3, ax4) = plt.subplots(4, 1, sharex='col')
+    f1.set_figheight(10)
     f1.set_figwidth(10)
     plt.subplots_adjust(hspace=.0)
 
-    D = pp.pload(ntot, varNames = ['rho','prs','vx1','vx2','vx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
+    D = pp.pload(ntot, varNames = ['rho','prs','vx1','vx2','vx3','Bx1','Bx2','Bx3'], w_dir = w_dir, datatype=datatype) # Load fluid data.
 
     Rho = getScalarArray_1d(D.rho, UNIT_DENSITY, axis, point1, point2)
     Prs = getScalarArray_1d(D.prs, UNIT_DENSITY*UNIT_VELOCITY*UNIT_VELOCITY, axis, point1, point2)
     V = getVectorArray_1d(D.vx1, D.vx2, D.vx3, UNIT_VELOCITY / c, axis, point1, point2)
+    B = getVectorArray_1d(D.Bx1, D.Bx2, D.Bx3, np.sqrt(4 * np.pi * UNIT_DENSITY * UNIT_VELOCITY * UNIT_VELOCITY), axis, point1, point2)
 
     nx = Rho.shape[0]
 
@@ -38,7 +39,7 @@ def plot_profile_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
         S[i] = Prs[i]/pow(Rho[i], gam)
 
     S0 = S[int(0.4*nx)]
-    S0 = 1
+    #S0 = 1
 
     S = S/S0
 
@@ -103,24 +104,28 @@ def plot_profile_1d_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY
     minS = np.amin(S[N1:N2])
     maxS = np.amax(S[N1:N2])
 
-    ax1.set_ylabel(r'$\rho$ [g/cm]$^3$', fontsize=20)
-    ax1.set_yscale('log')
-    ax2.set_ylabel(r'$v/c$', fontsize=20)
-    ax3.set_ylabel(r'S')
-    ax3.set_yscale('log')
+    ax1.set_ylabel(r'$v/c$', fontsize=20)
+    ax2.set_ylabel(r'$\rho$ [g/cm]$^3$', fontsize=20)
+    ax2.set_yscale('log')
+    ax3.set_ylabel(r'B $\mu$G', fontsize=20)
+    ax4.set_ylabel(r'S/S_0')
+    ax4.set_yscale('log')
 
     ax1.set_xlabel(r'z [pc]', fontsize=20)
     ax2.set_xlabel(r'z [pc]', fontsize=20)
     ax3.set_xlabel(r'z [pc]', fontsize=20)
+    ax4.set_xlabel(r'z [pc]', fontsize=20)
 
     ax1.minorticks_on()
     ax2.minorticks_on()
     ax3.minorticks_on()
+    ax4.minorticks_on()
 
     #plt.axis([0.0,1.0,0.0,1.0])
-    ax1.plot(x[N1:N2], Rho[N1:N2], linewidth = 2)
-    ax2.plot(x[N1:N2], V[N1:N2], linewidth=2)
-    ax3.plot(x[N1:N2], S[N1:N2], linewidth=2)
+    ax1.plot(x[N1:N2], V[N1:N2], linewidth=2)
+    ax2.plot(x[N1:N2], Rho[N1:N2], linewidth = 2)
+    ax3.plot(x[N1:N2], 1000000*B[N1:N2], linewidth=2)
+    ax4.plot(x[N1:N2], S[N1:N2], linewidth=2)
 
     #plt.show()
     plt.savefig(out_dir + file_name, bbox_inches = 'tight')

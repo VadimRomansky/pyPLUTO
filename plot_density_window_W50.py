@@ -46,7 +46,8 @@ def plot_density_window_W50(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY,
     if(transponse):
         #np.flip(Rho, 0)
         im2 = ax.imshow(Rho.T, origin='lower', norm = colors.LogNorm(vmin = minRho, vmax = maxRho), aspect=aspect,extent=[D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
-    cax2 = f1.add_axes([0.92,0.17,0.02,0.65])
+    #cax2 = f1.add_axes([0.92,0.17,0.02,0.65])
+    cax2 = f1.add_axes([0.92, 0.12, 0.02, 0.75])
 
     cbar = plt.colorbar(im2, cax=cax2, orientation='vertical')  # vertical colorbar for fluid data.
     # cbar = plt.colorbar(im2, orientation='vertical')
