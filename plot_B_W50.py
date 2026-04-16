@@ -36,15 +36,15 @@ def plot_B_W50(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, fi
     minB = np.amin(B)
     maxB = np.amax(B)
 
-
+    V1 = B[:, 1:int(B.shape[1] / 2)]
 
     if(not transponse):
-        im2 = ax.imshow(B, origin='upper', norm = colors.LogNorm(vmin = minB, vmax = maxB), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+        im2 = ax.imshow(V1, origin='upper', norm = colors.LogNorm(vmin = minB, vmax = maxB), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, 0.5*D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
     if(transponse):
         #np.flip(B,0)
-        im2 = ax.imshow(B.T, origin='lower', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
+        im2 = ax.imshow(V1.T, origin='lower', norm=colors.LogNorm(vmin=minB, vmax=maxB), aspect=aspect,
                         extent=[D.x2.min() * UNIT_LENGTH, D.x2.max() * UNIT_LENGTH, D.x1.min() * UNIT_LENGTH,
-                                D.x1.max() * UNIT_LENGTH])  # plotting fluid data.
+                                0.5*D.x1.max() * UNIT_LENGTH])  # plotting fluid data.
 
     cax2 = f1.add_axes([0.92, 0.17, 0.02, 0.65])
     # im2.set_clim(minB, maxB)

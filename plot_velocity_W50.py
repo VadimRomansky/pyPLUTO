@@ -36,15 +36,15 @@ def plot_velocity_W50(ns, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datat
     minV = np.amin(V)
     maxV = np.amax(V)
 
-    V1 = V[:,1:int(V.shape[1]/2)]
+    V1 = V[int(V.shape[0]*0.1):int(V.shape[0]*0.9),1:int(V.shape[1]/2)]
 
 
 
-    im2 = ax.imshow(V1, origin='upper', norm = colors.Normalize(vmin = minV, vmax = maxV), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, 0.5*D.x1.max()*UNIT_LENGTH, D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
+    im2 = ax.imshow(V1, origin='upper', norm = colors.Normalize(vmin = minV, vmax = maxV), aspect=aspect,extent=[D.x1.min()*UNIT_LENGTH, 0.5*D.x1.max()*UNIT_LENGTH, 0.8*D.x2.min()*UNIT_LENGTH, 0.8*D.x2.max()*UNIT_LENGTH]) # plotting fluid data.
     if(transponse):
         #np.flip(V, 0)
-        im2 = ax.imshow(V1.T, origin='lower', norm = colors.Normalize(vmin = minV, vmax = maxV), aspect=aspect,extent=[D.x2.min()*UNIT_LENGTH, D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, 0.5*D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
-    cax2 = f1.add_axes([0.92,0.17,0.02,0.65])
+        im2 = ax.imshow(V1.T, origin='lower', norm = colors.Normalize(vmin = minV, vmax = maxV), aspect=aspect,extent=[0.8*D.x2.min()*UNIT_LENGTH, 0.8*D.x2.max()*UNIT_LENGTH, D.x1.min()*UNIT_LENGTH, 0.5*D.x1.max()*UNIT_LENGTH]) # plotting fluid data.
+    cax2 = f1.add_axes([0.92,0.12,0.02,0.75])
     #im2.set_clim(minB, maxB)
     cbar = plt.colorbar(im2,cax=cax2,orientation='vertical') # vertical colorbar for fluid data.
     #cbar = plt.colorbar(im2, orientation='vertical')
