@@ -11,8 +11,12 @@ from plot_B_animated_window import plot_B_animated_window
 from plot_B_quiver import plot_B_quiver
 from plot_B_quiver_animated import plot_B_quiver_animated
 from plot_B_quiver_window import plot_B_quiver_window
+from plot_B_turb_animated_1d import plot_B_turb_animated_1d
 from plot_B_window import plot_B_window
 from plot_B_window_W50 import plot_B_window_W50
+from plot_Bturb import plot_Bturb
+from plot_Bturb_1d import plot_Bturb_1d
+from plot_Bturb_animated import plot_Bturb_animated
 from plot_Bx import plot_Bx
 from plot_Bx_window import plot_Bx_window
 from plot_By import plot_By
@@ -81,6 +85,8 @@ from plot_temperature_animated import plot_temperature_animated
 from plot_temperature_animated_1d import plot_temperature_animated_1d
 from plot_temperature_animated_window import plot_temperature_animated_window
 from plot_temperature_window import plot_temperature_window
+from plot_turbulence_spectrum import plot_turbulence_spectrum
+from plot_turbulence_spectrum_animated import plot_turbulence_spectrum_animated
 
 from plot_velocity import plot_velocity
 from plot_velocity_1d import plot_velocity_1d
@@ -121,7 +127,7 @@ from write_velocity_to_file import write_velocity_to_file
 from plot_energy_flux import plot_energy_flux_cyl
 
 #w_dir='../../output_churazov_rhoamb0.01_P4.3E39_vi3E8_v0.2_T8.6E4_theta5_BjE-4/'
-w_dir = '../../output/'
+w_dir = '../../output0.8/'
 out_dir = w_dir
 #w_dir='../../output_2_winds_MWR1_1_4_4/'
 #w_dir='../../output_snr_rel_M0.1_MWR4_4/'
@@ -363,6 +369,22 @@ for i in range(ntot):
 #plot_particles_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
 #plot_particles_animated_cyl(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 2E20,2E20, datatype, out_dir = out_dir)
 #plot_particles_animated_spher(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, -2E16, 2E16, datatype, out_dir = out_dir)
+
+######## turb
+#plot_Bturb(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Bturb_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+plot_Bturb_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+plot_B_turb_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Jmc(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+#plot_Jmc_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir = out_dir)
+plot_turbulence_spectrum(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir=out_dir)
+plot_turbulence_spectrum_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir=out_dir)
+#plot_turbulence_spectrum_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 1E19, 0.0, 6E19, datatype, out_dir=out_dir)
+#plot_turbulence_spectrum_animated_window(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, 0.0, 1E19, 0.0, 6E19, datatype, out_dir=out_dir)
+
+#plot_growth_rate(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir=out_dir)
+#plot_growth_rate_animated(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOCITY, datatype, out_dir=out_dir)
+
 
 ######## writedata
 ### 1 because change to concentration

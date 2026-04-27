@@ -69,7 +69,7 @@ def plot_velocity_animated_1d(ntot, w_dir, UNIT_DENSITY, UNIT_LENGTH, UNIT_VELOC
 
     # plt.show()
 
-    f = file_name
+    f = out_dir + file_name
     writergif = animation.PillowWriter(fps=4)
     anim.save(f, writer=writergif)
     plt.close()
